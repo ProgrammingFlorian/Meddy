@@ -28,6 +28,15 @@ const Home: NextPage = () => {
               Verwalte die aktuelle Warteschlange und checke neue Kunden ein.
             </p>
           </a>
+          <a
+            href="checkInPage"
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+          >
+            <h3 className="text-2xl font-bold">CheckIn &rarr;</h3>
+            <p className="mt-4 text-xl">
+              Checke neue Kunden ein
+            </p>
+          </a>
 
           <a
             href="https://nextjs.org/learn"
