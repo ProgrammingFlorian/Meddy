@@ -4,8 +4,10 @@
  */
 
 import { createStyles, Text } from '@mantine/core';
-import { useListState } from '@mantine/hooks';
+import { useListState, UseListStateHandlers } from '@mantine/hooks';
 import dynamic from 'next/dynamic';
+import { DropResult } from 'react-beautiful-dnd';
+import { Customer, getCustomerIdAsString } from '../models/customer';
 
 // https://stackoverflow.com/a/73168004
 const DragDropContext = dynamic(
@@ -13,21 +15,21 @@ const DragDropContext = dynamic(
     import('react-beautiful-dnd').then(mod => {
       return mod.DragDropContext;
     }),
-  {ssr: false},
+  { ssr: false },
 );
 const Droppable = dynamic(
   () =>
     import('react-beautiful-dnd').then(mod => {
       return mod.Droppable;
     }),
-  {ssr: false},
+  { ssr: false },
 );
 const Draggable = dynamic(
   () =>
     import('react-beautiful-dnd').then(mod => {
       return mod.Draggable;
     }),
-  {ssr: false},
+  { ssr: false },
 );
 
 const useStyles = createStyles((theme) => ({
@@ -49,19 +51,17 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface DndListProps {
-  data: {
-    id: number;
-    name: string;
-    duration: number;
-  }[];
+  items: Customer[];
+  handler: UseListStateHandlers<Customer>;
+
+  onReorder: () => void;
 }
 
-export function DndList({ data }: DndListProps) {
+export const DndList = (props: DndListProps) => {
   const { classes, cx } = useStyles();
-  const [state, handlers] = useListState(data);
 
-  const items = state.map((item, index) => (
-    <Draggable key={item.name} index={index} draggableId={item.name}>
+  const items = props.items.map((item, index) => (
+    <Draggable key={getCustomerIdAsString(item)} index={index} draggableId={getCustomerIdAsString(item)}>
       {(provided, snapshot) => (
         <div
           className={cx(classes.item, { [classes.itemDragging]: snapshot.isDragging })}
@@ -81,11 +81,14 @@ export function DndList({ data }: DndListProps) {
   ));
 
   return (
-    <DragDropContext
-      onDragEnd={({ destination, source }) =>
-        handlers.reorder({ from: source.index, to: destination?.index || 0 })
-      }
-    >
+    <DragDropContext onDragEnd={({ destination, source }) => {
+      props.handler.reorder({ from: source.index, to: destination?.index || 0 });
+      props.items.forEach((value, index) => {
+        value.position = index;
+        props.handler.setItem(index, value);
+      });
+      props.onReorder();
+    }}>
       <Droppable droppableId="dnd-list" direction="vertical">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
