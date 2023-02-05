@@ -37,6 +37,24 @@ const Home: NextPage = () => {
               Checke neue Kunden ein
             </p>
           </a>
+          <a
+            href="qrCodePage"
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+          >
+            <h3 className="text-2xl font-bold">QR Code Page &rarr;</h3>
+            <p className="mt-4 text-xl">
+              Hier wird der QR Code angezeigt
+            </p>
+          </a>
+          <a
+            href="waitingPage"
+            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+          >
+            <h3 className="text-2xl font-bold">Waiting Page &rarr;</h3>
+            <p className="mt-4 text-xl">
+              Hier wird der Timer angezeig
+            </p>
+          </a>
 
           <a
             href="https://nextjs.org/learn"

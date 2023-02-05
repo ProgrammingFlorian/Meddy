@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.blue-color {
+    color: #0099ff;
+   
+}
+
+.fill-blue {
+    fill: #0099ff;
+}
+
+.stroke-blue {
+    stroke: #0099ff;
+}
+
+.bg-blue {
+    background-color: #0099ff;
+}

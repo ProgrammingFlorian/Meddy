@@ -1,21 +1,18 @@
 import type { NextPage } from 'next'
 import { DndList } from '../components/DnDList'
 
-const Overview: NextPage = () => {
+const CheckIn: NextPage = () => {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center py-2">
 
 
             <div className="relative inline-block text-left ">
-                <html>
-                    <head>
-
-                        <script src="https://unpkg.com/tailwindcss-jit-cdn"></script>
-                    </head>
-                    <body>
+                
+                
+                   
                         <div className=" p-10 bg-gray-100 justify-center">
-                        <label htmlFor="select" className=" text-center font-semibold text text-2xl text-blue-500 block py-2">Neuer Kunde</label>
-                        <br />
+                            <label htmlFor="select" className=" text-center font-semibold text text-2xl text-blue-500 block py-2">Neuer Kunde</label>
+                            <br />
                             <div className='items-start'>
                                 <div className="col-span-6 sm:col-span-3">
                                     <label htmlFor="select" className="font-semibold block py-2">Patientenname:</label>
@@ -41,24 +38,23 @@ const Overview: NextPage = () => {
                             <br />
                             <br />
                             <br />
-                            <div className="w-full flex-col-1 justify-items-center">
-                            <button className="bg-transparent hover:bg-blue-700 text-white border border-transparent font-bold py-2 px-4 rounded">
-                            //ToDo
-                                </button>
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white border border-transparent font-bold py-2 px-4 rounded">
+                            <div className="w-full flex justify-center">
+
+                                <button className="bg-blue-500 hover:bg-blue-700 text-white justify-self-center border border-transparent font-bold py-2 px-4 rounded" onClick={() => {
+                                    window.location.href = "qrCodePage";
+                                }}>
                                     QR-Code Generieren
                                 </button>
-                              
-                               
-</div>
 
-                          
+
+                            </div>
+
+
                         </div>
-                    </body>
-                </html>
+                  
             </div>
         </div>
     )
 }
 
-export default Overview
+export default CheckIn
