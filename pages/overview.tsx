@@ -5,18 +5,18 @@ import { DndList } from '../components/DnDList'
 const TextArea: React.FC = () => {
     const [text, setText] = useState('Text');
     const [isEditing, setIsEditing] = useState(false);
-  
+
     const handleClick = () => {
       setIsEditing(!isEditing);
     };
-  
+
     return (
       <div onClick={handleClick} style={{ textDecoration: isEditing ? 'underline' : 'none', backgroundColor: 'blue' }}>
         {isEditing ? <input value={text} onChange={(e) => setText(e.target.value)} /> : text}
       </div>
     );
   };
-  
+
 
 
 
@@ -29,11 +29,11 @@ const Overview: NextPage = () => {
     const [text, setText] = useState('Task List');
     const [isEditing, setIsEditing] = useState(false);
     const [newText, setNewText] = useState(text);
-  
+
     const handleClick = () => {
       setIsEditing(true);
     };
-  
+
     const handleBlur = () => {
         if (newText !== text) {
           const confirmChange = window.confirm(`Do you want to change the text from "${text}" to "${newText}"?`);
@@ -46,21 +46,28 @@ const Overview: NextPage = () => {
         setIsEditing(false);
       };
 
+    const {customers, sendUpdate} = useStore();
+    const [listItems, listHandler] = useListState([] as Customer[]);
+
+    useEffect(() => {
+        listHandler.setState(customers);
+    }, [customers]);
+
 
     return (
         <div className=''>
-<div 
-      className="notranslate" 
-      placeholder="Untitled" 
-      data-content-editable-leaf="true" 
-      contentEditable={isEditing} 
-      style={{ 
-        maxWidth: '100%', 
-        width: '100%', 
-        whiteSpace: 'pre-wrap', 
-        wordBreak: 'break-word', 
+<div
+      className="notranslate"
+      placeholder="Untitled"
+      data-content-editable-leaf="true"
+      contentEditable={isEditing}
+      style={{
+        maxWidth: '100%',
+        width: '100%',
+        whiteSpace: 'pre-wrap',
+        wordBreak: 'break-word',
         textOverflow: 'ellipsis',
-        caretColor: 'rgba(255, 255, 255, 0.81)', 
+        caretColor: 'rgba(255, 255, 255, 0.81)',
         padding: '3px 2px',
         outline: 'none',
         textDecoration: isEditing ? 'underline' : 'none'
@@ -72,7 +79,7 @@ const Overview: NextPage = () => {
       onInput={(e) => setNewText(e.currentTarget.innerText)}
     >
     ffff
-    </div>    
+    </div>
             <div className=" flex select-none text-center min-h-screen flex-col justify-center py-2 max-w-max">
             <div className='flex flex-row justify-between font-bold blue-color px-8'>
                 <div className='text-start basis-1/2'>
@@ -91,21 +98,7 @@ const Overview: NextPage = () => {
                     <h3>Arzt 1</h3>
                     <main className="flex w-full flex-1  items-center justify-center px-20 text-center">
 
-                        <DndList data={[{
-                            id: 1,
-                            name: "Hufenstein",
-                            duration: 5
-                        },
-                        {
-                            id: 2,
-                            name: "Albert",
-                            duration: 50
-                        },
-                        {
-                            id: 3,
-                            name: "Simon",
-                            duration: 3
-                        }]}></DndList>
+                        <DndList items={listItems} handler={listHandler} sendUpdate={sendUpdate}></DndList>
                     </main>
                 </div>
 
@@ -113,42 +106,14 @@ const Overview: NextPage = () => {
                     <h3>Arzt 2</h3>
                     <main className="flex w-full flex-1 items-center justify-center px-20 text-center">
 
-                        <DndList data={[{
-                            id: 1,
-                            name: "Hufenstein",
-                            duration: 5
-                        },
-                        {
-                            id: 2,
-                            name: "Albert",
-                            duration: 50
-                        },
-                        {
-                            id: 3,
-                            name: "Simon",
-                            duration: 3
-                        }]}></DndList>
+                        <DndList items={listItems} handler={listHandler} sendUpdate={sendUpdate}></DndList>
                     </main>
                 </div>
                 <div className='flex-col'>
                     <h3>Arzt 3</h3>
                     <main className="flex w-full flex-1  items-center justify-center px-20 text-center">
 
-                        <DndList data={[{
-                            id: 1,
-                            name: "Hufenstein",
-                            duration: 5
-                        },
-                        {
-                            id: 2,
-                            name: "Albert",
-                            duration: 50
-                        },
-                        {
-                            id: 3,
-                            name: "Simon",
-                            duration: 3
-                        }]}></DndList>
+                        <DndList items={listItems} handler={listHandler} sendUpdate={sendUpdate}></DndList>
                     </main>
                 </div>
                 <div className="w-full flex justify-center">
@@ -178,15 +143,7 @@ const Overview: NextPage = () => {
             <br />
             <br />
         </div>
-        </div>
-       
-    )
+    );
 }
 
-export default Overview
-
-
-function setText(innerText: string): void {
-    //throw new Error('Function not implemented.');
-}
-
+export default Overview;
