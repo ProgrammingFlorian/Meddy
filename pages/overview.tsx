@@ -1,22 +1,15 @@
-import { useListState } from '@mantine/hooks';
-import type { NextPage } from 'next'
-import { useEffect } from 'react';
-import { DndList } from '../components/DnDList'
-import { updateUser, useStore } from '../lib/store';
-import { Customer } from '../models/customer';
+import {useListState} from '@mantine/hooks';
+import type {NextPage} from 'next'
+import {useEffect} from 'react';
+import {DndList} from '../components/DnDList'
+import {useStore} from '../lib/store';
+import {Customer} from '../models/customer';
 
 const Overview: NextPage = () => {
-    const customers = useStore();
+    const {customers, sendUpdate} = useStore();
     const [listItems, listHandler] = useListState([] as Customer[]);
 
-    const onReorder = () => {
-        for(const c of customers) {
-            updateUser(c);
-        }
-    }
-
     useEffect(() => {
-        console.log('customers', customers);
         listHandler.setState(customers);
     }, [customers]);
 
@@ -25,11 +18,11 @@ const Overview: NextPage = () => {
             <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
                 <div>
                     <h1 className="my-5">Dr. Proman</h1>
-                    <DndList items={listItems} handler={listHandler} onReorder={onReorder}></DndList>
+                    <DndList items={listItems} handler={listHandler} sendUpdate={sendUpdate}></DndList>
                 </div>
             </main>
         </div>
-    )
+    );
 }
 
-export default Overview
+export default Overview;
