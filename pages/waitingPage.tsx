@@ -1,11 +1,51 @@
 import type {NextPage} from 'next'
 
 
+const custerMessageBuilder = (personsInQueue: number) => {
+    if (personsInQueue === 1) {
+        return "Vor Ihnen befinden sich noch eine Person"
+    } else if (personsInQueue > 4) {
+        return "Vor Ihnen befinden sich noch mehr als vier Personen"
+    } else {
+        return "Vor Ihnen befinden sich noch " + personsInQueue + " Personen"
+    }
+}
+
+
+const personInQueueSVG = (personsInQueue: number) => {
+    if (personsInQueue > 4) {
+        return Array(4).fill(null).map((_, index) => <svg xmlns="http://www.w3.org/2000/svg"
+                                                                       viewBox="0 0 24 24" stroke-width="1.5"
+                                                                       className="w-6 h-6 align-self-center blue-color stroke-blue fill-blue">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+        </svg>).concat(<div className="font-bold blue-color">+</div>);
+    } else {
+        return Array(personsInQueue).fill(null).map((_, index) => <svg xmlns="http://www.w3.org/2000/svg"
+                                                                       viewBox="0 0 24 24" stroke-width="1.5"
+                                                                       className="w-6 h-6 align-self-center blue-color stroke-blue fill-blue">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+        </svg>)
+    }
+
+
+
+}
+
+
+
 const waitingPage: NextPage = () => {
-    const greeting = "Herzlichen Willkommen in der TUM Praxis, Florian!";
-    const circleText = "15";
-    const customerMessage = "Vor Ihnen befinden sich noch vier Kunden";
-    const appBlue = "#0099ff"
+    const personsInQueue = 5;
+    const estimatedWaitingTimeInMinutes = 15;
+    const nameOfCustomer = "Florian"
+    const greeting = "Herzlichen Willkommen in der TUM Praxis, " + nameOfCustomer + "!";
+
+    const customerMessage = custerMessageBuilder(personsInQueue);
+
+
+
+
 
     return (
 
@@ -23,7 +63,7 @@ const waitingPage: NextPage = () => {
                         borderRadius: "75px",
                         margin: "0 auto"
                     }}>
-                        <h1 className="pt-5 pb-0 text-black font-bold">{circleText}</h1>
+                        <h1 className="pt-5 pb-0 text-black font-bold">{estimatedWaitingTimeInMinutes}</h1>
                         <h4 className="text-black font-bold pt-0">min</h4>
                     </div>
                     <h2 className='pt-5 font-bold'>Ihre geschätze Wartezeit</h2>
@@ -31,27 +71,7 @@ const waitingPage: NextPage = () => {
                     <br/>
                     <br/>
                     <div className=' flex justify-items-center justify-center' style={{}}>
-
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5"
-                             className="w-6 h-6 align-self-center blue-color stroke-blue fill-blue">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5"
-                             className="w-6 h-6 align-self-center blue-color stroke-blue fill-blue">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5"
-                             className="w-6 h-6 align-self-center blue-color stroke-blue fill-blue">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5"
-                             className="w-6 h-6 align-self-center blue-color stroke-blue fill-blue">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-                        </svg>
+                        {personInQueueSVG(personsInQueue)}
                     </div>
 
 

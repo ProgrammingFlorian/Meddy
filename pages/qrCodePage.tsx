@@ -14,7 +14,7 @@ const qrCodePage: NextPage = () => {
     const greeting = "Herzlichen Willkommen in der TUM Praxis, Florian!";
     const id1 = uuidv4()
     const id2 = uuidv4()
-    const url = "http://10.181.134.159:3000/waitingPage";
+    const url = "http://192.168.178.63:3000/waitingPage";
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center py-2">

@@ -20,7 +20,7 @@ const Home: NextPage = () => {
 
                 <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
                     <a
-                        href="pages/overview"
+                        href="overview"
                         className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
                     >
                         <h3 className="text-2xl font-bold">Verwaltung &rarr;</h3>
@@ -29,7 +29,7 @@ const Home: NextPage = () => {
                         </p>
                     </a>
                     <a
-                        href="pages/checkInPage"
+                        href="checkInPage"
                         className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
                     >
                         <h3 className="text-2xl font-bold">CheckIn &rarr;</h3>

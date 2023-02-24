@@ -5,8 +5,7 @@ import {RealtimeChannel} from "@supabase/realtime-js";
 
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-);
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '');
 
 const BROADCAST_CHANNEL = 'waiting_queue_updated';
 const CHANNEL_NAME = 'waiting_updates';

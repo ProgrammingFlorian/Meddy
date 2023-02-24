@@ -8,6 +8,7 @@ import {UseListStateHandlers} from '@mantine/hooks';
 import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
 import {Customer, getCustomerIdAsString} from '../models/customer';
 import {updateUser} from "../lib/store";
+import {rgba} from "@mantine/styles/lib/theme/functions/fns/rgba/rgba";
 
 const useStyles = createStyles((theme) => ({
     item: {
@@ -41,14 +42,16 @@ export const DndList = (props: DndListProps) => {
         <Draggable key={getCustomerIdAsString(item)} index={index} draggableId={getCustomerIdAsString(item)}>
             {(provided, snapshot) => (
                 <div
+
                     className={cx(classes.item, {[classes.itemDragging]: snapshot.isDragging})}
                     {...provided.draggableProps}
+                    style={{background: "#D1D5DB"}}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
                 >
-                    <div>
+                    <div className="text-gray-500 font-bold">
                         <Text>{item.name}</Text>
-                        <Text color="dimmed" size="sm">
+                        <Text size="sm">
                             Dauer: {item.duration} Minuten
                         </Text>
                     </div>
