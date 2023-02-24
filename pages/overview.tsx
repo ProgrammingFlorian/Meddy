@@ -4,9 +4,8 @@ import {DndList} from '../components/DnDList'
 import {Customer} from "../models/customer";
 import {useStore} from "../lib/store";
 import {useListState} from "@mantine/hooks";
-import {Text} from "@mantine/core";
+import {Button} from "@mantine/core";
 import DropDownMenuLanguage from "../components/DropDownMenuLanguage";
-import DropDownMenu from "../components/DropDownMenu";
 import DropDownMenuComputername from "../components/DropDownMenuComputername";
 
 
@@ -206,13 +205,11 @@ const Overview2: NextPage = () => {
                     </div>
 
                     <div className="items-center">
-                        <button
-                            className="bg-blue-500 w-50 hover:bg-blue-700 text-white justify-self-center border border-transparent font-bold py-2 px-4 rounded"
-                            onClick={() => {
-                                window.location.href = "checkInPage";
-                            }}>
+                        <Button size="md" uppercase onClick={() => {
+                            window.location.href = "checkInPage";
+                        }}>
                             Neuen Patient einchecken
-                        </button>
+                        </Button>
                     </div>
                 </div>
 
