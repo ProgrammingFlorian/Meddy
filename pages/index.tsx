@@ -47,6 +47,24 @@ const Home: NextPage = () => {
                         </p>
                     </a>
                     <a
+                        href="loginPage"
+                        className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+                    >
+                        <h3 className="text-2xl font-bold">LoginPage &rarr;</h3>
+                        <p className="mt-4 text-xl">
+                            Hier kann sich ein User einloggen
+                        </p>
+                    </a>
+                    <a
+                        href="registrationPage"
+                        className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
+                    >
+                        <h3 className="text-2xl font-bold">RegistrationPage &rarr;</h3>
+                        <p className="mt-4 text-xl">
+                            Hier kann sich ein User registrieren
+                        </p>
+                    </a>
+                    <a
                         href="waitingPage"
                         className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
                     >

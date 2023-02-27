@@ -17,7 +17,7 @@ export default class _Document extends Document {
                         <p>
                             Webseite erstellt von{' '}
                             <span className="font-bold">
-                                Florian Koller
+                                Florian Koller & Marius Weigt
                             </span>
                         </p>
                     </footer>

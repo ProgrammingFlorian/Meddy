@@ -11,6 +11,8 @@
     "@headlessui/react": "^1.7.10",
     "@heroicons/react": "^2.0.15",
     "@mantine/core": "^5.10.3",
+    "@mantine/ds": "^5.10.5",
+    "@mantine/form": "^5.10.5",
     "@mantine/hooks": "^5.10.3",
     "@mantine/next": "^5.10.3",
     "@supabase/supabase-js": "^2.7.1",
@@ -24,6 +26,7 @@
     "react": "18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "18.2.0",
+    "tabler": "^1.0.0-alpha.8",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

@@ -1,62 +1,138 @@
 import type {NextPage} from 'next'
+import {Box, Button, Modal, Group, createStyles, NumberInput, Select, Textarea, TextInput, Burger} from "@mantine/core";
+import {useState} from "react";
+import {Language} from "../models/Language";
+import {customLabel} from "../models/Functions";
+import {useForm} from "@mantine/form";
+import qrCodePage from "./qrCodePage";
 
-const checkInPage: NextPage = () => {
+
+const checkInPage = () => {
+
+    const [opened, setOpened] = useState(false);
+    const useStyles = createStyles((theme) => ({
+        backgroundColor: {
+            backgroundColor:
+                theme.fn.rgba("#ffffff", 1)
+        },
+        textColor: {
+            color: "black"
+        }
+    }));
+
+
+    const language = Language.GERMAN
+    const employees = ['Arzt 1', 'Arzt 2', 'Arzt 3', 'Arzt 4']
+    const {classes} = useStyles();
+    const [approxWaitingTime, setApproxWaitingTime] = useState(5);
+    const [inputName, setInputName] = useState("")
+    const [employee, setEmployee] = useState(employees[0])
+    const [comment, setComment] = useState("")
+
+    const form = useForm({
+        initialValues: {
+            name: '', email: '', password: '',
+            confirmPassword: ''
+        },
+
+        // functions will be used to validate values at corresponding key
+        validate: {
+            name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+            email: (value) => value.length > 0 ? (/^\S+@\S+$/.test(value) ? null : 'Invalid email') : null,
+        },
+    });
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center py-2">
-            <div className="relative inline-block text-left ">
-                <div className=" p-10 bg-gray-100 justify-center">
-                    <label htmlFor="select"
-                           className=" text-center font-semibold text text-2xl text-blue-500 block py-2">Neuer
-                        Kunde</label>
-                    <br/>
-                    <div className='items-start'>
-                        <div className="col-span-6 sm:col-span-3">
-                            <label htmlFor="select" className="font-semibold block py-2">Patientenname:</label>
-                            <input className="h-10 text-2l font-bold w-full pl-3 bg-gray-400 flex rounded items-center"
-                                   placeholder="Max Mustermann"></input></div>
-                        <br/>
-                        <br/>
-                        <div className="col-span-6 sm:col-span-3">
-                            <label htmlFor="select" className="font-semibold block py-2">Geschätzte Termindauer in
-                                Minuten:</label>
-                            <input className="h-10 text-2l font-bold w-full pl-3 bg-gray-400 flex rounded items-center"
-                                   placeholder="15"></input></div>
-                        <br/>
-                        <br/>
-                    </div>
-                    <div>
-                        <label htmlFor="select" className="font-semibold block py-2">Behandelnder Arzt:</label>
-                        <div className="relative w-full  inline-flex self-center">
-                            <select
-                                className="text-2l font-bold rounded border border-transparent text-gray-500 h-10 w-full pl-3 pr-10 bg-gray-400  appearance-none">
-                                <option>Arzt 1</option>
-                                <option>Arzt 2</option>
-                                <option>Arzt 3</option>
-                            </select>
+        <>
+            <Modal
+                size="lg"
+                opened={opened}
+                onClose={() => setOpened(false)}
+                className="my-modal"
+            >
+                    <div className="flex flex-col items-center justify-center">
+                        <div className="relative inline-block text-left" style={{minWidth: 500}}>
+                            <div className=" p-10 justify-center">
+                                <label htmlFor="select"
+                                       className=" text-center font-semibold text text-2xl text-blue-500 block py-2">
+                                    Neuer Kund*in
+                                </label>
+                                <br/>
+                                <Box sx={{maxWidth: 340}} mx="auto">
+                                    <form onSubmit={form.onSubmit((values) => console.log(values))}>
+                                        <TextInput
+                                            label={customLabel("Patienten Name", true)}
+                                            placeholder="Name"
+                                            {...form.getInputProps('name')} />
+                                        <br/>
+                                        <NumberInput
+                                            label={customLabel(language == Language.GERMAN ? "Geschätze Termindauer in Minuten:" : "Approximate duration of appointment:")}
+                                            hideControls
+                                            placeholder={String(approxWaitingTime)}
+                                            classNames={{input: classes.textColor}}
+                                            value={approxWaitingTime}
+                                            onChange={() => setApproxWaitingTime}
+                                        />
+                                        <div className="grid grid-cols-4 gap-0.5 pt-1 place-items-stretch">
+                                            <Button color="gray"
+                                                    onClick={() => setApproxWaitingTime(10)}>
+                                                10 min
+                                            </Button>
+                                            <Button color="gray"
+                                                    onClick={() => setApproxWaitingTime(15)}>
+                                                15 min
+                                            </Button>
+                                            <Button color="gray"
+                                                    onClick={() => setApproxWaitingTime(20)}>
+                                                20 min
+                                            </Button>
+                                            <Button color="gray"
+                                                    onClick={() => setApproxWaitingTime(30)}>
+                                                30 min
+                                            </Button>
+
+                                        </div>
+                                        <br/>
+                                        <Select
+                                            data={employees}
+                                            defaultValue={employees.length > 0 ? employees[0] : "no selection possible"}
+                                            label={customLabel(language == Language.GERMAN ? "Behandelnde/r Ärztin/Arzt" : "Doctor:")}
+                                            onChange={() => setEmployee}
+                                        />
+                                        <br/>
+                                        <Textarea
+                                            label={customLabel(language == Language.GERMAN ? "Notizen:" : "Notes")}
+                                            placeholder="only internal information"
+                                            minRows={3}
+                                            maxRows={10}
+                                            autosize
+                                        />
+                                        <br/>
+                                        <br/>
+                                        <div className="flex flex-col items-center justify-content-center">
+                                            <Button type="submit" onClick={() => {
+
+                                            }
+                                            }>
+                                            </Button>
+                                            {form.isValid() ? qrCodePage(false) : qrCodePage(true)}
+                                            <br/>
+                                        </div>
+                                    </form>
+                                </Box>
+                            </div>
                         </div>
                     </div>
                     <br/>
                     <br/>
-                    <br/>
-                    <div className="w-full flex justify-center">
 
-                        <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white justify-self-center border border-transparent font-bold py-2 px-4 rounded"
-                            onClick={() => {
-                                window.location.href = "qrCodePage";
-                            }}>
-                            QR-Code Generieren
-                        </button>
+            </Modal>
+
+            <Group position="center">
+                <Button onClick={() => setOpened(true)}>Neuen Patienten einchecken</Button>
+            </Group>
+        </>
 
 
-                    </div>
-
-
-                </div>
-
-            </div>
-        </div>
     )
 }
-
 export default checkInPage;

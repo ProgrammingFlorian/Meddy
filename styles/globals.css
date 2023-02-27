@@ -18,3 +18,16 @@
 .bg-blue {
     background-color: #0099ff;
 }
+
+.button-gray {
+    background-color: #6b7280;
+    color: white;
+    justify-self: center;
+    font-weight: bold;
+    border: transparent;
+
+}
+
+.button-gray:hover {
+    background-color: #0099ff;
+}

@@ -9,6 +9,9 @@ import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
 import {Customer, getCustomerIdAsString} from '../models/customer';
 import {updateUser} from "../lib/store";
 import {rgba} from "@mantine/styles/lib/theme/functions/fns/rgba/rgba";
+import popUpCustomer from "../pages/popUpCustomer";
+import it from "node:test";
+import {name} from "next/dist/telemetry/ci-info";
 
 const useStyles = createStyles((theme) => ({
     item: {
@@ -45,16 +48,11 @@ export const DndList = (props: DndListProps) => {
 
                     className={cx(classes.item, {[classes.itemDragging]: snapshot.isDragging})}
                     {...provided.draggableProps}
-                    style={{background: "#D1D5DB"}}
+                    style={{background: "#D1D5DB", padding: 5}}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
                 >
-                    <div className="text-gray-500 font-bold">
-                        <Text>{item.name}</Text>
-                        <Text size="sm">
-                            Dauer: {item.duration} Minuten
-                        </Text>
-                    </div>
+                    {popUpCustomer(item)}
                 </div>
             )}
         </Draggable>
