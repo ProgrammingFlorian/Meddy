@@ -1,35 +1,42 @@
 import '../styles/globals.css'
-import { AppProps } from 'next/app';
+import {AppProps} from 'next/app';
 import Head from 'next/head';
 import {createEmotionCache, MantineProvider} from '@mantine/core';
+import {useState} from "react";
+import {createBrowserSupabaseClient} from "@supabase/auth-helpers-nextjs";
+import {SessionContextProvider} from "@supabase/auth-helpers-react";
+import {Session} from "@supabase/supabase-js";
 
-export default function App(props: AppProps) {
-  const { Component, pageProps } = props;
-
+export default function App({Component, pageProps}: AppProps<{ initialSession: Session }>) {
     // To load mantine after tailwind (some mantine css got overwritten my tailwind)
     const mantineCache = createEmotionCache({
         key: 'mantine',
         prepend: false
     });
 
-  return (
-    <>
-      <Head>
-        <title>Meddy</title>
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-      </Head>
+    const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          /** Put your mantine theme override here */
-          colorScheme: 'light',
-        }}
-        emotionCache={mantineCache}
-      >
-        <Component {...pageProps} />
-      </MantineProvider>
-    </>
-  );
+    return (
+        <>
+            <Head>
+                <title>Meddy</title>
+                <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
+            </Head>
+
+            <SessionContextProvider supabaseClient={supabaseClient}
+                                    initialSession={pageProps.initialSession}>
+                <MantineProvider
+                    withGlobalStyles
+                    withNormalizeCSS
+                    theme={{
+                        /** Put your mantine theme override here */
+                        colorScheme: 'light',
+                    }}
+                    emotionCache={mantineCache}
+                >
+                    <Component {...pageProps} />
+                </MantineProvider>
+            </SessionContextProvider>
+        </>
+    );
 }
