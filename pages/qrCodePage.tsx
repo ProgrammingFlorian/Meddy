@@ -6,7 +6,6 @@ import {v4 as uuidv4} from 'uuid';
 import {Button, Group, Modal, useMantineTheme} from "@mantine/core";
 
 const id = uuidv4();
-
 const generateRandomId = () => Math.random().toString(36).substr(2, 9);
 
 
@@ -30,23 +29,25 @@ const qrCodePage = (disabled: boolean) => {
                 size={"lg"}
             >
 
-        <div className="min-h-screen flex flex-col items-center justify-center py-2">
-            <div className='p-10 justify-center flex-1' >
-                <div className="text-center">
-                    <br/>
-                    <h1 className="font-bold text-blue-800">{greeting}</h1>
-                    <br/>
-                    <br/>
+                <div className="min-h-screen flex flex-col items-center justify-center py-2">
+                    <div className='p-10 justify-center flex-1'>
+                        <div className="text-center">
+                            <br/>
+                            <h1 className="font-bold text-blue-800">{greeting}</h1>
+                            <br/>
+                            <br/>
+                        </div>
+                        <div className='justify-center flex'>
+                            <QRCodeSVG className='' value={`${url}`} width={256} height={256}/>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div className="font-bold text-center text-blue-800" style={{fontSize: 25}}>Scannen Sie den
+                            QR-Code um über Ihre Wartezeit informiert zu
+                            bleiben
+                        </div>
+                    </div>
                 </div>
-                <div className='justify-center flex'>
-                    <QRCodeSVG className='' value={`${url}`} width={256} height={256}/>
-                </div>
-                <br/>
-                <br/>
-                <div className="font-bold text-center text-blue-800" style={{fontSize: 25}}>Scannen Sie den QR-Code um über Ihre Wartezeit informiert zu
-                    bleiben</div>
-            </div>
-        </div>
 
             </Modal>
             <Group position="center">

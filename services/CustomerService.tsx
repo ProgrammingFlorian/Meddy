@@ -17,6 +17,20 @@ export const fetchCustomers = async (setData: (data: Customer[]) => void) => {
     }
 }
 
+
+export const fetchCustomersWithQueueId = async (setData: (data: Customer[]) => void, queue_id: number) => {
+    try {
+        const data: PostgrestResponse<Customer> = await supabase.from(TABLE_CUSTOMERS).select('*').eq("queue_id", queue_id);
+        if (data.data !== null) {
+            const result = [...data.data];
+            result.sort((a, b) => (a.position - b.position));
+            setData(result);
+        }
+    } catch (error) {
+        console.error('Error retrieving waiting_queue from database', error);
+    }
+}
+
 export const fetchCustomer = async (setData: (data: Customer) => void, customerId: number) => {
     try {
         const data: PostgrestResponse<Customer> = await supabase.from(TABLE_CUSTOMERS).select('*').eq('id', customerId);
@@ -39,3 +53,23 @@ export const updateCustomer = async (customer: Customer) => {
         console.error('Error updating waiting_queue from database', error);
     }
 }
+
+
+export const saveCustomer = async (customer: Customer) => {
+    try {
+        const data: PostgrestResponse<Customer> = await supabase.from(TABLE_CUSTOMERS).select('*').eq('name', customer.name);
+        if (data.data == null) {
+            const data: PostgrestResponse<undefined> = await supabase
+                .from(TABLE_CUSTOMERS)
+                .insert(customer);
+
+            if (data.error !== null) {
+                console.error('Error saving customer', customer, data.error);
+            }
+        }
+
+    } catch (error) {
+        console.error('Error saving customer to database', error);
+    }
+};
+

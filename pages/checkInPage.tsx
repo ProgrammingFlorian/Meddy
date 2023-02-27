@@ -1,10 +1,11 @@
-import type {NextPage} from 'next'
-import {Box, Button, Modal, Group, createStyles, NumberInput, Select, Textarea, TextInput, Burger} from "@mantine/core";
+import {Box, Button, Modal, Group, createStyles, NumberInput, Select, Textarea, TextInput} from "@mantine/core";
 import {useState} from "react";
 import {Language} from "../models/Language";
 import {customLabel} from "../models/Functions";
 import {useForm} from "@mantine/form";
 import qrCodePage from "./qrCodePage";
+import {Customer} from "../models/Customer";
+import {saveCustomer} from "../services/CustomerService";
 
 
 const checkInPage = () => {
@@ -110,6 +111,13 @@ const checkInPage = () => {
                                         <br/>
                                         <div className="flex flex-col items-center justify-content-center">
                                             <Button type="submit" onClick={() => {
+                                                const randomID = Math.random();
+
+                                                const customer: Customer = {
+                                                    duration: 0, id: randomID, name: "", position: 0, queue_id: 0
+                                                }
+                                                //saveCustomer(customer)
+
 
                                             }
                                             }>
