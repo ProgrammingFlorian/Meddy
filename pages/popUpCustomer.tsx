@@ -1,19 +1,8 @@
-import React, { useState } from 'react';
-import {
-    Modal,
-    Button,
-    Group,
-    Box,
-    NumberInput,
-    Select,
-    Textarea,
-    createStyles,
-    Popover, Text
-} from '@mantine/core';
+import React, {useState} from 'react';
+import {Box, Button, createStyles, Group, Modal, NumberInput, Popover, Select, Text, Textarea} from '@mantine/core';
 import {customLabel} from "../models/Functions";
 import {Language} from "../models/Language";
-import {InfoSVG} from "../models/SVGIcons";
-import {Customer} from "../models/customer";
+import {Customer} from "../models/Customer";
 import qrCodePage from "./qrCodePage";
 
 interface popUpCustomerProps {
@@ -35,7 +24,7 @@ const popUpCustomer = (item: Customer) => {
     }));
     const language = Language.GERMAN;
     const employees = ['Arzt 1', 'Arzt 2', 'Arzt 3', 'Arzt 4'];
-    const { classes } = useStyles();
+    const {classes} = useStyles();
     const [approxWaitingTime, setApproxWaitingTime] = useState(20);
     const [inputName, setInputName] = useState("");
     const [employee, setEmployee] = useState(employees[0]);
@@ -78,17 +67,17 @@ const popUpCustomer = (item: Customer) => {
                                         </Popover.Dropdown>
                                     </Popover>
                                     <Popover trapFocus position="bottom" withArrow shadow="md">
-                                    <Popover.Target>
-                                        <Button color="red">
-                                            Check Out
-                                        </Button>
-                                    </Popover.Target>
-                                    <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
-                                        <Button color="gray">
-                                            OK
-                                        </Button>
-                                    </Popover.Dropdown>
-                                </Popover>
+                                        <Popover.Target>
+                                            <Button color="red">
+                                                Check Out
+                                            </Button>
+                                        </Popover.Target>
+                                        <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
+                                            <Button color="gray">
+                                                OK
+                                            </Button>
+                                        </Popover.Dropdown>
+                                    </Popover>
                                 </div>
                                 <br/>
                                 <br/>
@@ -98,8 +87,8 @@ const popUpCustomer = (item: Customer) => {
                                 </div>
                                 <div className="grid grid-cols-2 gap-1 place-items-stretch pb-1 pt-2">
                                     <Button color="gray"
-                                            onClick={() => setDurationOfAppointment( durationOfAppointment > 4 ? durationOfAppointment - 5 : 0)}>
-                                       - 5 min
+                                            onClick={() => setDurationOfAppointment(durationOfAppointment > 4 ? durationOfAppointment - 5 : 0)}>
+                                        - 5 min
                                     </Button>
                                     <Button color="gray"
                                             onClick={() => setDurationOfAppointment(durationOfAppointment + 5)}>
@@ -160,13 +149,13 @@ const popUpCustomer = (item: Customer) => {
             </Modal>
 
             <Group position="center" style={{width: '100%', height: '100%', margin: 0, padding: 0}}>
-                    <div className="text-gray-500 font-bold m-2"
-                         onClick={() => setOpened(true)}>
-                        <Text>{item.name}</Text>
-                        <Text size="sm">
-                            Dauer: {item.duration} Minuten
-                        </Text>
-                    </div>
+                <div className="text-gray-500 font-bold m-2"
+                     onClick={() => setOpened(true)}>
+                    <Text>{item.name}</Text>
+                    <Text size="sm">
+                        Dauer: {item.duration} Minuten
+                    </Text>
+                </div>
             </Group>
         </div>
     );

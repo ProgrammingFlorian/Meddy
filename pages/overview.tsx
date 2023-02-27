@@ -5,11 +5,10 @@ import {MenuSVG} from "../models/SVGIcons";
 import {Language} from "../models/Language";
 
 
-
 const Overview = () => {
     const [nameOfClient, setNameOfClient] = useState("TUM Praxis");
     const [nameOfComputer, setNameOfComputer] = useState("Verwaltungsrechner");
-    const [language, setLanguage] = useState(Language.GERMAN)
+    const [language, setLanguage] = useState(Language.GERMAN);
 
     const employees = ["Arzt 1", "Arzt 2", "Arzt 3"]
 
@@ -17,17 +16,17 @@ const Overview = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="flex overflow-x-hidden h-screen" >
+        <div className="flex overflow-x-hidden h-screen">
             {/*Sidebar*/}
             <aside
                 className={`flex-shrink-0 w-64 flex flex-col border-r transition-all duration-300 ${!sidebarOpen ? '-ml-64' : ''}`}>
                 <SideBarComponent
-                nameOfClient={nameOfClient}
-                setNameOfClient={setNameOfClient}
-                nameOfComputer={nameOfComputer}
-                setNameOfComputer={setNameOfComputer}
-                language={Language.GERMAN}
-                setLanguage={setLanguage}/>
+                    nameOfClient={nameOfClient}
+                    setNameOfClient={setNameOfClient}
+                    nameOfComputer={nameOfComputer}
+                    setNameOfComputer={setNameOfComputer}
+                    language={Language.GERMAN}
+                    setLanguage={setLanguage}/>
             </aside>
 
             {/*Dashboard*/}

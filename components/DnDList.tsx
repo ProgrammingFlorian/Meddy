@@ -3,15 +3,12 @@
  * https://ui.mantine.dev/category/dnd
  */
 
-import {createStyles, Text} from '@mantine/core';
+import {createStyles} from '@mantine/core';
 import {UseListStateHandlers} from '@mantine/hooks';
 import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
-import {Customer, getCustomerIdAsString} from '../models/customer';
-import {updateUser} from "../lib/store";
-import {rgba} from "@mantine/styles/lib/theme/functions/fns/rgba/rgba";
+import {Customer, getCustomerIdAsString} from '../models/Customer';
 import popUpCustomer from "../pages/popUpCustomer";
-import it from "node:test";
-import {name} from "next/dist/telemetry/ci-info";
+import {updateCustomer} from "../services/CustomerService";
 
 const useStyles = createStyles((theme) => ({
     item: {
@@ -63,7 +60,7 @@ export const DndList = (props: DndListProps) => {
         if (value.position !== index) {
             valuesHaveChanged = true;
             value.position = index;
-            updateUser(value);
+            updateCustomer(value);
         }
     });
     if (valuesHaveChanged) {

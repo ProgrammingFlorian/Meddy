@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useStore} from "../lib/store";
 import {useListState} from "@mantine/hooks";
-import {Customer} from "../models/customer";
+import {Customer} from "../models/Customer";
 import {DndList} from "../components/DnDList";
 import checkInPage from "./checkInPage";
 import {Language} from "../models/Language";

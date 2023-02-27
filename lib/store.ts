@@ -1,7 +1,8 @@
 import {useCallback, useEffect, useState} from 'react'
-import {createClient, PostgrestResponse} from '@supabase/supabase-js'
-import {Customer} from '../models/customer'
+import {createClient} from '@supabase/supabase-js'
+import {Customer} from '../models/Customer'
 import {RealtimeChannel} from "@supabase/realtime-js";
+import {fetchCustomers} from "../services/CustomerService";
 
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -17,7 +18,7 @@ export const useStore = () => {
 
     useEffect(() => {
         // Fetch current state of customers
-        fetchList(setCustomers);
+        fetchCustomers(setCustomers);
 
         // Listen to state changes of customers
         channel = supabase.channel(CHANNEL_NAME)
@@ -28,7 +29,7 @@ export const useStore = () => {
                     // TODO: Find out type
                 }, (payload) => {
                     // TODO: Only update single queue
-                    fetchList(setCustomers);
+                    fetchCustomers(setCustomers);
                 }
             )
             .subscribe();
@@ -53,28 +54,4 @@ export const useStore = () => {
     }, [channel]);
 
     return {customers: customers, sendUpdate: sendUpdate}
-}
-
-export const fetchList = async (setData: (data: Customer[]) => void) => {
-    try {
-        const data: PostgrestResponse<Customer> = await supabase.from('waiting_queue').select('*');
-        if (data.data !== null) {
-            const result = [...data.data];
-            result.sort((a, b) => (a.position - b.position));
-            setData(result);
-        }
-    } catch (error) {
-        console.error('Error retrieving waiting_queue from database', error);
-    }
-}
-
-export const updateUser = async (customer: Customer) => {
-    try {
-        const data: PostgrestResponse<undefined> = await supabase.from('waiting_queue').update(customer).eq('id', customer.id);
-        if (data.error !== null) {
-            console.error('Error updating customer', customer, data.error);
-        }
-    } catch (error) {
-        console.error('Error updating waiting_queue from database', error);
-    }
 }
