@@ -14,6 +14,7 @@ interface CustomerPopupProps {
 }
 
 const CustomerPopup = (props: CustomerPopupProps) => {
+    const [propertiesChanged, setPropertiesChanged] = useState(false);
     const useStyles = createStyles((theme) => ({
         backgroundColor: {
             backgroundColor:
@@ -89,15 +90,24 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                 </div>
                                 <div className="grid grid-cols-2 gap-1 place-items-stretch pb-1 pt-2">
                                     <Button color="gray"
-                                            onClick={() => setDurationOfAppointment(durationOfAppointment > 4 ? durationOfAppointment - 5 : 0)}>
+                                            onClick={() => {
+                                                setPropertiesChanged(true);
+                                                setDurationOfAppointment(durationOfAppointment > 4 ? durationOfAppointment - 5 : 0)
+                                            }}>
                                         - 5 min
                                     </Button>
                                     <Button color="gray"
-                                            onClick={() => setDurationOfAppointment(durationOfAppointment + 5)}>
+                                            onClick={() => {
+                                                setPropertiesChanged(true);
+                                                setDurationOfAppointment(durationOfAppointment + 5)
+                                            }}>
                                         + 5 min
                                     </Button>
                                     <Button color="gray"
-                                            onClick={() => setDurationOfAppointment(durationOfAppointment + 10)}>
+                                            onClick={() => {
+                                                setPropertiesChanged(true);
+                                                setDurationOfAppointment(durationOfAppointment + 10)
+                                            }}>
                                         + 10 min
                                     </Button>
                                     <NumberInput
@@ -106,7 +116,10 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                         step={5}
                                         min={15}
                                         max={120}
-                                        onChange={(value: number) => setDurationOfAppointment(value)}
+                                        onChange={(value: number) => {
+                                            setPropertiesChanged(true);
+                                            setDurationOfAppointment(value)
+                                        }}
                                         styles={() => ({
                                             input: {
                                                 background: "#878e95",
@@ -133,7 +146,10 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                         <Textarea
                                             label={customLabel(language == Language.GERMAN ? "Notizen:" : "Notes")}
                                             defaultValue={notes}
-                                            onChange={event => setNotes(event.target.value)}
+                                            onChange={event => {
+                                                setPropertiesChanged(true);
+                                                setNotes(event.target.value)
+                                            }}
                                             placeholder="Nur interne Informationen"
                                             minRows={3}
                                             maxRows={10}
@@ -141,7 +157,14 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                         />
                                         <br/>
                                         <div className="flex flex-col items-center justify-content-center">
-                                            {qrCodePage(false)}
+                                            <div className="flex flex-row gap-2">
+                                                <Button
+                                                disabled={!propertiesChanged}>
+                                                    Änderungen speichern
+                                                </Button>
+                                                {qrCodePage(false, "QR Code generieren")}
+                                            </div>
+
                                         </div>
                                     </form>
                                 </Box>
