@@ -99,12 +99,12 @@ export const useStore = (): StoreType => {
             newQueues.push({
                 id: temporaryId,
                 name: name,
-                organisation_id: organisation,
+                organisation_id: organisation.id,
                 latest_appointment_start: null //TODO!
             });
             return newQueues;
         });
-        QueueService.createQueue(name, organisation).then(value => {
+        QueueService.createQueue(name, organisation.id).then(value => {
             setQueues(previous => {
                 const newQueues = [...previous];
                 newQueues[newQueues.findIndex(element => element.id === temporaryId)] = value;
