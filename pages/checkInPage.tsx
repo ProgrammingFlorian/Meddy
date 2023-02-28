@@ -31,6 +31,8 @@ const checkInPage = () => {
     const [comment, setComment] = useState("")
 
 
+
+
     const form = useForm({
         initialValues: {
             name: '', email: '', password: '',
@@ -124,7 +126,7 @@ const checkInPage = () => {
                                                 type="submit"
                                             // loading
                                                 >
-                                            {qrCodePage(!form.isValid())}
+                                            {qrCodePage(!form.isValid(), "Speichern und QR Code generieren")}
                                         </Button>
 
                                         <br/>
