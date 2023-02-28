@@ -1,11 +1,9 @@
-import { useState } from 'react';
-import {TextInput, Box, Button, PasswordInput, Group} from '@mantine/core';
-import { useForm } from '@mantine/form';
+import {Box, Button, Group, PasswordInput, TextInput} from '@mantine/core';
+import {useForm} from '@mantine/form';
 import {NextPage} from "next";
-import {AtIcon} from "../models/SVGIcons";
-import {customLabel} from "../models/Functions";
+import {customLabel} from "../helpers/Functions";
 import Link from "next/link";
-
+import {IconAt} from "@tabler/icons-react";
 
 
 const registrationPage: NextPage = () => {
@@ -25,7 +23,7 @@ const registrationPage: NextPage = () => {
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center py-2" >
-            <div className="relative inline-block text-left "style={{minWidth: 500}}>
+            <div className="relative inline-block text-left " style={{minWidth: 500}}>
                 <div className=" p-10 bg-gray-100 justify-center">
                     <label htmlFor="select"
                            className=" text-center font-semibold text text-2xl text-blue-500 block py-2">
@@ -41,7 +39,7 @@ const registrationPage: NextPage = () => {
                             <br/>
                             <TextInput
                                 label={customLabel("E-Mail:", true)}
-                                placeholder="Your email" icon={AtIcon()}
+                                placeholder="Your email" icon={<IconAt />}
                                 {...form.getInputProps('email')}/>
                             <br/>
                             <PasswordInput

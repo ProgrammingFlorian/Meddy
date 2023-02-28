@@ -1,15 +1,54 @@
 import {Customer} from "../models/Customer";
 import {PostgrestResponse} from "@supabase/supabase-js";
 import {supabase} from "../lib/store";
-import {QueuesForAccountDTO} from "../models/QueuesForAccountDTO";
 import {PostgrestResponseFailure, PostgrestResponseSuccess} from "@supabase/postgrest-js";
+import {TABLE_ACCOUNT_TO_ORGANISATION} from "./AccountService";
+import {Organisation} from "../models/Organisation";
 
 const TABLE_CUSTOMERS = 'customers';
 
-const fetchCustomersFromAccountOrganisationGroupedByQueue = async (accountId: string): Promise<QueuesForAccountDTO> => {
+interface CustomersInSameQueue extends Customer {
+    queues: {
+        customers: Customer[],
+        organisations: Organisation
+    }
+}
+
+const fetchCustomersInSameQueue = async (customerId: number): Promise<[Customer, Customer[], Organisation]> => {
     try {
         // @ts-ignore ignore type not perfect
-        const response: PostgrestResponse<QueuesForAccountDTO> = await supabase.from('account_to_organisation').select(`
+        const response: PostgrestResponse<CustomersInSameQueue> = await supabase.from(TABLE_CUSTOMERS).select(`
+        *, queues(customers(*), organisations(*))`).eq('id', customerId);
+        console.log(response);
+        if (response.data && response.data.length > 0) {
+            const customer = response.data[0] as Customer;
+            const otherCustomers = response.data[0].queues.customers.filter(c => c.id !== customerId);
+            const organisation = response.data[0].queues.organisations;
+            return Promise.resolve([customer, otherCustomers, organisation]);
+        }
+    } catch (error) {
+        console.error('Error retrieving waiting_queue from database', error);
+    }
+    return Promise.reject();
+}
+
+interface QueuesForAccount {
+    organisation_id: number;
+    organisations: {
+        name: string;
+        queues: [{
+            id: number;
+            name: string;
+            latest_appointment_start: Date;
+            customers: [Customer];
+        }];
+    };
+}
+
+const fetchCustomersFromAccountOrganisationGroupedByQueue = async (accountId: string): Promise<QueuesForAccount> => {
+    try {
+        // @ts-ignore ignore type not perfect
+        const response: PostgrestResponse<QueuesForAccount> = await supabase.from(TABLE_ACCOUNT_TO_ORGANISATION).select(`
         organisation_id, organisations (
             name,
             queues (
@@ -47,7 +86,6 @@ const updateCustomer = async (customer: Customer) => {
     }
 }
 
-
 const saveCustomer = async (customer: Customer): Promise<Customer> => {
     try {
         // @ts-ignore
@@ -66,6 +104,7 @@ const saveCustomer = async (customer: Customer): Promise<Customer> => {
 };
 
 export default {
+    fetchCustomersInSameQueue,
     fetchCustomersFromAccountOrganisationGroupedByQueue,
     updateCustomer,
     saveCustomer,

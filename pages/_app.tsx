@@ -6,6 +6,7 @@ import {useState} from "react";
 import {createBrowserSupabaseClient} from "@supabase/auth-helpers-nextjs";
 import {SessionContextProvider} from "@supabase/auth-helpers-react";
 import {Session} from "@supabase/supabase-js";
+import FooterComponent from "../components/FooterComponent";
 
 export default function App({Component, pageProps}: AppProps<{ initialSession: Session }>) {
     // To load mantine after tailwind (some mantine css got overwritten my tailwind)
@@ -19,8 +20,9 @@ export default function App({Component, pageProps}: AppProps<{ initialSession: S
     return (
         <>
             <Head>
-                <title>Meddy</title>
+                <title>Swait</title>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
+                <meta name="description" content="Wartezeiten intelligent verkürzen"/>
             </Head>
 
             <SessionContextProvider supabaseClient={supabaseClient}
@@ -28,13 +30,11 @@ export default function App({Component, pageProps}: AppProps<{ initialSession: S
                 <MantineProvider
                     withGlobalStyles
                     withNormalizeCSS
-                    theme={{
-                        /** Put your mantine theme override here */
-                        colorScheme: 'light',
-                    }}
+                    theme={{colorScheme: 'light'}}
                     emotionCache={mantineCache}
                 >
                     <Component {...pageProps} />
+                    <FooterComponent />
                 </MantineProvider>
             </SessionContextProvider>
         </>

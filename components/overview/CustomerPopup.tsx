@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Box, Button, createStyles, Group, Modal, NumberInput, Popover, Select, Textarea} from '@mantine/core';
-import {customLabel} from "../../models/Functions";
+import {customLabel} from "../../helpers/Functions";
 import {Language} from "../../models/Language";
 import {Customer} from "../../models/Customer";
 import QRCodePopup from "../QRCodePopup";

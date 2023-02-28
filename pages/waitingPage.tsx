@@ -1,59 +1,55 @@
 import type {NextPage} from 'next'
-
+import {useEffect, useState} from "react";
+import {Customer} from "../models/Customer";
+import {LoadingOverlay} from "@mantine/core";
+import {useRouter} from "next/router";
+import CustomerService from "../services/CustomerService";
+import {IconUser, IconUsers} from "@tabler/icons-react";
 
 const custerMessageBuilder = (personsInQueue: number) => {
     if (personsInQueue === 1) {
-        return "Vor Ihnen befinden sich noch eine Person"
+        return "Vor Ihnen befinden sich noch eine Person";
     } else if (personsInQueue > 4) {
-        return "Vor Ihnen befinden sich noch mehr als vier Personen"
+        return "Vor Ihnen befinden sich noch mehr als vier Personen";
     } else {
-        return "Vor Ihnen befinden sich noch " + personsInQueue + " Personen"
+        return "Vor Ihnen befinden sich noch " + personsInQueue + " Personen";
     }
-}
+};
 
-
-const personInQueueSVG = (personsInQueue: number) => {
+const personInQueue = (personsInQueue: number) => {
     if (personsInQueue > 4) {
-        return Array(4).fill(null).map((_, index) => <svg xmlns="http://www.w3.org/2000/svg"
-                                                                       viewBox="0 0 24 24" stroke-width="1.5"
-                                                                       className="w-6 h-6 align-self-center blue-color stroke-blue fill-blue">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-        </svg>).concat(<div className="font-bold blue-color">+</div>);
+        return <IconUsers color="#0099ff"/>;
     } else {
-        return Array(personsInQueue).fill(null).map((_, index) => <svg xmlns="http://www.w3.org/2000/svg"
-                                                                       viewBox="0 0 24 24" stroke-width="1.5"
-                                                                       className="w-6 h-6 align-self-center blue-color stroke-blue fill-blue">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
-        </svg>)
+        return Array(personsInQueue).fill(null).map((_, index) => <IconUser key={index} color="#0099ff"/>);
     }
-
-
-
-}
-
-
+};
 
 const waitingPage: NextPage = () => {
-    const personsInQueue = 5;
-    const estimatedWaitingTimeInMinutes = 15;
-    const nameOfCustomer = "Florian"
-    const greeting = "Herzlichen Willkommen in der TUM Praxis, " + nameOfCustomer + "!";
+    const [customer, setCustomer] = useState(null as Customer | null);
+    const [waitingTime, setWaitingTime] = useState(0);
+    const [personsAhead, setPersonsAhead] = useState(0);
+    const [organisationName, setOrganisationName] = useState('');
 
-    const customerMessage = custerMessageBuilder(personsInQueue);
+    const router = useRouter();
 
+    useEffect(() => {
+        const id = router.query['id'];
+        if (id) {
+            CustomerService.fetchCustomersInSameQueue(+id).then(([c, otherCustomers, organisation]) => {
+                setCustomer(c);
+                setPersonsAhead(otherCustomers.length);
+                setWaitingTime(otherCustomers.reduce((previous, currentCustomer) => previous + currentCustomer.duration, 0))
+                setOrganisationName(organisation.name);
+            });
+        }
+    }, [router.query]);
 
-
-
-
-    return (
-
+    return customer ? (
         <div className="min-h-screen flex flex-col items-center justify-center py-2">
             <div className='p-10 bg-gray-100 justify-center'>
                 <div className="text-center" style={{width: "400px"}}>
                     <br/>
-                    <h1 className="">{greeting}</h1>
+                    <h1 className="">Herzlichen Willkommen bei {organisationName}, {customer.name}!</h1>
                     <br/>
                     <br/>
                     <div className='blue-color text-center' style={{
@@ -63,7 +59,7 @@ const waitingPage: NextPage = () => {
                         borderRadius: "75px",
                         margin: "0 auto"
                     }}>
-                        <h1 className="pt-5 pb-0 text-black font-bold">{estimatedWaitingTimeInMinutes}</h1>
+                        <h1 className="pt-5 pb-0 text-black font-bold">{waitingTime}</h1>
                         <h4 className="text-black font-bold pt-0">min</h4>
                     </div>
                     <h2 className='pt-5 font-bold'>Ihre geschätze Wartezeit</h2>
@@ -71,28 +67,25 @@ const waitingPage: NextPage = () => {
                     <br/>
                     <br/>
                     <div className=' flex justify-items-center justify-center' style={{}}>
-                        {personInQueueSVG(personsInQueue)}
+                        {personInQueue(personsAhead)}
                     </div>
-
-
-                    <p className=' font-bold'>{customerMessage}</p>
+                    <p className=' font-bold'>{custerMessageBuilder(personsAhead)}</p>
                 </div>
                 <br/>
+                {/* TODO: Notifications
                 <div className="w-full flex justify-center">
-
                     <button
                         className="bg-blue hover:bg-blue-500 text-white justify-self-center border border-transparent text-xs py-2 px-4 rounded"
                         style={{width: "200px"}}>
                         Ich möchte benachrichtigt werden, wenn ich dran bin!
                     </button>
-
-
                 </div>
+                */}
             </div>
         </div>
-
+    ) : (
+        <LoadingOverlay visible={true}/>
     );
 };
 
-
-export default waitingPage
+export default waitingPage;

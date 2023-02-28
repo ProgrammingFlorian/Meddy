@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import Dashboard from "../components/overview/Dashboard";
 import SideBarComponent from "../components/SideBarComponent";
-import {MenuSVG} from "../models/SVGIcons";
 import {Language} from "../models/Language";
 import {useSupabaseClient, useUser} from "@supabase/auth-helpers-react";
 import {AuthPage} from "../components/AuthPage";
 import {StoreContext, useStore} from "../lib/store";
+import {IconMenu2} from "@tabler/icons-react";
 
 
 const Overview = () => {
@@ -43,7 +43,7 @@ const Overview = () => {
                     <div className="flex-1">
                         <header className="flex items-center p-2 text-semibold text-gray-100 bg-blue">
                             <button className="p-1 mr-4" onClick={() => setSidebarOpen(!sidebarOpen)}>
-                                {MenuSVG()}
+                                <IconMenu2 />
                             </button>
                         </header>
                         <main className="p-4">

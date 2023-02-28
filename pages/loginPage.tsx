@@ -1,9 +1,9 @@
-import { TextInput, PasswordInput, Tooltip, Center, Text, Button, Box } from '@mantine/core';import {NextPage} from "next";
-import {AtIcon} from "../models/SVGIcons";
-import {customLabel} from "../models/Functions";
+import {Box, Button, PasswordInput, TextInput} from '@mantine/core';
+import {NextPage} from "next";
+import {customLabel} from "../helpers/Functions";
 import Link from "next/link";
 import {useForm} from "@mantine/form";
-
+import {IconAt} from "@tabler/icons-react";
 
 
 const loginPage: NextPage = () => {
@@ -36,7 +36,7 @@ const loginPage: NextPage = () => {
                         <form onSubmit={form.onSubmit((values) => console.log(values))}>
                             <TextInput
                                 label={customLabel("E-Mail:", true)}
-                                placeholder="Your email" icon={AtIcon()}
+                                placeholder="Your email" icon={<IconAt />}
                                 {...form.getInputProps('email')}/>
                             <br/>
                             <PasswordInput

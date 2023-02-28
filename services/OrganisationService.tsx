@@ -2,12 +2,11 @@ import {PostgrestResponse} from "@supabase/supabase-js";
 import {supabase} from "../lib/store";
 import {Organisation} from "../models/Organisation";
 
-
-
 const TABLE_ORGANISATIONS = 'organisations';
 
 export const fetchOrganisation = async (setData: (data: Organisation) => void, id: number) => {
     try {
+        // @ts-ignore ignore type not perfect
         const data: PostgrestResponse<Organisation> = await supabase.from(TABLE_ORGANISATIONS).select('*').eq("id", id);
         if (data.data !== null) {
             const result = data.data[0];
@@ -20,6 +19,7 @@ export const fetchOrganisation = async (setData: (data: Organisation) => void, i
 
 export const saveOrganisation = async (organisation: Organisation) => {
     try {
+        // @ts-ignore ignore type not perfect
         const data: PostgrestResponse<Organisation> = await supabase.from(TABLE_ORGANISATIONS).select('*').eq('name', organisation.name);
         if (data.data == null) {
             const data: PostgrestResponse<undefined> = await supabase
@@ -38,6 +38,7 @@ export const saveOrganisation = async (organisation: Organisation) => {
 
 export const updateOrganisation = async (organisation: Organisation) => {
     try {
+        // @ts-ignore ignore type not perfect
         const data: PostgrestResponse<Organisation> = await supabase.from(TABLE_ORGANISATIONS).update(organisation).eq('id', organisation.id);
         if (data.error !== null) {
             console.error('Error saving organisation', organisation, data.error);
