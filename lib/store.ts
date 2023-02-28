@@ -7,6 +7,7 @@ import {useSupabaseClient, useUser} from "@supabase/auth-helpers-react";
 import QueueService from "../services/QueueService";
 import CustomerService from "../services/CustomerService";
 import {number} from "prop-types";
+import {Organisation} from "../models/Organisation";
 
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -29,7 +30,7 @@ export const useStore = (): StoreType => {
         [id: number]: Customer[]
     });
     const [queues, setQueues] = useState([] as Queue[]);
-    const [organisationId, setOrganisationId] = useState(-1); // TODO null
+    const [organisation, setOrganisation] = useState({id: -1, name: ''} as Organisation); // TODO null
 
     // Before receiving the actual database values (id!) of new elements, add them to instantly show them and then later
     // replace their data with the database values. Use this counter as a preview to keep track of which one needs to
@@ -52,7 +53,7 @@ export const useStore = (): StoreType => {
                     result[val.id] = val.customers;
                 });
 
-                setOrganisationId(data.organisation_id);
+                setOrganisation({id: data.organisation_id, name: data.organisations.name});
                 setCustomersInQueue(result);
             });
             QueueService.fetchQueues(account.id).then(setQueues);
@@ -98,12 +99,12 @@ export const useStore = (): StoreType => {
             newQueues.push({
                 id: temporaryId,
                 name: name,
-                organisation_id: organisationId,
+                organisation_id: organisation,
                 latest_appointment_start: null //TODO!
             });
             return newQueues;
         });
-        QueueService.createQueue(name, organisationId).then(value => {
+        QueueService.createQueue(name, organisation).then(value => {
             setQueues(previous => {
                 const newQueues = [...previous];
                 newQueues[newQueues.findIndex(element => element.id === temporaryId)] = value;
