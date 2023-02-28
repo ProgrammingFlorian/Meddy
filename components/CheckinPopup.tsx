@@ -1,4 +1,4 @@
-import {Box, Button, createStyles, Group, Modal, NumberInput, Select, Textarea, TextInput} from "@mantine/core";
+import {Box, Button, createStyles, Group, Modal, Select, Textarea, TextInput} from "@mantine/core";
 import {useContext, useState} from "react";
 import {Language} from "../models/Language";
 import {customLabel} from "../models/Functions";
