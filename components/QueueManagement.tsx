@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {Queue} from "../models/Queue";
 import {User} from "@supabase/auth-helpers-react";
 import {fetchQueues} from "../services/QueueService";
+import {customLabel} from "../models/Functions";
 
 interface QueueManagementProps {
     isOpen: boolean,
@@ -35,9 +36,9 @@ export const QueueManagement = (props: QueueManagementProps) => {
     }, []);
 
     return (
-        <Modal opened={props.isOpen} onClose={props.onClose} size={"lg"} title={"Warteschlangen verwalten"}>
+        <Modal opened={props.isOpen} onClose={props.onClose} size={"sm"} title={"Warteschlangen verwalten"}>
             {queues.map((queue) => (
-                <Card shadow="sm" p="lg" radius="md" withBorder key={queue.id}>
+                <Card className="mt-1" p="sm" radius="md" withBorder key={queue.id}>
                     <Group position="apart">
                         <Text weight={500}>{queue.name}</Text>
                         <ActionIcon onClick={() => {
@@ -50,8 +51,14 @@ export const QueueManagement = (props: QueueManagementProps) => {
             ))}
             <Group>
                 <form onSubmit={form.onSubmit((val) => onAdd(val.name))}>
-                    <TextInput placeholder="Neue Warteschlange" {...form.getInputProps("name")}/>
-                    <Button type="submit">Hinzufügen</Button>
+                    <div className="flex-row flex gap-2 mt-1">
+                        <TextInput
+                            style={{width: 220}}
+                            placeholder="Neue Warteschlange"
+                            {...form.getInputProps("name")}
+                        />
+                        <Button type="submit">Hinzufügen</Button>
+                    </div>
                 </form>
             </Group>
         </Modal>

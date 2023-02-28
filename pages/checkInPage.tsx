@@ -130,7 +130,7 @@ const checkInPage = () => {
 
                                         }
                                         }>
-                                            {qrCodePage(!form.isValid())}
+                                            {qrCodePage(!form.isValid(), "Speichern und QR Code generieren")}
                                         </Button>
 
                                         <br/>

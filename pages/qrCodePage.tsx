@@ -9,7 +9,7 @@ const id = uuidv4();
 const generateRandomId = () => Math.random().toString(36).substr(2, 9);
 
 
-const qrCodePage = (disabled: boolean) => {
+const qrCodePage = (disabled: boolean, buttonText: string) => {
     const [opened, setOpened] = useState(false);
 
     const greeting = "Herzlichen Willkommen in der TUM Praxis, Florian!";
@@ -57,7 +57,7 @@ const qrCodePage = (disabled: boolean) => {
                         if (!disabled) {
                             setOpened(true)
                         }
-                    }}>QR Code generieren</Button>
+                    }}>{buttonText}</Button>
             </Group>
         </>
     );
