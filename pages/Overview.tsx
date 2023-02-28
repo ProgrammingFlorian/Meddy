@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import Dashboard from "./dashboard";
+import React, {useState} from 'react';
+import Dashboard from "../components/overview/Dashboard";
 import SideBarComponent from "../components/SideBarComponent";
 import {MenuSVG} from "../models/SVGIcons";
 import {Language} from "../models/Language";
@@ -12,19 +12,10 @@ const Overview = () => {
     const [nameOfComputer, setNameOfComputer] = useState("Verwaltungsrechner");
     const [language, setLanguage] = useState(Language.GERMAN);
 
-    const employees = ["Arzt 1", "Arzt 2", "Arzt 3"]
-
-
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const supabaseClient = useSupabaseClient();
     const user = useUser();
-
-    useEffect(() => {
-        if(user) {
-            user.id
-        }
-    });
 
     return (
         <AuthPage user={user} supabaseClient={supabaseClient}>
@@ -38,7 +29,10 @@ const Overview = () => {
                         nameOfComputer={nameOfComputer}
                         setNameOfComputer={setNameOfComputer}
                         language={Language.GERMAN}
-                        setLanguage={setLanguage}/>
+                        setLanguage={setLanguage}
+                        // @ts-ignore AuthPage doesn't render this if user is null
+                        user={user}
+                    />
                 </aside>
 
                 {/*Dashboard*/}

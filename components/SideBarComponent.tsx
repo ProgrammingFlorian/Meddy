@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import {Button, Popover, Select, TextInput, CloseButton} from "@mantine/core";
+import {Button, Popover, Select, TextInput} from "@mantine/core";
 import {Language} from "../models/Language";
+import {QueueManagement} from "./QueueManagement";
+import {User} from "@supabase/auth-helpers-react";
 
 
 interface SideBarComponentProps {
@@ -9,7 +11,8 @@ interface SideBarComponentProps {
     nameOfComputer: string,
     setNameOfComputer: (newName: string) => void,
     language: Language,
-    setLanguage: (lan: Language) => void;
+    setLanguage: (lan: Language) => void,
+    user: User
 }
 
 
@@ -20,6 +23,7 @@ const SideBarComponent = (props: SideBarComponentProps) => {
     const [openedComputerName, setOpenedComputerName] = useState(false);
     const [openedClientName, setOpenedClientName] = useState(false);
     const [openedSignOut, setOpenedSignOut] = useState(false);
+    const [openedQueueManagement, setOpenedQueueManagement] = useState(false);
 
     const closeAllPopovers = () => {
         setOpenedSignOut(false);
@@ -43,7 +47,8 @@ const SideBarComponent = (props: SideBarComponentProps) => {
                         <Button className="m-2 mt-4"
                                 onClick={() => {
                                     closeAllPopovers();
-                                    setOpenedClientName(!openedClientName)}}
+                                    setOpenedClientName(!openedClientName)
+                                }}
                                 color="gray">
                             Praxisname ändern
                         </Button>
@@ -81,7 +86,8 @@ const SideBarComponent = (props: SideBarComponentProps) => {
                                 color="gray"
                                 onClick={() => {
                                     closeAllPopovers();
-                                    setOpenedComputerName(!openedComputerName)}}>
+                                    setOpenedComputerName(!openedComputerName)
+                                }}>
                             Computername ändern
                         </Button>
                     </Popover.Target>
@@ -106,9 +112,15 @@ const SideBarComponent = (props: SideBarComponentProps) => {
                         </div>
                     </Popover.Dropdown>
                 </Popover>
-
-
-
+                <Button className="m-2"
+                        color="gray"
+                        onClick={() => {
+                            closeAllPopovers();
+                            setOpenedQueueManagement(true)
+                        }}>
+                    Warteschlangen verwalten
+                </Button>
+                <QueueManagement isOpen={openedQueueManagement} onClose={() => setOpenedQueueManagement(false)} user={props.user} />
                 {/*Change language selection */}
                 <Select
                     className="m-2 text-center"
@@ -139,9 +151,10 @@ const SideBarComponent = (props: SideBarComponentProps) => {
                     <Popover.Target>
                         <Button className="m-2"
                                 color="gray"
-                                onClick={()=> {
+                                onClick={() => {
                                     closeAllPopovers();
-                                    setOpenedSignOut(!openedSignOut)}}>
+                                    setOpenedSignOut(!openedSignOut)
+                                }}>
                             Sign Out
                         </Button>
                     </Popover.Target>
@@ -156,7 +169,7 @@ const SideBarComponent = (props: SideBarComponentProps) => {
                                 Ok
                             </Button>
                             <Button color="red"
-                                    onClick={()=> setOpenedSignOut(false)}>
+                                    onClick={() => setOpenedSignOut(false)}>
                                 Abbrechen
                             </Button>
                         </div>

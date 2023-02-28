@@ -1,18 +1,19 @@
 import React, {useState} from 'react';
-import {Box, Button, createStyles, Group, Modal, NumberInput, Popover, Select, Text, Textarea} from '@mantine/core';
-import {customLabel} from "../models/Functions";
-import {Language} from "../models/Language";
-import {Customer} from "../models/Customer";
-import qrCodePage from "./qrCodePage";
+import {Box, Button, createStyles, Modal, NumberInput, Popover, Select, Textarea} from '@mantine/core';
+import {customLabel} from "../../models/Functions";
+import {Language} from "../../models/Language";
+import {Customer} from "../../models/Customer";
+import qrCodePage from "../../pages/qrCodePage";
+import {Queue} from "../../models/Queue";
 
-interface popUpCustomerProps {
-    name: string,
-    duration: number,
+interface CustomerPopupProps {
+    customer: Customer;
+    queues: Queue[];
+    updateCustomer: (customer: Customer) => void;
+    onClose: () => void;
 }
 
-
-const popUpCustomer = (item: Customer) => {
-    const [opened, setOpened] = useState(false);
+const CustomerPopup = (props: CustomerPopupProps) => {
     const useStyles = createStyles((theme) => ({
         backgroundColor: {
             backgroundColor:
@@ -23,30 +24,28 @@ const popUpCustomer = (item: Customer) => {
         }
     }));
     const language = Language.GERMAN;
-    const employees = ['Arzt 1', 'Arzt 2', 'Arzt 3', 'Arzt 4'];
     const {classes} = useStyles();
     const [approxWaitingTime, setApproxWaitingTime] = useState(20);
     const [inputName, setInputName] = useState("");
-    const [employee, setEmployee] = useState(employees[0]);
-    const [comment, setComment] = useState("");
-    const [durationOfAppointment, setDurationOfAppointment] = useState(item.duration)
+    const [queue, setQueue] = useState(props.queues.find(queue => props.customer.queue_id === queue.id)?.name ?? null);
+    const [notes, setNotes] = useState(props.customer.notes);
+    const [durationOfAppointment, setDurationOfAppointment] = useState(props.customer.duration)
 
 
     return (
         <div>
             <Modal
-                opened={opened}
-                onClose={() => setOpened(false)}
+                opened={true}
+                onClose={props.onClose}
                 size={"lg"}
             >
-
                 <div>
                     <div className="flex flex-col items-center justify-center">
                         <div className="relative inline-block text-left">
                             <div className=" p-10 justify-center">
                                 <label htmlFor="select"
                                        className=" text-center font-semibold text text-2xl text-blue-500 block py-2">
-                                    {item.name}
+                                    {props.customer.name}
                                 </label>
                                 <br/>
                                 <div className="grid grid-cols-2 gap-1" style={{fontWeight: "bold"}}>
@@ -96,10 +95,9 @@ const popUpCustomer = (item: Customer) => {
                                     </Button>
                                     <Button color="gray"
                                             onClick={() => setDurationOfAppointment(durationOfAppointment + 10)}>
-                                        +10 min
+                                        + 10 min
                                     </Button>
                                     <NumberInput
-
                                         placeholder={String(approxWaitingTime)}
                                         value={durationOfAppointment}
                                         step={5}
@@ -121,23 +119,26 @@ const popUpCustomer = (item: Customer) => {
                                 <Box sx={{minWidth: 340}} mx="auto">
                                     <form>
                                         <br/>
+                                        {/* TODO: Handle no existing queues */}
                                         <Select
-                                            data={employees}
-                                            defaultValue={employees.length > 0 ? employees[0] : "no selection possible"}
+                                            data={props.queues.map(queue => queue.name)}
+                                            defaultValue={queue}
                                             label={customLabel(language == Language.GERMAN ? "Behandelnde/r Ärztin/Arzt" : "Doctor:")}
-                                            onChange={() => setEmployee}
+                                            onChange={setQueue}
                                         />
                                         <br/>
                                         <Textarea
                                             label={customLabel(language == Language.GERMAN ? "Notizen:" : "Notes")}
-                                            placeholder="only internal information"
+                                            defaultValue={notes}
+                                            onChange={event => setNotes(event.target.value)}
+                                            placeholder="Nur interne Informationen"
                                             minRows={3}
                                             maxRows={10}
                                             autosize
                                         />
                                         <br/>
                                         <div className="flex flex-col items-center justify-content-center">
-                                            {qrCodePage()}
+                                            {qrCodePage(false)}
                                         </div>
                                     </form>
                                 </Box>
@@ -145,20 +146,9 @@ const popUpCustomer = (item: Customer) => {
                         </div>
                     </div>
                 </div>
-
             </Modal>
-
-            <Group position="center" style={{width: '100%', height: '100%', margin: 0, padding: 0}}>
-                <div className="text-gray-500 font-bold m-2"
-                     onClick={() => setOpened(true)}>
-                    <Text>{item.name}</Text>
-                    <Text size="sm">
-                        Dauer: {item.duration} Minuten
-                    </Text>
-                </div>
-            </Group>
         </div>
     );
-}
+};
 
-export default popUpCustomer;
+export default CustomerPopup;

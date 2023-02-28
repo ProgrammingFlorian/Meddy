@@ -2,7 +2,6 @@ import {useCallback, useEffect, useState} from 'react'
 import {createClient} from '@supabase/supabase-js'
 import {Customer} from '../models/Customer'
 import {RealtimeChannel} from "@supabase/realtime-js";
-import {fetchCustomers} from "../services/CustomerService";
 
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -18,7 +17,7 @@ export const useStore = () => {
 
     useEffect(() => {
         // Fetch current state of customers
-        fetchCustomers(setCustomers);
+        //fetchCustomers(setCustomers);
 
         // Listen to state changes of customers
         channel = supabase.channel(CHANNEL_NAME)
@@ -29,7 +28,7 @@ export const useStore = () => {
                     // TODO: Find out type
                 }, (payload) => {
                     // TODO: Only update single queue
-                    fetchCustomers(setCustomers);
+                    //fetchCustomers(setCustomers);
                 }
             )
             .subscribe();
