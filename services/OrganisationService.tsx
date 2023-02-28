@@ -18,8 +18,6 @@ export const fetchOrganisation = async (setData: (data: Organisation) => void, i
     }
 }
 
-
-
 export const saveOrganisation = async (organisation: Organisation) => {
     try {
         const data: PostgrestResponse<Organisation> = await supabase.from(TABLE_ORGANISATIONS).select('*').eq('name', organisation.name);
@@ -37,9 +35,6 @@ export const saveOrganisation = async (organisation: Organisation) => {
         console.error('Error saving organisation to database', error);
     }
 };
-
-
-
 
 export const updateOrganisation = async (organisation: Organisation) => {
     try {

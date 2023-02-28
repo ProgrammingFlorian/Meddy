@@ -31,8 +31,6 @@ const checkInPage = () => {
     const [comment, setComment] = useState("")
 
 
-
-
     const form = useForm({
         initialValues: {
             name: '', email: '', password: '',
@@ -62,7 +60,16 @@ const checkInPage = () => {
                             </label>
                             <br/>
                             <Box sx={{maxWidth: 340}} mx="auto">
-                                <form onSubmit={form.onSubmit((values) => console.log(values))}>
+                                <form onSubmit={form.onSubmit((values) => {
+                                    // @ts-ignore TODO
+                                    const customer: Customer = {
+                                            duration: 80,
+                                            name: values.name,
+                                            position: 0,
+                                            queue_id: 1
+                                        }
+                                        saveCustomer(customer).catch((e) => console.log(e))
+                                })}>
                                     <TextInput
                                         label={customLabel("Patienten Name", true)}
                                         placeholder="Name"
@@ -115,21 +122,8 @@ const checkInPage = () => {
                                     <div className="flex flex-col items-center justify-content-center">
                                         <Button style={{paddingRight: 0, paddingLeft: 0}}
                                                 type="submit"
-                                               // loading
-                                                onClick={() => {
-                                                    const randomID = Math.random();
-                                                    const customer: Customer = {
-                                                        duration: 80,
-                                                        id: randomID,
-                                                        name: "huhuhuhu",
-                                                        position: 0,
-                                                        queue_id: 0
-                                                    }
-                                            saveCustomer(customer).catch((e) => console.log(e))
-
-
-                                        }
-                                        }>
+                                            // loading
+                                                >
                                             {qrCodePage(!form.isValid())}
                                         </Button>
 

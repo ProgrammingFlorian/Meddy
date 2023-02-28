@@ -5,6 +5,7 @@ import {MenuSVG} from "../models/SVGIcons";
 import {Language} from "../models/Language";
 import {useSupabaseClient, useUser} from "@supabase/auth-helpers-react";
 import {AuthPage} from "../components/AuthPage";
+import {useStore} from "../lib/store";
 
 
 const Overview = () => {

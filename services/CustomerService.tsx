@@ -6,7 +6,7 @@ import {PostgrestResponseFailure, PostgrestResponseSuccess} from "@supabase/post
 
 const TABLE_CUSTOMERS = 'customers';
 
-export const fetchCustomersFromAccountOrganisationGroupedByQueue = async (accountId: string): Promise<QueuesForAccountDTO> => {
+const fetchCustomersFromAccountOrganisationGroupedByQueue = async (accountId: string): Promise<QueuesForAccountDTO> => {
     try {
         // @ts-ignore ignore type not perfect
         const response: PostgrestResponse<QueuesForAccountDTO> = await supabase.from('account_to_organisation').select(`
@@ -26,7 +26,7 @@ export const fetchCustomersFromAccountOrganisationGroupedByQueue = async (accoun
     return Promise.reject();
 }
 
-export const deleteCustomer = async (id: number) => {
+const deleteCustomer = async (id: number) => {
     try {
         // Remove the customer from the database
         await supabase.from(TABLE_CUSTOMERS).delete().eq('id', id);
@@ -36,34 +36,7 @@ export const deleteCustomer = async (id: number) => {
     }
 }
 
-
-
-export const fetchCustomersWithQueueId = async (setData: (data: Customer[]) => void, queue_id: number) => {
-    try {
-        const data: PostgrestResponse<Customer> = await supabase.from(TABLE_CUSTOMERS).select('*').eq("queue_id", queue_id);
-        if (data.data !== null) {
-            const result = [...data.data];
-            result.sort((a, b) => (a.position - b.position));
-            setData(result);
-        }
-    } catch (error) {
-        console.error('Error retrieving waiting_queue from database', error);
-    }
-}
-
-export const fetchCustomer = async (setData: (data: Customer) => void, customerId: number) => {
-    try {
-        const data: PostgrestResponse<Customer> = await supabase.from(TABLE_CUSTOMERS).select('*').eq('id', customerId);
-        if (data.data !== null) {
-            const result = data.data[0];
-            setData(result);
-        }
-    } catch (error) {
-        console.error('Error retrieving waiting_queue from database', error);
-    }
-}
-
-export const updateCustomer = async (customer: Customer) => {
+const updateCustomer = async (customer: Customer) => {
     try {
         const data: PostgrestResponseSuccess<null> | PostgrestResponseFailure = await supabase.from(TABLE_CUSTOMERS).update(customer).eq('id', customer.id);
         if (data.error !== null) {
@@ -75,21 +48,25 @@ export const updateCustomer = async (customer: Customer) => {
 }
 
 
-export const saveCustomer = async (customer: Customer) => {
+const saveCustomer = async (customer: Customer) => {
+    console.log(customer);
     try {
-        const data = await supabase.from(TABLE_CUSTOMERS).select('*').eq('name', customer.name);
-        if (data.data == null) {
-            const data: PostgrestResponseSuccess<null> | PostgrestResponseFailure = await supabase
-                .from(TABLE_CUSTOMERS)
-                .insert(customer);
+        const data: PostgrestResponseSuccess<null> | PostgrestResponseFailure = await supabase.from(TABLE_CUSTOMERS).insert(customer);
+        console.log(data);
 
-            if (data.error !== null) {
-                console.error('Error saving customer', customer, data.error);
-            }
+        if (data.error !== null) {
+            console.error('Error saving customer', customer, data.error);
         }
 
     } catch (error) {
         console.error('Error saving customer to database', error);
     }
 };
+
+export default {
+    fetchCustomersFromAccountOrganisationGroupedByQueue,
+    updateCustomer,
+    saveCustomer,
+    deleteCustomer
+}
 

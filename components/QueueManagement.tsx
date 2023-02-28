@@ -1,10 +1,8 @@
 import {ActionIcon, Button, Card, Group, Modal, Text, TextInput} from "@mantine/core";
 import {IconX} from "@tabler/icons-react";
 import {useForm} from "@mantine/form";
-import {useEffect, useState} from "react";
-import {Queue} from "../models/Queue";
 import {User} from "@supabase/auth-helpers-react";
-import {fetchQueues} from "../services/QueueService";
+import {useStore} from "../lib/store";
 
 interface QueueManagementProps {
     isOpen: boolean,
@@ -20,19 +18,7 @@ export const QueueManagement = (props: QueueManagementProps) => {
         }
     });
 
-    const [queues, setQueues] = useState([] as Queue[])
-
-    const onDelete = (queue_id: number) => {
-
-    };
-
-    const onAdd = (name: string) => {
-
-    };
-
-    useEffect(() => {
-        fetchQueues(setQueues, props.user.id);
-    }, []);
+    const {queues, createQueue, deleteQueue} = useStore();
 
     return (
         <Modal opened={props.isOpen} onClose={props.onClose} size={"lg"} title={"Warteschlangen verwalten"}>
@@ -41,7 +27,7 @@ export const QueueManagement = (props: QueueManagementProps) => {
                     <Group position="apart">
                         <Text weight={500}>{queue.name}</Text>
                         <ActionIcon onClick={() => {
-                            onDelete(queue.id)
+                            deleteQueue(queue.id);
                         }}>
                             <IconX size={32}/>
                         </ActionIcon>
@@ -49,7 +35,7 @@ export const QueueManagement = (props: QueueManagementProps) => {
                 </Card>
             ))}
             <Group>
-                <form onSubmit={form.onSubmit((val) => onAdd(val.name))}>
+                <form onSubmit={form.onSubmit((val) => createQueue(val.name))}>
                     <TextInput placeholder="Neue Warteschlange" {...form.getInputProps("name")}/>
                     <Button type="submit">Hinzufügen</Button>
                 </form>
