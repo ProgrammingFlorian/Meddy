@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {Box, Button, createStyles, Modal, NumberInput, Popover, Select, Textarea} from '@mantine/core';
+import {Box, Button, createStyles, Group, Modal, NumberInput, Popover, Select, Textarea} from '@mantine/core';
 import {customLabel} from "../../models/Functions";
 import {Language} from "../../models/Language";
 import {Customer} from "../../models/Customer";
-import qrCodePage from "../../pages/qrCodePage";
+import QRCodePopup from "../QRCodePopup";
 import {Queue} from "../../models/Queue";
 
 interface CustomerPopupProps {
@@ -31,6 +31,8 @@ const CustomerPopup = (props: CustomerPopupProps) => {
     const [queue, setQueue] = useState(props.queues.find(queue => props.customer.queue_id === queue.id)?.name ?? null);
     const [notes, setNotes] = useState(props.customer.notes);
     const [durationOfAppointment, setDurationOfAppointment] = useState(props.customer.duration)
+
+    const [qrCodeShown, showQRCode] = useState(false);
 
 
     return (
@@ -159,10 +161,16 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                         <div className="flex flex-col items-center justify-content-center">
                                             <div className="flex flex-row gap-2">
                                                 <Button
-                                                disabled={!propertiesChanged}>
+                                                    disabled={!propertiesChanged}>
                                                     Änderungen speichern
                                                 </Button>
-                                                {qrCodePage(false, "QR Code generieren")}
+                                                <QRCodePopup visible={qrCodeShown} onClose={() => showQRCode(false)}
+                                                             customer={props.customer}/>
+                                                <Group position="center">
+                                                    <Button
+                                                        style={{width: "100%"}}
+                                                        onClick={() => showQRCode(true)}>{"QR Code anzeigen"}</Button>
+                                                </Group>
                                             </div>
 
                                         </div>

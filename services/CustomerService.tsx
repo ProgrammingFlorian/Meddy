@@ -48,17 +48,21 @@ const updateCustomer = async (customer: Customer) => {
 }
 
 
-const saveCustomer = async (customer: Customer) => {
+const saveCustomer = async (customer: Customer): Promise<Customer> => {
     try {
-        const data: PostgrestResponseSuccess<null> | PostgrestResponseFailure = await supabase.from(TABLE_CUSTOMERS).insert(customer);
+        // @ts-ignore
+        const response: PostgrestResponse<Customer> = await supabase.from(TABLE_CUSTOMERS).insert(customer).select();
 
-        if (data.error !== null) {
-            console.error('Error saving customer', customer, data.error);
+        if (!response.error) {
+            return Promise.resolve(response.data[0]);
+        } else {
+            console.error('Error saving customer', customer, response.error);
         }
 
     } catch (error) {
         console.error('Error saving customer to database', error);
     }
+    return Promise.reject();
 };
 
 export default {

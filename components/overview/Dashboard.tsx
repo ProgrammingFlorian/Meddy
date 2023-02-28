@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import checkInPage from "../../pages/checkInPage";
+import checkInPage from "../CheckinPopup";
 import {Language} from "../../models/Language";
 import QueueViewer from "./QueueViewer";
 

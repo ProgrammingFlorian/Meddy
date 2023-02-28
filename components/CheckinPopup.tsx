@@ -1,14 +1,14 @@
-import {Box, Button, Modal, Group, createStyles, NumberInput, Select, Textarea, TextInput} from "@mantine/core";
-import {useState} from "react";
+import {Box, Button, createStyles, Group, Modal, NumberInput, Select, Textarea, TextInput} from "@mantine/core";
+import {useContext, useState} from "react";
 import {Language} from "../models/Language";
 import {customLabel} from "../models/Functions";
 import {useForm} from "@mantine/form";
-import qrCodePage from "./qrCodePage";
 import {Customer} from "../models/Customer";
-import {saveCustomer} from "../services/CustomerService";
+import QRCodePopup from "./QRCodePopup";
+import CustomerService from "../services/CustomerService";
+import {StoreContext} from "../lib/store";
 
-
-const checkInPage = () => {
+const CheckinPopup = () => {
 
     const [opened, setOpened] = useState(false);
     const useStyles = createStyles((theme) => ({
@@ -22,31 +22,36 @@ const checkInPage = () => {
     }));
 
 
-    const language = Language.GERMAN
-    const employees = ['Arzt 1', 'Arzt 2', 'Arzt 3', 'Arzt 4']
+    const language = Language.GERMAN;
     const {classes} = useStyles();
-    const [approxWaitingTime, setApproxWaitingTime] = useState(5);
-    const [inputName, setInputName] = useState("")
-    const [employee, setEmployee] = useState(employees[0])
-    const [comment, setComment] = useState("")
+    const [isLoading, setLoading] = useState(false);
+    const [customer, setCustomer] = useState(null as null | Customer);
 
-
-
+    const {queues} = useContext(StoreContext);
 
     const form = useForm({
         initialValues: {
-            name: '', email: '', password: '',
-            confirmPassword: ''
+            name: '',
+            duration: 5,
+            queue: '',
+            notes: ''
         },
 
         // functions will be used to validate values at corresponding key
         validate: {
-            name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
-            email: (value) => value.length > 0 ? (/^\S+@\S+$/.test(value) ? null : 'Invalid email') : null,
+            name: value => (value.length < 2 ? 'Name must have at least 2 letters' : null),
+            duration: value => value < 0 ? "Bitte wähle eine positive Dauer" : null,
+            queue: value => queues.find(queue => queue.name == value) === undefined ? 'Bitte wähle ein Element' : null
         },
     });
+
     return (
         <>
+            {customer ?
+                <QRCodePopup visible={true} customer={customer} onClose={() => {
+                    setOpened(false);
+                    setCustomer(null);
+                }}/> : <></>}
             <Modal
                 size="lg"
                 opened={opened}
@@ -63,58 +68,62 @@ const checkInPage = () => {
                             <br/>
                             <Box sx={{maxWidth: 340}} mx="auto">
                                 <form onSubmit={form.onSubmit((values) => {
-                                    // @ts-ignore TODO
-                                    const customer: Customer = {
-                                            duration: 80,
+                                    const queueId = queues.find(queue => queue.name === values.queue)?.id;
+                                    if (queueId) {
+                                        // @ts-ignore TODO
+                                        const customer: Customer = {
+                                            duration: values.duration,
                                             name: values.name,
                                             position: 0,
-                                            queue_id: 1
+                                            queue_id: queueId
                                         }
-                                        saveCustomer(customer).catch((e) => console.log(e))
+                                        CustomerService.saveCustomer(customer).then(createdCustomer => {
+                                            setCustomer(createdCustomer);
+                                            setLoading(false);
+                                        });
+                                        setLoading(true);
+                                    }
                                 })}>
                                     <TextInput
                                         label={customLabel("Patienten Name", true)}
                                         placeholder="Name"
                                         {...form.getInputProps('name')} />
                                     <br/>
-                                    <NumberInput
+                                    <TextInput
                                         label={customLabel(language == Language.GERMAN ? "Geschätze Termindauer in Minuten:" : "Approximate duration of appointment:")}
-                                        hideControls
-                                        placeholder={String(approxWaitingTime)}
+                                        placeholder={"5"}
                                         classNames={{input: classes.textColor}}
-                                        value={approxWaitingTime}
-                                        onChange={() => setApproxWaitingTime}
+                                        {...form.getInputProps('duration')}
                                     />
                                     <div className="grid grid-cols-4 gap-0.5 pt-1 place-items-stretch">
                                         <Button color="gray"
-                                                onClick={() => setApproxWaitingTime(10)}>
+                                                onClick={() => form.setFieldValue('duration', 10)}>
                                             10 min
                                         </Button>
                                         <Button color="gray"
-                                                onClick={() => setApproxWaitingTime(15)}>
+                                                onClick={() => form.setFieldValue('duration', 15)}>
                                             15 min
                                         </Button>
                                         <Button color="gray"
-                                                onClick={() => setApproxWaitingTime(20)}>
+                                                onClick={() => form.setFieldValue('duration', 20)}>
                                             20 min
                                         </Button>
                                         <Button color="gray"
-                                                onClick={() => setApproxWaitingTime(30)}>
+                                                onClick={() => form.setFieldValue('duration', 30)}>
                                             30 min
                                         </Button>
 
                                     </div>
                                     <br/>
                                     <Select
-                                        data={employees}
-                                        defaultValue={employees.length > 0 ? employees[0] : "no selection possible"}
+                                        data={queues.map(queue => queue.name)}
                                         label={customLabel(language == Language.GERMAN ? "Behandelnde/r Ärztin/Arzt" : "Doctor:")}
-                                        onChange={() => setEmployee}
+                                        {...form.getInputProps('queue')}
                                     />
                                     <br/>
                                     <Textarea
                                         label={customLabel(language == Language.GERMAN ? "Notizen:" : "Notes")}
-                                        placeholder="only internal information"
+                                        placeholder="Nur interne Informationen"
                                         minRows={3}
                                         maxRows={10}
                                         autosize
@@ -122,13 +131,10 @@ const checkInPage = () => {
                                     <br/>
                                     <br/>
                                     <div className="flex flex-col items-center justify-content-center">
-                                        <Button style={{paddingRight: 0, paddingLeft: 0}}
-                                                type="submit"
-                                            // loading
-                                                >
-                                            {qrCodePage(!form.isValid(), "Speichern und QR Code generieren")}
+                                        <Button type="submit"
+                                                loading={isLoading}>
+                                            Kunde erstellen
                                         </Button>
-
                                         <br/>
                                     </div>
                                 </form>
@@ -138,15 +144,13 @@ const checkInPage = () => {
                 </div>
                 <br/>
                 <br/>
-
             </Modal>
 
             <Group position="center">
                 <Button onClick={() => setOpened(true)}>Neuen Patienten einchecken</Button>
             </Group>
         </>
+    );
+};
 
-
-    )
-}
-export default checkInPage;
+export default CheckinPopup;
