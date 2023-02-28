@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react'
+import {createContext, useCallback, useEffect, useMemo, useState} from 'react'
 import {createClient} from '@supabase/supabase-js'
 import {Customer} from '../models/Customer'
 import {RealtimeChannel} from "@supabase/realtime-js";
@@ -15,7 +15,15 @@ export const supabase = createClient(
 const BROADCAST_CHANNEL = 'waiting_queue_updated';
 const CHANNEL_NAME = 'waiting_updates';
 
-export const useStore = () => {
+interface StoreType {
+    sendUpdate: (queue_id: number) => void;
+    queues: Queue[];
+    createQueue: (name: string) => void;
+    deleteQueue: (queue_id: number) => void;
+    customersInQueue: { [queue: number]: Customer[] };
+}
+
+export const useStore = (): StoreType => {
     const [customersInQueue, setCustomersInQueue] = useState([] as {
         [id: number]: Customer[]
     });
@@ -109,4 +117,13 @@ export const useStore = () => {
     }
 
     return {queues, customersInQueue, createQueue, deleteQueue, sendUpdate}
-}
+};
+
+export const StoreContext = createContext<StoreType>({
+    createQueue: () => {
+    }, customersInQueue: [],
+    deleteQueue: () => {
+    }, queues: [],//{id: 0, name: "test", latest_appointment_start: null, organisation_id: 0}],
+    sendUpdate: () => {
+    }
+});

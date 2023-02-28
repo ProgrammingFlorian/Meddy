@@ -2,7 +2,9 @@ import {ActionIcon, Button, Card, Group, Modal, Text, TextInput} from "@mantine/
 import {IconX} from "@tabler/icons-react";
 import {useForm} from "@mantine/form";
 import {User} from "@supabase/auth-helpers-react";
-import {useStore} from "../lib/store";
+import {Queue} from "../models/Queue";
+import {StoreContext} from "../lib/store";
+import {useContext} from "react";
 
 interface QueueManagementProps {
     isOpen: boolean,
@@ -18,7 +20,9 @@ export const QueueManagement = (props: QueueManagementProps) => {
         }
     });
 
-    const {queues, createQueue, deleteQueue} = useStore();
+    const {queues, createQueue, deleteQueue} = useContext(StoreContext);
+
+    console.log(queues);
 
     return (
         <Modal opened={props.isOpen} onClose={props.onClose} size={"lg"} title={"Warteschlangen verwalten"}>

@@ -2,13 +2,13 @@ import {createStyles, Group, Text} from '@mantine/core';
 import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
 import {Customer, getCustomerIdAsString} from '../../models/Customer';
 import {move, reorder} from "../../util/ListUtil";
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useContext, useEffect, useMemo, useState} from "react";
 import {ListQueue} from "../../models/ListQueue";
 import {useSupabaseClient, useUser} from "@supabase/auth-helpers-react";
 import CustomerPopup from "./CustomerPopup";
 import {Queue} from "../../models/Queue";
 import QueueService from "../../services/QueueService";
-import {useStore} from "../../lib/store";
+import {StoreContext, useStore} from "../../lib/store";
 
 const useStyles = createStyles((theme) => ({
     item: {
@@ -44,7 +44,9 @@ const QueueViewer = () => {
             });
         });
     }*/
-    const {queues, customersInQueue} = useStore();
+    const {queues, customersInQueue} = useContext(StoreContext);
+
+    console.log(queues);
 
     const onDragEnd = ({destination, source}: DropResult) => {
         // dropped outside the lists
@@ -93,7 +95,7 @@ const QueueViewer = () => {
                             <Droppable key={index} droppableId={`${index}`} direction="vertical">
                                 {(provided) => (
                                     <div {...provided.droppableProps} ref={provided.innerRef}>
-                                        {customersInQueue[queue.id].map((customer, index) => (
+                                        {customersInQueue[queue.id] ? customersInQueue[queue.id].map((customer, index) => (
                                             <Draggable key={getCustomerIdAsString(customer)} index={index}
                                                        draggableId={getCustomerIdAsString(customer)}>
                                                 {(provided, snapshot) => (
@@ -120,7 +122,7 @@ const QueueViewer = () => {
                                                     </div>
                                                 )}
                                             </Draggable>
-                                        ))}
+                                        )) : <></>}
                                         {provided.placeholder}
                                     </div>
                                 )}
