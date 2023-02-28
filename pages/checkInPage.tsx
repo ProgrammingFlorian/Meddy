@@ -30,6 +30,9 @@ const checkInPage = () => {
     const [employee, setEmployee] = useState(employees[0])
     const [comment, setComment] = useState("")
 
+
+
+
     const form = useForm({
         initialValues: {
             name: '', email: '', password: '',
@@ -110,19 +113,26 @@ const checkInPage = () => {
                                     <br/>
                                     <br/>
                                     <div className="flex flex-col items-center justify-content-center">
-                                        <Button type="submit" onClick={() => {
-                                            const randomID = Math.random();
-
-                                            const customer: Customer = {
-                                                duration: 0, id: randomID, name: "", position: 0, queue_id: 0
-                                            }
-                                            //saveCustomer(customer)
+                                        <Button style={{paddingRight: 0, paddingLeft: 0}}
+                                                type="submit"
+                                               // loading
+                                                onClick={() => {
+                                                    const randomID = Math.random();
+                                                    const customer: Customer = {
+                                                        duration: 80,
+                                                        id: randomID,
+                                                        name: "huhuhuhu",
+                                                        position: 0,
+                                                        queue_id: 0
+                                                    }
+                                            saveCustomer(customer).catch((e) => console.log(e))
 
 
                                         }
                                         }>
+                                            {qrCodePage(!form.isValid())}
                                         </Button>
-                                        {form.isValid() ? qrCodePage(false) : qrCodePage(true)}
+
                                         <br/>
                                     </div>
                                 </form>

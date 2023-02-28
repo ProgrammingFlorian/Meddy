@@ -61,7 +61,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                         </Popover.Target>
                                         <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
                                             <Button color="gray">
-                                                OK
+                                                Bestätigen
                                             </Button>
                                         </Popover.Dropdown>
                                     </Popover>
@@ -72,8 +72,11 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                             </Button>
                                         </Popover.Target>
                                         <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
-                                            <Button color="gray">
-                                                OK
+                                            <Button color="gray"
+                                                    onClick={() => {
+                                                        //todo delete customer
+                                                    }}>
+                                                Bestätigen
                                             </Button>
                                         </Popover.Dropdown>
                                     </Popover>

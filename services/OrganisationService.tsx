@@ -1,8 +1,7 @@
-import {Queue} from "../models/Queue";
 import {PostgrestResponse} from "@supabase/supabase-js";
 import {supabase} from "../lib/store";
 import {Organisation} from "../models/Organisation";
-import {Customer} from "../models/Customer";
+
 
 
 const TABLE_ORGANISATIONS = 'organisations';
@@ -44,7 +43,7 @@ export const saveOrganisation = async (organisation: Organisation) => {
 
 export const updateOrganisation = async (organisation: Organisation) => {
     try {
-        const data: PostgrestResponse<undefined> = await supabase.from(TABLE_ORGANISATIONS).update(organisation).eq('id', organisation.id);
+        const data: PostgrestResponse<Organisation> = await supabase.from(TABLE_ORGANISATIONS).update(organisation).eq('id', organisation.id);
         if (data.error !== null) {
             console.error('Error saving organisation', organisation, data.error);
         }
