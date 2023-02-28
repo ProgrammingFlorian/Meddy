@@ -24,8 +24,6 @@ export const QueueManagement = (props: QueueManagementProps) => {
 
     const {queues, createQueue, deleteQueue} = useContext(StoreContext);
 
-    console.log(queues);
-
     return (
         <Modal opened={props.isOpen} onClose={props.onClose} size={"sm"} title={"Warteschlangen verwalten"}>
             {queues.map((queue) => (

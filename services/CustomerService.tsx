@@ -49,10 +49,8 @@ const updateCustomer = async (customer: Customer) => {
 
 
 const saveCustomer = async (customer: Customer) => {
-    console.log(customer);
     try {
         const data: PostgrestResponseSuccess<null> | PostgrestResponseFailure = await supabase.from(TABLE_CUSTOMERS).insert(customer);
-        console.log(data);
 
         if (data.error !== null) {
             console.error('Error saving customer', customer, data.error);
