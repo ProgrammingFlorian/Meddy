@@ -1,6 +1,7 @@
 import {Customer} from "../models/Customer";
 import {PostgrestResponse} from "@supabase/supabase-js";
 import {supabase} from "../lib/store";
+import {PostgrestResponseFailure, PostgrestResponseSuccess} from "@supabase/postgrest-js";
 
 const TABLE_CUSTOMERS = 'customers';
 
@@ -16,6 +17,17 @@ export const fetchCustomers = async (setData: (data: Customer[]) => void) => {
         console.error('Error retrieving waiting_queue from database', error);
     }
 }
+
+export const deleteCustomer = async (id: number) => {
+    try {
+        // Remove the customer from the database
+        await supabase.from(TABLE_CUSTOMERS).delete().eq('id', id);
+
+    } catch (error) {
+        console.error(`Error deleting customer with ID ${id} from database`, error);
+    }
+}
+
 
 
 export const fetchCustomersWithQueueId = async (setData: (data: Customer[]) => void, queue_id: number) => {
@@ -45,7 +57,7 @@ export const fetchCustomer = async (setData: (data: Customer) => void, customerI
 
 export const updateCustomer = async (customer: Customer) => {
     try {
-        const data: PostgrestResponse<undefined> = await supabase.from(TABLE_CUSTOMERS).update(customer).eq('id', customer.id);
+        const data: PostgrestResponseSuccess<null> | PostgrestResponseFailure = await supabase.from(TABLE_CUSTOMERS).update(customer).eq('id', customer.id);
         if (data.error !== null) {
             console.error('Error updating customer', customer, data.error);
         }
@@ -57,9 +69,9 @@ export const updateCustomer = async (customer: Customer) => {
 
 export const saveCustomer = async (customer: Customer) => {
     try {
-        const data: PostgrestResponse<Customer> = await supabase.from(TABLE_CUSTOMERS).select('*').eq('name', customer.name);
+        const data = await supabase.from(TABLE_CUSTOMERS).select('*').eq('name', customer.name);
         if (data.data == null) {
-            const data: PostgrestResponse<undefined> = await supabase
+            const data: PostgrestResponseSuccess<null> | PostgrestResponseFailure = await supabase
                 .from(TABLE_CUSTOMERS)
                 .insert(customer);
 

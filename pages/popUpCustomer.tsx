@@ -62,7 +62,7 @@ const popUpCustomer = (item: Customer) => {
                                         </Popover.Target>
                                         <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
                                             <Button color="gray">
-                                                OK
+                                                Bestätigen
                                             </Button>
                                         </Popover.Dropdown>
                                     </Popover>
@@ -73,8 +73,11 @@ const popUpCustomer = (item: Customer) => {
                                             </Button>
                                         </Popover.Target>
                                         <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
-                                            <Button color="gray">
-                                                OK
+                                            <Button color="gray"
+                                                    onClick={() => {
+                                                        //todo delete customer
+                                                    }}>
+                                                Bestätigen
                                             </Button>
                                         </Popover.Dropdown>
                                     </Popover>
@@ -137,7 +140,7 @@ const popUpCustomer = (item: Customer) => {
                                         />
                                         <br/>
                                         <div className="flex flex-col items-center justify-content-center">
-                                            {qrCodePage()}
+                                            {qrCodePage(false)}
                                         </div>
                                     </form>
                                 </Box>

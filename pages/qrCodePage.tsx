@@ -52,8 +52,12 @@ const qrCodePage = (disabled: boolean) => {
             </Modal>
             <Group position="center">
                 <Button
-                    disabled={disabled}
-                    onClick={() => setOpened(true)}>QR Code generieren</Button>
+                    style={{width: "100%"}}
+                    onClick={() => {
+                        if (!disabled) {
+                            setOpened(true)
+                        }
+                    }}>QR Code generieren</Button>
             </Group>
         </>
     );
