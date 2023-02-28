@@ -20,6 +20,7 @@ interface StoreType {
     queues: Queue[];
     createQueue: (name: string) => void;
     deleteQueue: (queue_id: number) => void;
+    updateCustomersInQueue: (newValue: { [p: number]: Customer[] }) => void,
     customersInQueue: { [queue: number]: Customer[] };
 }
 
@@ -116,14 +117,27 @@ export const useStore = (): StoreType => {
         QueueService.deleteQueue(queue_id); // TODO: Handle deletion error
     }
 
-    return {queues, customersInQueue, createQueue, deleteQueue, sendUpdate}
+    const updateCustomersInQueue = (newValue: {
+        [id: number]: Customer[]
+    }) => {
+        Object.entries(newValue).forEach(([queue_id, customers]) => {
+            customers.forEach((customer, index) => {
+                customer.position = index;
+                customer.queue_id = +queue_id;
+                CustomerService.updateCustomer(customer);
+            });
+        });
+        setCustomersInQueue(newValue);
+    }
+
+    return {queues, customersInQueue, createQueue, deleteQueue, updateCustomersInQueue, sendUpdate}
 };
 
 export const StoreContext = createContext<StoreType>({
     createQueue: () => {
     }, customersInQueue: [],
-    deleteQueue: () => {
-    }, queues: [],//{id: 0, name: "test", latest_appointment_start: null, organisation_id: 0}],
+    deleteQueue: () => {}, queues: [],
+    updateCustomersInQueue: () => {},
     sendUpdate: () => {
     }
 });

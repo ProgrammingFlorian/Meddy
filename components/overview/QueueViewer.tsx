@@ -21,6 +21,7 @@ const useStyles = createStyles((theme) => ({
         padding: `${theme.spacing.sm}px ${theme.spacing.xl}px`,
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.white,
         marginBottom: theme.spacing.sm,
+        minWidth: "300px"
     },
 
     itemDragging: {
@@ -44,9 +45,7 @@ const QueueViewer = () => {
             });
         });
     }*/
-    const {queues, customersInQueue} = useContext(StoreContext);
-
-    console.log(queues);
+    const {queues, customersInQueue, updateCustomersInQueue} = useContext(StoreContext);
 
     const onDragEnd = ({destination, source}: DropResult) => {
         // dropped outside the lists
@@ -57,18 +56,18 @@ const QueueViewer = () => {
         const sourceId = +source.droppableId;
         const destinationId = +destination.droppableId;
 
-        /*if (sourceId === destinationId) {
-            const items = reorder(state[sourceId].customers, source.index, destination.index);
-            const newState = [...state];
-            newState[sourceId].customers = items;
-            setState(newState);
+        if (sourceId === destinationId) {
+            const items = reorder(customersInQueue[sourceId], source.index, destination.index);
+            const newState = {...customersInQueue};
+            newState[sourceId] = items;
+            updateCustomersInQueue(newState);
         } else {
-            const result = move(state[sourceId].customers, state[destinationId].customers, source, destination);
-            const newState = [...state];
-            newState[sourceId].customers = result[sourceId];
-            newState[destinationId].customers = result[destinationId];
-            setState(newState);
-        }*/
+            const result = move(customersInQueue[sourceId], customersInQueue[destinationId], source, destination);
+            const newState = {...customersInQueue};
+            newState[sourceId] = result[sourceId];
+            newState[destinationId] = result[destinationId];
+            updateCustomersInQueue(newState);
+        }
     };
 
     /*const deleteCustomer = ((queue_index: number, customer_index: number) => {
@@ -89,12 +88,12 @@ const QueueViewer = () => {
             }
             <DragDropContext onDragEnd={onDragEnd}>
                 {queues.map(((queue, index) => (
-                    <div key={index}>
+                    <div key={index} className="flex" style={{}}>
                         <h3>{queue.name}</h3>
-                        <main className="flex w-full flex-1 items-center justify-center px-20 text-center">
-                            <Droppable key={index} droppableId={`${index}`} direction="vertical">
+                        {/*<main className="flex w-full flex-1 items-center justify-center px-20 text-center" style={{height: 100}}>*/}
+                            <Droppable key={queue.id} droppableId={`${queue.id}`} direction="vertical">
                                 {(provided) => (
-                                    <div {...provided.droppableProps} ref={provided.innerRef}>
+                                    <div {...provided.droppableProps} ref={provided.innerRef} style={{minWidth: "300px"}}> {/* TODO */}
                                         {customersInQueue[queue.id] ? customersInQueue[queue.id].map((customer, index) => (
                                             <Draggable key={getCustomerIdAsString(customer)} index={index}
                                                        draggableId={getCustomerIdAsString(customer)}>
@@ -127,7 +126,7 @@ const QueueViewer = () => {
                                     </div>
                                 )}
                             </Droppable>
-                        </main>
+                        {/*}</main>*/}
                     </div>
                 )))}
             </DragDropContext>
