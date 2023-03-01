@@ -1,5 +1,5 @@
 import {Box, Button, createStyles, Group, Modal, Select, Textarea, TextInput} from "@mantine/core";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Language} from "../models/Language";
 import {customLabel} from "../helpers/Functions";
 import {useForm} from "@mantine/form";
@@ -27,8 +27,6 @@ const CheckinPopup = () => {
     const [isLoading, setLoading] = useState(false);
     const [customer, setCustomer] = useState(null as null | Customer);
 
-    const {queues} = useContext(StoreContext);
-
     const form = useForm({
         initialValues: {
             name: '',
@@ -44,6 +42,14 @@ const CheckinPopup = () => {
             queue: value => queues.find(queue => queue.name == value) === undefined ? 'Bitte wähle ein Element' : null
         },
     });
+
+    const {queues} = useContext(StoreContext);
+
+    useEffect(() => {
+        if (queues.length > 0) {
+            form.setFieldValue('queue', queues[0].name);
+        }
+    }, [queues]);
 
     return (
         <>
