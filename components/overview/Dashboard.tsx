@@ -1,17 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import checkInPage from "../CheckinPopup";
 import {Language} from "../../models/Language";
 import QueueViewer from "./QueueViewer";
+import {StoreContext} from "../../lib/store";
 
-
-interface DashboardProps {
-    nameOfClient: string,
-    nameOfComputer: string,
-    language: Language,
-}
-
-const Dashboard = (props: DashboardProps) => {
+const Dashboard = () => {
     const [time, setTime] = useState(new Date());
+    const {organisation, updateOrganisation} = useContext(StoreContext);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -23,13 +18,14 @@ const Dashboard = (props: DashboardProps) => {
         };
     }, []);
 
+    //todo connect "Verwaltungsrechner" to database
     return (
         <div className='flex flex-row justify-center'>
             <div className="flex select-none text-center min-h-screen flex-col justify-center py-2">
                 <div className='flex flex-row justify-between font-bold blue-color px-8'>
                     <div className='text-start basis-1/2'>
-                        <h2>{props.nameOfClient}</h2>
-                        <h2>{props.nameOfComputer}</h2>
+                        <h2>{organisation.name}</h2>
+                        <h2>Verwaltungsrechner</h2>
                     </div>
                     <div className=' text-end basis-1/2'>
                         <h1> {time.toLocaleTimeString('de-DE', {
@@ -38,7 +34,6 @@ const Dashboard = (props: DashboardProps) => {
                             timeZone: 'Europe/Berlin'
                         })} Uhr</h1>
                     </div>
-
                 </div>
                 <br/>
                 <br/>

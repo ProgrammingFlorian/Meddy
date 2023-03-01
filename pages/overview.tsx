@@ -28,12 +28,6 @@ const Overview = () => {
                     <aside
                         className={`flex-shrink-0 w-64 flex flex-col border-r transition-all duration-300 ${!sidebarOpen ? '-ml-64' : ''}`}>
                         <SideBarComponent
-                            nameOfClient={nameOfClient}
-                            setNameOfClient={setNameOfClient}
-                            nameOfComputer={nameOfComputer}
-                            setNameOfComputer={setNameOfComputer}
-                            language={Language.GERMAN}
-                            setLanguage={setLanguage}
                             // @ts-ignore AuthPage doesn't render this if user is null
                             user={user}
                         />
@@ -47,9 +41,7 @@ const Overview = () => {
                             </button>
                         </header>
                         <main className="p-4">
-                            <Dashboard nameOfClient={nameOfClient}
-                                       nameOfComputer={nameOfComputer}
-                                       language={language}/>
+                            <Dashboard/>
                         </main>
                     </div>
                 </div>
