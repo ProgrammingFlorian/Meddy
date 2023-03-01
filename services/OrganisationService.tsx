@@ -1,12 +1,12 @@
 import {PostgrestResponse} from "@supabase/supabase-js";
 import {supabase} from "../lib/store";
 import {Organisation} from "../models/Organisation";
-
+import {PostgrestResponseFailure, PostgrestResponseSuccess} from "@supabase/postgrest-js";
 
 
 const TABLE_ORGANISATIONS = 'organisations';
 
-export const fetchOrganisation = async (setData: (data: Organisation) => void, id: number) => {
+const fetchOrganisation = async (setData: (data: Organisation) => void, id: number) => {
     try {
         const data: PostgrestResponse<Organisation> = await supabase.from(TABLE_ORGANISATIONS).select('*').eq("id", id);
         if (data.data !== null) {
@@ -18,8 +18,9 @@ export const fetchOrganisation = async (setData: (data: Organisation) => void, i
     }
 }
 
-export const saveOrganisation = async (organisation: Organisation) => {
+const saveOrganisation = async (organisation: Organisation) => {
     try {
+
         const data: PostgrestResponse<Organisation> = await supabase.from(TABLE_ORGANISATIONS).select('*').eq('name', organisation.name);
         if (data.data == null) {
             const data: PostgrestResponse<undefined> = await supabase
@@ -36,9 +37,9 @@ export const saveOrganisation = async (organisation: Organisation) => {
     }
 };
 
-export const updateOrganisation = async (organisation: Organisation) => {
+const updateOrganisation = async (organisation: Organisation) => {
     try {
-        const data: PostgrestResponse<Organisation> = await supabase.from(TABLE_ORGANISATIONS).update(organisation).eq('id', organisation.id);
+        const data: PostgrestResponseSuccess<null> | PostgrestResponseFailure = await supabase.from(TABLE_ORGANISATIONS).update(organisation).eq('id', organisation.id);
         if (data.error !== null) {
             console.error('Error saving organisation', organisation, data.error);
         }
@@ -47,3 +48,9 @@ export const updateOrganisation = async (organisation: Organisation) => {
         console.error('Error saving organisation to database', error);
     }
 };
+
+export default {
+    updateOrganisation,
+    saveOrganisation,
+    fetchOrganisation
+}

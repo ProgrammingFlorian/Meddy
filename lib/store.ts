@@ -8,6 +8,8 @@ import QueueService from "../services/QueueService";
 import CustomerService from "../services/CustomerService";
 import {number} from "prop-types";
 import {Organisation} from "../models/Organisation";
+import OrganisationService from "../services/OrganisationService";
+import {name} from "next/dist/telemetry/ci-info";
 
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -23,6 +25,8 @@ interface StoreType {
     deleteQueue: (queue_id: number) => void;
     updateCustomersInQueue: (newValue: { [p: number]: Customer[] }) => void,
     customersInQueue: { [queue: number]: Customer[] };
+    organisation: Organisation;
+    updateOrganisation: (name: string) => void;
 }
 
 export const useStore = (): StoreType => {
@@ -55,6 +59,7 @@ export const useStore = (): StoreType => {
 
                 setOrganisation({id: data.organisation_id, name: data.organisations.name});
                 setCustomersInQueue(result);
+
             });
             QueueService.fetchQueues(account.id).then(setQueues);
         }
@@ -131,7 +136,12 @@ export const useStore = (): StoreType => {
         setCustomersInQueue(newValue);
     }
 
-    return {queues, customersInQueue, createQueue, deleteQueue, updateCustomersInQueue, sendUpdate}
+    const updateOrganisation = (name: string) => {
+        setOrganisation({id: organisation.id, name: name});
+        OrganisationService.updateOrganisation({id: organisation.id, name: name});
+    }
+
+    return {queues, customersInQueue, createQueue, deleteQueue, updateCustomersInQueue, sendUpdate, organisation, updateOrganisation}
 };
 
 export const StoreContext = createContext<StoreType>({
@@ -140,5 +150,10 @@ export const StoreContext = createContext<StoreType>({
     deleteQueue: () => {}, queues: [],
     updateCustomersInQueue: () => {},
     sendUpdate: () => {
-    }
+    },
+    organisation: {
+        id: -1,
+        name: ""
+    },
+    updateOrganisation: (name: string) => {},
 });

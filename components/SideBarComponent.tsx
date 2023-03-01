@@ -1,24 +1,21 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Popover, Select, TextInput} from "@mantine/core";
 import {Language} from "../models/Language";
 import {QueueManagement} from "./QueueManagement";
 import {User} from "@supabase/auth-helpers-react";
+import {StoreContext} from "../lib/store";
 
 
 interface SideBarComponentProps {
-    nameOfClient: string,
-    setNameOfClient: (newName: string) => void,
-    nameOfComputer: string,
-    setNameOfComputer: (newName: string) => void,
-    language: Language,
-    setLanguage: (lan: Language) => void,
     user: User
 }
 
 
 const SideBarComponent = (props: SideBarComponentProps) => {
-    const [newNameOfComputer, setNewNameOfComputer] = useState(props.nameOfComputer);
-    const [newNameOfClient, setNewNameOfClient] = useState(props.nameOfClient);
+    const {organisation, updateOrganisation} = useContext(StoreContext);
+
+    const [newNameOfComputer, setNewNameOfComputer] = useState("Verwaltungsrechner");
+    const [newNameOfClient, setNewNameOfClient] = useState(organisation.name);
 
     const [openedComputerName, setOpenedComputerName] = useState(false);
     const [openedClientName, setOpenedClientName] = useState(false);
@@ -55,13 +52,13 @@ const SideBarComponent = (props: SideBarComponentProps) => {
                     </Popover.Target>
                     <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
                         <TextInput label="Praxisname"
-                                   defaultValue={props.nameOfClient}
+                                   defaultValue={organisation.name}
                                    size="sm"
                                    onChange={(e) => setNewNameOfClient(e.target.value)}/>
                         <div className="grid grid-cols-2 gap-1 pt-1 place-items-stretch">
                             <Button color="green"
                                     onClick={() => {
-                                        props.setNameOfClient(newNameOfClient)
+                                        updateOrganisation(newNameOfClient)
                                         setOpenedClientName(false)
                                     }}>
                                 Ändern
@@ -94,13 +91,13 @@ const SideBarComponent = (props: SideBarComponentProps) => {
                     <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
                         <TextInput
                             label="Name"
-                            defaultValue={props.nameOfComputer}
+                            defaultValue={"Verwaltungsrechner"}//todo set database value
                             size="sm"
                             onChange={(e) => setNewNameOfComputer(e.target.value)}/>
                         <div className="grid grid-cols-2 gap-1 pt-1 place-items-stretch">
                             <Button color="green"
                                     onClick={() => {
-                                        props.setNameOfComputer(newNameOfComputer)
+                                        //todo set nameOfComputer
                                         setOpenedComputerName(false)
                                     }}>
                                 Ändern
@@ -125,12 +122,12 @@ const SideBarComponent = (props: SideBarComponentProps) => {
                 <Select
                     className="m-2 text-center"
                     data={['English', 'Deutsch']}
-                    defaultValue={Language.GERMAN == props.language ? "Deutsch" : "English"}
+                    defaultValue={"Deutsch"}
                     variant="filled"
                     onClick={() => closeAllPopovers()}
                     onChange={(selectedLanguage) => {
                         const newLanguage = selectedLanguage === 'Deutsch' ? Language.GERMAN : Language.ENGLISH;
-                        props.setLanguage(newLanguage);
+                        //todo set language
                     }}
                     styles={() => ({
                         input: {
