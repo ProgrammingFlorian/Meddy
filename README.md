@@ -20,6 +20,12 @@ Build the app for production: \
 Run the built app in production mode: \
 `npm start`
 
+Build docker Image: \
+`docker build -t swait .`
+
+Run docker on port 3000: \
+`docker run -p 3000:3000 swait`
+
 ## Technical Overview
 
 The Frontend uses Next.js, TypeScript, TailwindCSS, Mantine.\

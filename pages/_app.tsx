@@ -7,8 +7,9 @@ import {createBrowserSupabaseClient} from "@supabase/auth-helpers-nextjs";
 import {SessionContextProvider} from "@supabase/auth-helpers-react";
 import {Session} from "@supabase/supabase-js";
 import FooterComponent from "../components/FooterComponent";
+import {appWithTranslation} from "next-i18next";
 
-export default function App({Component, pageProps}: AppProps<{ initialSession: Session }>) {
+const App = ({Component, pageProps}: AppProps<{ initialSession: Session }>) => {
     // To load mantine after tailwind (some mantine css got overwritten my tailwind)
     const mantineCache = createEmotionCache({
         key: 'mantine',
@@ -40,3 +41,5 @@ export default function App({Component, pageProps}: AppProps<{ initialSession: S
         </>
     );
 }
+
+export default appWithTranslation(App);

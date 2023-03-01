@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import QueueViewer from "./QueueViewer";
+import QueueViewer from "./queue_viewer/QueueViewer";
 import {StoreContext} from "../../lib/store";
 import {Container, Flex, Group, Space, Title} from "@mantine/core";
 import CheckinPopup from "../CheckinPopup";

@@ -2,8 +2,9 @@ import {Customer} from "../models/Customer";
 import {PostgrestResponse} from "@supabase/supabase-js";
 import {supabase} from "../lib/store";
 import {PostgrestResponseFailure, PostgrestResponseSuccess} from "@supabase/postgrest-js";
-import {TABLE_ACCOUNT_TO_ORGANISATION} from "./AccountService";
+import {TABLE_ACCOUNT_INFORMATION} from "./AccountService";
 import {Organisation} from "../models/Organisation";
+import {TABLE_QUEUES} from "./QueueService";
 
 const TABLE_CUSTOMERS = 'customers';
 
@@ -19,7 +20,6 @@ const fetchCustomersInSameQueue = async (customerId: number): Promise<[Customer,
         // @ts-ignore ignore type not perfect
         const response: PostgrestResponse<CustomersInSameQueue> = await supabase.from(TABLE_CUSTOMERS).select(`
         *, queues(customers(*), organisations(*))`).eq('id', customerId);
-        console.log(response);
         if (response.data && response.data.length > 0) {
             const customer = response.data[0] as Customer;
             const otherCustomers = response.data[0].queues.customers.filter(c => c.id !== customerId);
@@ -48,12 +48,12 @@ interface QueuesForAccount {
 const fetchCustomersFromAccountOrganisationGroupedByQueue = async (accountId: string): Promise<QueuesForAccount> => {
     try {
         // @ts-ignore ignore type not perfect
-        const response: PostgrestResponse<QueuesForAccount> = await supabase.from(TABLE_ACCOUNT_TO_ORGANISATION).select(`
+        const response: PostgrestResponse<QueuesForAccount> = await supabase.from(TABLE_ACCOUNT_INFORMATION).select(`
         organisation_id, organisations (
             name,
             queues (
                 id, name, latest_appointment_start,
-                customers (*)
+                customers!customers_queue_id_fkey (*)
             )
         )`).eq('account_id', accountId);
         if (response.data && response.data.length > 0) {
@@ -67,8 +67,13 @@ const fetchCustomersFromAccountOrganisationGroupedByQueue = async (accountId: st
 
 const deleteCustomer = async (id: number) => {
     try {
-        // Remove the customer from the database
-        await supabase.from(TABLE_CUSTOMERS).delete().eq('id', id);
+        // First, remove active_customer from queues to avoid foreign key constraints
+        // @ts-ignore
+        const response: PostgrestResponse<null> = await supabase.from(TABLE_QUEUES).update({active_customer: null, latest_appointment_start: null}).eq('active_customer', id);
+        if (response.error === null) {
+            // Remove the customer from the database
+            await supabase.from(TABLE_CUSTOMERS).delete().eq('id', id);
+        }
 
     } catch (error) {
         console.error(`Error deleting customer with ID ${id} from database`, error);

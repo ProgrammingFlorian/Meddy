@@ -1,5 +1,6 @@
-import {Button, Group, Popover, Text, TextInput, ThemeIcon, UnstyledButton} from "@mantine/core";
+import {Button, Popover, TextInput} from "@mantine/core";
 import React, {useState} from "react";
+import SidebarButton from "./SidebarButton";
 
 interface SidebarButtonProps {
     icon: JSX.Element;
@@ -22,32 +23,18 @@ export const SidebarTextField = (props: SidebarButtonProps) => {
                  onClose={() => setPopupOpen(false)}
                  shadow="md">
             <Popover.Target>
-                <UnstyledButton
-                    sx={(theme) => ({
-                        display: 'block',
-                        width: '100%',
-                        padding: theme.spacing.xs,
-                        borderRadius: theme.radius.sm,
-                        color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-
-                        '&:hover': {
-                            backgroundColor:
-                                theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-                        },
-                    })}
-                    onClick={() => setPopupOpen(!isPopupOpen)}
-                >
-                    <Group>
-                        <ThemeIcon color={props.iconColor} variant="light">{props.icon}</ThemeIcon>
-                        <Text size="sm">{props.label}</Text>
-                    </Group>
-                </UnstyledButton>
+                {SidebarButton({
+                    icon: props.icon, iconColor: props.iconColor, label: props.label,
+                    onClick: () => setPopupOpen(!isPopupOpen)
+                })}
             </Popover.Target>
             <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
                 <TextInput label={props.editLabel}
                            defaultValue={text}
                            size="sm"
-                           onChange={(e) => {setText(e.target.value)}}/>
+                           onChange={(e) => {
+                               setText(e.target.value)
+                           }}/>
                 <div className="grid grid-cols-2 gap-1 pt-1 place-items-stretch">
                     <Button color="green" onClick={() => {
                         props.onConfirm(text);

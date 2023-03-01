@@ -1,15 +1,15 @@
 import {PostgrestResponse} from "@supabase/supabase-js";
 import {supabase} from "../lib/store";
 import {Queue} from "../models/Queue";
-import {TABLE_ACCOUNT_TO_ORGANISATION} from "./AccountService";
+import {TABLE_ACCOUNT_INFORMATION} from "./AccountService";
 
 
-const TABLE_QUEUES = 'queues';
+export const TABLE_QUEUES = 'queues';
 
 const fetchQueues = async (account_id: string): Promise<Queue[]> => {
     try {
         // @ts-ignore
-        const data: PostgrestResponse<{organisations: {queues: [Queue]}}> = await supabase.from(TABLE_ACCOUNT_TO_ORGANISATION).select('organisations ( queues (*) )').eq("account_id", account_id);
+        const data: PostgrestResponse<{ organisations: { queues: [Queue] } }> = await supabase.from(TABLE_ACCOUNT_INFORMATION).select('organisations ( queues (*) )').eq("account_id", account_id);
         if (data.data !== null) {
             const result = data.data[0].organisations.queues;
             return Promise.resolve(result);
@@ -18,6 +18,18 @@ const fetchQueues = async (account_id: string): Promise<Queue[]> => {
         console.error('Error retrieving waiting_queues from database', error);
     }
     return Promise.reject();
+}
+
+const updateQueue = async (queue: Queue) => {
+    try {
+        // @ts-ignore
+        const response: PostgrestResponse<null> = await supabase.from(TABLE_QUEUES).update(queue).eq('id', queue.id);
+        if (response.error !== null) {
+            console.error('Error updating queue', queue, response.error);
+        }
+    } catch (error) {
+        console.error('Error updating waiting_queue from database', error);
+    }
 }
 
 
@@ -48,5 +60,6 @@ const deleteQueue = async (queue_id: number) => {
 export default {
     fetchQueues,
     createQueue,
+    updateQueue,
     deleteQueue
 }

@@ -22,8 +22,10 @@ export const SidebarConfirm = (props: SidebarButtonProps) => {
                  onClose={() => setPopupOpen(false)}
                  shadow="md">
             <Popover.Target>
-                <SidebarButton icon={props.icon} iconColor={props.iconColor} label={props.label}
-                               onClick={() => setPopupOpen(!isPopupOpen)}/>
+                {SidebarButton({
+                    icon: props.icon, iconColor: props.iconColor, label: props.label,
+                    onClick: () => setPopupOpen(!isPopupOpen)
+                })}
             </Popover.Target>
             <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
                 <Container>

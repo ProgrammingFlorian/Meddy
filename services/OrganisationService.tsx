@@ -8,6 +8,7 @@ const TABLE_ORGANISATIONS = 'organisations';
 
 const fetchOrganisation = async (setData: (data: Organisation) => void, id: number) => {
     try {
+        // @ts-ignore ignore type not perfect
         const data: PostgrestResponse<Organisation> = await supabase.from(TABLE_ORGANISATIONS).select('*').eq("id", id);
         if (data.data !== null) {
             const result = data.data[0];
@@ -20,9 +21,10 @@ const fetchOrganisation = async (setData: (data: Organisation) => void, id: numb
 
 const saveOrganisation = async (organisation: Organisation) => {
     try {
-
+        // @ts-ignore ignore type not perfect
         const data: PostgrestResponse<Organisation> = await supabase.from(TABLE_ORGANISATIONS).select('*').eq('name', organisation.name);
         if (data.data == null) {
+            // @ts-ignore ignore type not perfect
             const data: PostgrestResponse<undefined> = await supabase
                 .from(TABLE_ORGANISATIONS)
                 .insert(organisation);

@@ -7,8 +7,10 @@ import {Customer} from "../models/Customer";
 import QRCodePopup from "./QRCodePopup";
 import CustomerService from "../services/CustomerService";
 import {StoreContext} from "../lib/store";
+import {useTranslation} from "next-i18next";
 
 const CheckinPopup = () => {
+    const {t} = useTranslation();
 
     const [opened, setOpened] = useState(false);
     const useStyles = createStyles((theme) => ({
@@ -104,19 +106,19 @@ const CheckinPopup = () => {
                                     <div className="grid grid-cols-4 gap-0.5 pt-1 place-items-stretch">
                                         <Button color="gray"
                                                 onClick={() => form.setFieldValue('duration', 10)}>
-                                            10 min
+                                            10 {t('minutesAbbreviation')}
                                         </Button>
                                         <Button color="gray"
                                                 onClick={() => form.setFieldValue('duration', 15)}>
-                                            15 min
+                                            15 {t('minutesAbbreviation')}
                                         </Button>
                                         <Button color="gray"
                                                 onClick={() => form.setFieldValue('duration', 20)}>
-                                            20 min
+                                            20 {t('minutesAbbreviation')}
                                         </Button>
                                         <Button color="gray"
                                                 onClick={() => form.setFieldValue('duration', 30)}>
-                                            30 min
+                                            30 {t('minutesAbbreviation')}
                                         </Button>
 
                                     </div>

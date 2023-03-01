@@ -1,14 +1,1 @@
-
-
-export const TABLE_ACCOUNT_TO_ORGANISATION = 'account_to_organisation';
-
-
-
-const fetchAccount = () => {
-  
-}
-
-
-export default {
-    
-}
+export const TABLE_ACCOUNT_INFORMATION = 'account_information';

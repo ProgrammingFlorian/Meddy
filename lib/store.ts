@@ -1,15 +1,13 @@
-import {createContext, useCallback, useEffect, useMemo, useState} from 'react'
+import {createContext, useCallback, useEffect, useState} from 'react'
 import {createClient} from '@supabase/supabase-js'
 import {Customer} from '../models/Customer'
 import {RealtimeChannel} from "@supabase/realtime-js";
 import {Queue} from "../models/Queue";
-import {useSupabaseClient, useUser} from "@supabase/auth-helpers-react";
+import {useUser} from "@supabase/auth-helpers-react";
 import QueueService from "../services/QueueService";
 import CustomerService from "../services/CustomerService";
-import {number} from "prop-types";
 import {Organisation} from "../models/Organisation";
 import OrganisationService from "../services/OrganisationService";
-import {name} from "next/dist/telemetry/ci-info";
 
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -22,12 +20,13 @@ interface StoreType {
     sendUpdate: (queue_id: number) => void;
     queues: Queue[];
     createQueue: (name: string) => void;
+    updateQueue: (queue: Queue) => void;
     deleteQueue: (queue_id: number) => void;
     updateCustomersInQueue: (newValue: { [p: number]: Customer[] }) => void,
     customersInQueue: { [queue: number]: Customer[] };
     organisation: Organisation;
     updateOrganisation: (name: string) => void;
-    deleteCustomer: (id: number) => void;
+    deleteCustomer: (customer: Customer) => void;
 }
 
 export const useStore = (): StoreType => {
@@ -106,7 +105,8 @@ export const useStore = (): StoreType => {
                 id: temporaryId,
                 name: name,
                 organisation_id: organisation.id,
-                latest_appointment_start: null //TODO!
+                latest_appointment_start: null,
+                active_customer: null
             });
             return newQueues;
         });
@@ -142,24 +142,27 @@ export const useStore = (): StoreType => {
         OrganisationService.updateOrganisation({id: organisation.id, name: name});
     }
 
-    const deleteCustomer = (id: number) => {
-        CustomerService.deleteCustomer(id);
+    const deleteCustomer = (customer: Customer) => {
+        setCustomersInQueue(previous => {
+            const newValue = {...previous};
+            newValue[customer.queue_id] = newValue[customer.queue_id].filter(c => c.id !== customer.id);
+            return newValue;
+        });
+        CustomerService.deleteCustomer(customer.id);
     }
 
-    return {queues, customersInQueue, createQueue, deleteQueue, updateCustomersInQueue, sendUpdate, organisation, updateOrganisation, deleteCustomer}
+    const updateQueue = (queue: Queue) => {
+        setQueues(previous => {
+            const newQueues = [...previous];
+            const index = newQueues.findIndex(q => q.id === queue.id);
+            newQueues[index] = queue;
+            return newQueues;
+        });
+        QueueService.updateQueue(queue); // TODO: Handle error
+    }
+
+    return {queues, customersInQueue, createQueue, updateQueue, deleteQueue, updateCustomersInQueue, sendUpdate, organisation, updateOrganisation, deleteCustomer}
 };
 
-export const StoreContext = createContext<StoreType>({
-    createQueue: () => {
-    }, customersInQueue: [],
-    deleteQueue: () => {}, queues: [],
-    updateCustomersInQueue: () => {},
-    sendUpdate: () => {
-    },
-    organisation: {
-        id: -1,
-        name: ""
-    },
-    deleteCustomer: (id: number) => {},
-    updateOrganisation: (name: string) => {},
-});
+// @ts-ignore default state should never be used and is initialized empty
+export const StoreContext = createContext<StoreType>({});

@@ -1,0 +1,26 @@
+{
+  "appName": "Swait",
+  "madeBy": "",
+  "sidebar": {
+    "organisationName": "Praxisname",
+    "changeOrganisationName": "Praxisnamen ändern",
+    "manageQueues": "Warteschlangen verwalten"
+  },
+  "waitingScreen": {
+    "appointmentDuration": "Termindauer",
+    "remainingTime": "Aktuelle Wartezeit",
+    "queue": "Behandelnde/r Ärztin/Arzt",
+    "notes": "Notizen",
+    "notesPlaceholder": "Nur interne Informationen",
+    "showQRCode": "QR Code anzeigen"
+  },
+  "duration": "Dauer",
+  "minutesAbbreviation": "min",
+  "singleMinute": "Minute",
+  "multipleMinutes": "Minuten",
+  "call": "Aufrufen",
+  "checkout": "Abmelden",
+  "saveChanges": "Änderungen speichern",
+  "confirm": "Bestätigen",
+  "logout": "Abmelden"
+}

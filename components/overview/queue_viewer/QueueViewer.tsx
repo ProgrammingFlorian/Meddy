@@ -1,0 +1,103 @@
+import {Container, Grid, Title} from '@mantine/core';
+import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
+import {Customer, getCustomerIdAsString} from '../../../models/Customer';
+import {move, reorder} from "../../../util/ListUtil";
+import React, {useContext, useMemo, useState} from "react";
+import CustomerPopup from "../CustomerPopup";
+import {StoreContext} from "../../../lib/store";
+import QueueCustomerActive from "./QueueCustomerActive";
+import QueueCustomer from "./QueueCustomer";
+
+const QueueViewer = () => {
+    const [popup, setPopup] = useState(null as Customer | null);
+
+    const {queues, customersInQueue, updateCustomersInQueue, deleteCustomer, updateQueue} = useContext(StoreContext);
+
+    const onDragEnd = ({destination, source}: DropResult) => {
+        // dropped outside the lists
+        if (!destination) {
+            return;
+        }
+
+        const sourceId = +source.droppableId;
+        const destinationId = +destination.droppableId;
+
+        if (sourceId === destinationId) {
+            const items = reorder(customersInQueue[sourceId], source.index, destination.index);
+            const newState = {...customersInQueue};
+            newState[sourceId] = items;
+            updateCustomersInQueue(newState);
+        } else {
+            const result = move(customersInQueue[sourceId], customersInQueue[destinationId], source, destination);
+            const newState = {...customersInQueue};
+            newState[sourceId] = result[sourceId];
+            newState[destinationId] = result[destinationId];
+            updateCustomersInQueue(newState);
+        }
+    };
+
+    const activeCustomer = useMemo(() => {
+        const result = [] as { [queue_id: number]: Customer | null };
+        queues.forEach((queue) => {
+            result[queue.id] = customersInQueue[queue.id].find(customer => customer.id === queue.active_customer) ?? null;
+        });
+        return result;
+    }, [queues, customersInQueue]);
+
+    const passiveCustomersInQueue = useMemo(() => {
+        const result = [] as { [queue_id: number]: Customer[] };
+        queues.forEach((queue) => {
+            result[queue.id] = customersInQueue[queue.id].filter(customer => customer.id !== queue.active_customer);
+        });
+        return result;
+    }, [queues, customersInQueue]);
+
+    return (
+        <>
+            {popup ?
+                <CustomerPopup customer={popup} queues={queues} updateCustomer={() => {/* TODO */
+                }} onClose={() => setPopup(null)}/>
+                : <></>
+            }
+            <Grid grow>
+                <DragDropContext onDragEnd={onDragEnd}>
+                    {queues.map(((queue, queue_index) => (
+                        <Grid.Col span={2} key={queue_index}>
+                            <Container p={10} m={10} className="bg-gray-100 rounded h-full" style={{width: "340px"}}>
+                                <Container>
+                                    <Title order={3} align="center">{queue.name}</Title>
+                                </Container>
+                                <QueueCustomerActive activeCustomer={activeCustomer[queue.id]} queue={queue}
+                                                     setPopup={setPopup} deleteCustomer={deleteCustomer}/>
+                                <Droppable key={queue.id} droppableId={`${queue.id}`} direction="vertical">
+                                    {(provided) => (
+                                        <div className="m-2"
+                                             {...provided.droppableProps}
+                                             ref={provided.innerRef}
+                                             style={{minWidth: "300px"}}>
+                                            {passiveCustomersInQueue[queue.id].map((customer, customer_index) => (
+                                                <Draggable key={getCustomerIdAsString(customer)} index={customer_index}
+                                                           draggableId={getCustomerIdAsString(customer)}>
+                                                    {(provided, snapshot) =>
+                                                        <QueueCustomer isDragging={snapshot.isDragging}
+                                                                       provided={provided} setPopup={setPopup}
+                                                                       queue={queue}
+                                                                       isHighlighted={customer_index === 0 && activeCustomer[queue.id] === null}
+                                                                       customer={customer} updateQueue={updateQueue}/>
+                                                    }
+                                                </Draggable>
+                                            ))}
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            </Container>
+                        </Grid.Col>
+                    )))}
+                </DragDropContext>
+            </Grid>
+        </>
+    );
+};
+
+export default QueueViewer;

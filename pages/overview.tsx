@@ -7,6 +7,7 @@ import {AppShell} from "@mantine/core";
 import SidebarComponent from "../components/overview/sidebar/SidebarComponent";
 import HeaderComponent from "../components/overview/sidebar/HeaderComponent";
 import {QueueManagement} from "../components/QueueManagement";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 
 const Overview = () => {
@@ -38,5 +39,16 @@ const Overview = () => {
         </AuthPage>
     );
 };
+
+export async function getStaticProps({locale}: { locale: string }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'common'
+            ])),
+            // Will be passed to the page component as props
+        },
+    }
+}
 
 export default Overview;
