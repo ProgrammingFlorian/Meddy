@@ -6,7 +6,9 @@
     "changeOrganisationName": "Praxisnamen ändern",
     "manageQueues": "Warteschlangen verwalten"
   },
-  "waitingScreen": {
+  "customer": {
+    "editTitle": "Bearbeiten",
+    "name": "Name",
     "appointmentDuration": "Termindauer",
     "remainingTime": "Aktuelle Wartezeit",
     "queue": "Behandelnde/r Ärztin/Arzt",
@@ -15,6 +17,7 @@
     "showQRCode": "QR Code anzeigen"
   },
   "duration": "Dauer",
+  "since": "Seit",
   "minutesAbbreviation": "min",
   "singleMinute": "Minute",
   "multipleMinutes": "Minuten",

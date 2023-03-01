@@ -7,6 +7,7 @@ import {useTranslation} from "next-i18next";
 interface QueueCustomerActiveProps {
     activeCustomer: Customer | null;
     queue: Queue;
+    appointmentStart: Date | null;
     setPopup: (customer: Customer) => void;
     deleteCustomer: (customer: Customer) => void;
 }
@@ -15,8 +16,10 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
     const {t} = useTranslation();
     const activeCustomer = props.activeCustomer;
 
+    const time = props.appointmentStart ? new Date(props.appointmentStart).toLocaleTimeString() : '?';
+
     return activeCustomer !== null ? (
-        <Card>
+        <Card shadow="sm" m={8}>
             <Group position="center" style={{
                 width: '100%',
                 height: '100%',
@@ -29,6 +32,11 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
                     <Text size="sm">
                         {t('duration')}: {activeCustomer.duration} {t('multipleMinutes')}
                     </Text>
+                    {props.appointmentStart !== null ?
+                        <Text size="sm">
+                            {t('since')}: {time}
+                        </Text>
+                        : <></>}
                     <div className="mt-2"
                          onClick={(e) => e.stopPropagation()}>
                         <div className="grid grid-cols-2 gap-2">

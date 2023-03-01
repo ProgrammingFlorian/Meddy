@@ -1,7 +1,6 @@
 import {Customer} from "../models/Customer";
 import {PostgrestResponse} from "@supabase/supabase-js";
 import {supabase} from "../lib/store";
-import {PostgrestResponseFailure, PostgrestResponseSuccess} from "@supabase/postgrest-js";
 import {TABLE_ACCOUNT_INFORMATION} from "./AccountService";
 import {Organisation} from "../models/Organisation";
 import {TABLE_QUEUES} from "./QueueService";
@@ -69,7 +68,10 @@ const deleteCustomer = async (id: number) => {
     try {
         // First, remove active_customer from queues to avoid foreign key constraints
         // @ts-ignore
-        const response: PostgrestResponse<null> = await supabase.from(TABLE_QUEUES).update({active_customer: null, latest_appointment_start: null}).eq('active_customer', id);
+        const response: PostgrestResponse<null> = await supabase.from(TABLE_QUEUES).update({
+            active_customer: null,
+            latest_appointment_start: null
+        }).eq('active_customer', id);
         if (response.error === null) {
             // Remove the customer from the database
             await supabase.from(TABLE_CUSTOMERS).delete().eq('id', id);
@@ -80,15 +82,18 @@ const deleteCustomer = async (id: number) => {
     }
 }
 
-const updateCustomer = async (customer: Customer) => {
+const updateCustomer = async (customer: Customer): Promise<Customer> => {
     try {
-        const data: PostgrestResponseSuccess<null> | PostgrestResponseFailure = await supabase.from(TABLE_CUSTOMERS).update(customer).eq('id', customer.id);
-        if (data.error !== null) {
-            console.error('Error updating customer', customer, data.error);
+        const response: PostgrestResponse<Customer> = await supabase.from(TABLE_CUSTOMERS).update(customer).eq('id', customer.id).select();
+        if (!response.error) {
+            return Promise.resolve(response.data[0]);
+        } else {
+            console.error('Error updating customer', customer, response.error);
         }
     } catch (error) {
         console.error('Error updating waiting_queue from database', error);
     }
+    return Promise.reject();
 }
 
 const saveCustomer = async (customer: Customer): Promise<Customer> => {

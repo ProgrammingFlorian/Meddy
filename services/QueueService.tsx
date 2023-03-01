@@ -3,7 +3,6 @@ import {supabase} from "../lib/store";
 import {Queue} from "../models/Queue";
 import {TABLE_ACCOUNT_INFORMATION} from "./AccountService";
 
-
 export const TABLE_QUEUES = 'queues';
 
 const fetchQueues = async (account_id: string): Promise<Queue[]> => {

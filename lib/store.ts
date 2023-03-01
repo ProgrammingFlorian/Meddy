@@ -26,6 +26,7 @@ interface StoreType {
     customersInQueue: { [queue: number]: Customer[] };
     organisation: Organisation;
     updateOrganisation: (name: string) => void;
+    updateCustomer: (customer: Customer) => void;
     deleteCustomer: (customer: Customer) => void;
 }
 
@@ -124,6 +125,25 @@ export const useStore = (): StoreType => {
         QueueService.deleteQueue(queue_id); // TODO: Handle deletion error
     }
 
+    const updateCustomer = (newValue: Customer) => {
+        setCustomersInQueue(previous => {
+            const newQueues = {...previous};
+            newQueues[newValue.queue_id] = newQueues[newValue.queue_id].map(q =>
+                q.id === newValue.id ? newValue : q
+            );
+            return newQueues;
+        });
+        CustomerService.updateCustomer(newValue).then(serverValue => {
+            setCustomersInQueue(previous => {
+                const newQueues = {...previous};
+                newQueues[serverValue.queue_id].map(q =>
+                    q.id === serverValue.id ? serverValue : q
+                );
+                return newQueues;
+            });
+        });
+    }
+
     const updateCustomersInQueue = (newValue: {
         [id: number]: Customer[]
     }) => {
@@ -161,7 +181,19 @@ export const useStore = (): StoreType => {
         QueueService.updateQueue(queue); // TODO: Handle error
     }
 
-    return {queues, customersInQueue, createQueue, updateQueue, deleteQueue, updateCustomersInQueue, sendUpdate, organisation, updateOrganisation, deleteCustomer}
+    return {
+        queues,
+        customersInQueue,
+        createQueue,
+        updateQueue,
+        deleteQueue,
+        updateCustomersInQueue,
+        sendUpdate,
+        organisation,
+        updateOrganisation,
+        deleteCustomer,
+        updateCustomer
+    }
 };
 
 // @ts-ignore default state should never be used and is initialized empty

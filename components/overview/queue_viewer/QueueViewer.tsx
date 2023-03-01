@@ -11,7 +11,7 @@ import QueueCustomer from "./QueueCustomer";
 const QueueViewer = () => {
     const [popup, setPopup] = useState(null as Customer | null);
 
-    const {queues, customersInQueue, updateCustomersInQueue, deleteCustomer, updateQueue} = useContext(StoreContext);
+    const {queues, customersInQueue, updateCustomersInQueue, deleteCustomer, updateQueue, updateCustomer} = useContext(StoreContext);
 
     const onDragEnd = ({destination, source}: DropResult) => {
         // dropped outside the lists
@@ -21,6 +21,13 @@ const QueueViewer = () => {
 
         const sourceId = +source.droppableId;
         const destinationId = +destination.droppableId;
+
+        const sourceQueue = queues.find(q => q.id === sourceId);
+        const destinationQueue = queues.find(q => q.id === destinationId);
+
+        if (sourceQueue?.active_customer !== null) {
+
+        }
 
         if (sourceId === destinationId) {
             const items = reorder(customersInQueue[sourceId], source.index, destination.index);
@@ -39,7 +46,7 @@ const QueueViewer = () => {
     const activeCustomer = useMemo(() => {
         const result = [] as { [queue_id: number]: Customer | null };
         queues.forEach((queue) => {
-            result[queue.id] = customersInQueue[queue.id].find(customer => customer.id === queue.active_customer) ?? null;
+            result[queue.id] = customersInQueue[queue.id]?.find(customer => customer.id === queue.active_customer) ?? null;
         });
         return result;
     }, [queues, customersInQueue]);
@@ -47,7 +54,7 @@ const QueueViewer = () => {
     const passiveCustomersInQueue = useMemo(() => {
         const result = [] as { [queue_id: number]: Customer[] };
         queues.forEach((queue) => {
-            result[queue.id] = customersInQueue[queue.id].filter(customer => customer.id !== queue.active_customer);
+            result[queue.id] = customersInQueue[queue.id]?.filter(customer => customer.id !== queue.active_customer) ?? [];
         });
         return result;
     }, [queues, customersInQueue]);
@@ -55,8 +62,7 @@ const QueueViewer = () => {
     return (
         <>
             {popup ?
-                <CustomerPopup customer={popup} queues={queues} updateCustomer={() => {/* TODO */
-                }} onClose={() => setPopup(null)}/>
+                <CustomerPopup customer={popup} queues={queues} updateCustomer={updateCustomer} onClose={() => setPopup(null)}/>
                 : <></>
             }
             <Grid grow>
@@ -68,7 +74,8 @@ const QueueViewer = () => {
                                     <Title order={3} align="center">{queue.name}</Title>
                                 </Container>
                                 <QueueCustomerActive activeCustomer={activeCustomer[queue.id]} queue={queue}
-                                                     setPopup={setPopup} deleteCustomer={deleteCustomer}/>
+                                                     setPopup={setPopup} deleteCustomer={deleteCustomer}
+                                                     appointmentStart={queue.latest_appointment_start}/>
                                 <Droppable key={queue.id} droppableId={`${queue.id}`} direction="vertical">
                                     {(provided) => (
                                         <div className="m-2"
