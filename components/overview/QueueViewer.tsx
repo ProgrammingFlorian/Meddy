@@ -1,13 +1,9 @@
-import {createStyles, Group, Text} from '@mantine/core';
+import {Button, createStyles, Group, Popover, Text} from '@mantine/core';
 import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
 import {Customer, getCustomerIdAsString} from '../../models/Customer';
 import {move, reorder} from "../../util/ListUtil";
 import React, {useContext, useEffect, useMemo, useState} from "react";
-import {ListQueue} from "../../models/ListQueue";
-import {useSupabaseClient, useUser} from "@supabase/auth-helpers-react";
 import CustomerPopup from "./CustomerPopup";
-import {Queue} from "../../models/Queue";
-import QueueService from "../../services/QueueService";
 import {StoreContext, useStore} from "../../lib/store";
 
 const useStyles = createStyles((theme) => ({
@@ -30,7 +26,9 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const QueueViewer = () => {
+
     const {classes, cx} = useStyles();
+    const {deleteCustomer} = useContext(StoreContext);
 
     const [popup, setPopup] = useState(null as Customer | null);
 
@@ -45,6 +43,90 @@ const QueueViewer = () => {
             });
         });
     }*/
+    const positionView = (customer: Customer) => {
+        const [customerInvoked, setCustomerInvoked] = useState(false);
+        const [openedPopover, setOpenedPopover] = useState(false);
+
+
+        const appointmentState = () => {
+
+
+            if (!customerInvoked) {
+                return (
+                    <Popover trapFocus position="bottom"
+                             withArrow
+                             shadow="md"
+                             opened={openedPopover}
+                    >
+                        <Popover.Target>
+                            <Button color="green"
+                                    onClick={() => {
+                                        setOpenedPopover(!openedPopover)
+                                    }}>
+                                Aufrufen
+                            </Button>
+                        </Popover.Target>
+                        <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
+                            <Button color="gray"
+                                    onClick={() => {
+                                        setCustomerInvoked(true)
+                                        setOpenedPopover(!openedPopover)
+                                    }}>
+                                Bestätigen
+                            </Button>
+                        </Popover.Dropdown>
+                    </Popover>
+                )
+            } else {
+                return (
+                    <div className="grid grid-cols-2 gap-2">
+                        <Popover trapFocus position="bottom" withArrow shadow="md" opened={openedPopover}>
+                            <Popover.Target>
+                                <Button color="red"
+                                    onClick={() => setOpenedPopover(!openedPopover)}>
+                                    Auschecken
+                                </Button>
+                            </Popover.Target>
+                            <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
+                                <Button color="gray"
+                                        onClick={()=> {
+                                            setOpenedPopover(!openedPopover)
+                                            deleteCustomer(customer.id)
+                                        }}>
+                                    Bestätigen
+                                </Button>
+                            </Popover.Dropdown>
+                        </Popover>
+                        <Button color="gray"
+                                onClick={() => {
+                                }}>
+                            + 5 min
+                        </Button>
+                    </div>
+                    )
+            }
+        }
+
+
+
+
+        if (customer.position == 0) {
+            return (
+                <div>
+                    {appointmentState()}
+                </div>
+            );
+        } else {
+            return (
+                <div></div>
+            )
+        }
+
+
+    }
+
+
+
     const {queues, customersInQueue, updateCustomersInQueue} = useContext(StoreContext);
 
     const onDragEnd = ({destination, source}: DropResult) => {
@@ -86,14 +168,19 @@ const QueueViewer = () => {
                 <CustomerPopup customer={popup} queues={queues} updateCustomer={() => {/* TODO */}} onClose={closePopup}/>
                 : <></>
             }
-            <DragDropContext onDragEnd={onDragEnd}>
-                {queues.map(((queue, index) => (
-                    <div key={index} className="flex" style={{}}>
-                        <h3>{queue.name}</h3>
-                        {/*<main className="flex w-full flex-1 items-center justify-center px-20 text-center" style={{height: 100}}>*/}
+            <div className="grid grid-cols-4 gap-5">
+                <DragDropContext onDragEnd={onDragEnd}>
+                    {queues.map(((queue, index) => (
+                        <div key={index} className="flex flex-col bg-gray-100 rounded" style={{}}>
+                            <h2 className="mt-3" style={{fontWeight: "bold", fontSize: 20}}>{queue.name}</h2>
+                            {/*<main className="flex w-full flex-1 items-center justify-center px-20 text-center" style={{height: 100}}>*/}
                             <Droppable key={queue.id} droppableId={`${queue.id}`} direction="vertical">
                                 {(provided) => (
-                                    <div {...provided.droppableProps} ref={provided.innerRef} style={{minWidth: "300px"}}> {/* TODO */}
+                                    <div className="m-2"
+                                         {...provided.droppableProps}
+                                         ref={provided.innerRef}
+                                         style={{minWidth: "300px"}}>
+                                        {/* TODO */}
                                         {customersInQueue[queue.id] ? customersInQueue[queue.id].map((customer, index) => (
                                             <Draggable key={getCustomerIdAsString(customer)} index={index}
                                                        draggableId={getCustomerIdAsString(customer)}>
@@ -116,6 +203,10 @@ const QueueViewer = () => {
                                                                 <Text size="sm">
                                                                     Dauer: {customer.duration} Minuten
                                                                 </Text>
+                                                                <div className="mt-2" onClick={(e) => e.stopPropagation()}>
+                                                                    {positionView(customer)}
+                                                                </div>
+
                                                             </div>
                                                         </Group>
                                                     </div>
@@ -126,10 +217,12 @@ const QueueViewer = () => {
                                     </div>
                                 )}
                             </Droppable>
-                        {/*}</main>*/}
-                    </div>
-                )))}
-            </DragDropContext>
+                            {/*}</main>*/}
+                        </div>
+                    )))}
+                </DragDropContext>
+            </div>
+
         </>
     );
 };

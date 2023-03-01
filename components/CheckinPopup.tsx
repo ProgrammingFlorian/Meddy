@@ -147,7 +147,7 @@ const CheckinPopup = () => {
             </Modal>
 
             <Group position="center">
-                <Button onClick={() => setOpened(true)}>Neuen Patienten einchecken</Button>
+                <Button size={"md"} onClick={() => setOpened(true)}>Neuen Patienten einchecken</Button>
             </Group>
         </>
     );

@@ -20,32 +20,31 @@ const Dashboard = () => {
 
     //todo connect "Verwaltungsrechner" to database
     return (
-        <div className='flex flex-row justify-center'>
-            <div className="flex select-none text-center min-h-screen flex-col justify-center py-2">
-                <div className='flex flex-row justify-between font-bold blue-color px-8'>
-                    <div className='text-start basis-1/2'>
-                        <h2>{organisation.name}</h2>
-                        <h2>Verwaltungsrechner</h2>
-                    </div>
-                    <div className=' text-end basis-1/2'>
-                        <h1> {time.toLocaleTimeString('de-DE', {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            timeZone: 'Europe/Berlin'
-                        })} Uhr</h1>
-                    </div>
+        <div className='flex flex-col justify-center'>
+            <div className='flex flex-row justify-between font-bold blue-color px-8'>
+                <div className='text-start basis-1/2'>
+                    <h2>{organisation.name}</h2>
+                    <h2>Verwaltungsrechner</h2>
                 </div>
-                <br/>
-                <br/>
-                <div className=''>
-                    <div className="flex flex-row">
-                        <QueueViewer/>
-                    </div>
-                    <div className="items-center">
+                <div className='text-end basis-1/2'>
+                    <h1> {time.toLocaleTimeString('de-DE', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        timeZone: 'Europe/Berlin'
+                    })} Uhr</h1>
+                </div>
+            </div>
+            <div className="flex flex-col items-center">
+                <div className="flex select-none text-center min-h-screen min-w-max flex-col justify-center pb-2">
+                    <div className="flex items-start py-10">
                         {checkInPage()}
+                    </div>
+                    <div className="flex flex-row items-center">
+                        <QueueViewer/>
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }

@@ -4,6 +4,7 @@ export interface Customer {
     queue_id: number;
     position: number;
     name: string;
+    appointmentTime?: Date;
     duration: number;
     notes?: string;
 }

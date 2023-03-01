@@ -27,6 +27,7 @@ interface StoreType {
     customersInQueue: { [queue: number]: Customer[] };
     organisation: Organisation;
     updateOrganisation: (name: string) => void;
+    deleteCustomer: (id: number) => void;
 }
 
 export const useStore = (): StoreType => {
@@ -141,7 +142,11 @@ export const useStore = (): StoreType => {
         OrganisationService.updateOrganisation({id: organisation.id, name: name});
     }
 
-    return {queues, customersInQueue, createQueue, deleteQueue, updateCustomersInQueue, sendUpdate, organisation, updateOrganisation}
+    const deleteCustomer = (id: number) => {
+        CustomerService.deleteCustomer(id);
+    }
+
+    return {queues, customersInQueue, createQueue, deleteQueue, updateCustomersInQueue, sendUpdate, organisation, updateOrganisation, deleteCustomer}
 };
 
 export const StoreContext = createContext<StoreType>({
@@ -155,5 +160,6 @@ export const StoreContext = createContext<StoreType>({
         id: -1,
         name: ""
     },
+    deleteCustomer: (id: number) => {},
     updateOrganisation: (name: string) => {},
 });

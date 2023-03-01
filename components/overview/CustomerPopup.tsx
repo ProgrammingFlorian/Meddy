@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Box, Button, createStyles, Group, Modal, NumberInput, Popover, Select, Textarea} from '@mantine/core';
 import {customLabel} from "../../helpers/Functions";
 import {Language} from "../../models/Language";
 import {Customer} from "../../models/Customer";
 import QRCodePopup from "../QRCodePopup";
 import {Queue} from "../../models/Queue";
+import {StoreContext} from "../../lib/store";
 
 interface CustomerPopupProps {
     customer: Customer;
@@ -15,6 +16,7 @@ interface CustomerPopupProps {
 
 const CustomerPopup = (props: CustomerPopupProps) => {
     const [propertiesChanged, setPropertiesChanged] = useState(false);
+    const {deleteCustomer} = useContext(StoreContext);
     const useStyles = createStyles((theme) => ({
         backgroundColor: {
             backgroundColor:
@@ -33,12 +35,13 @@ const CustomerPopup = (props: CustomerPopupProps) => {
     const [durationOfAppointment, setDurationOfAppointment] = useState(props.customer.duration)
 
     const [qrCodeShown, showQRCode] = useState(false);
+    const [opened, setOpened] = useState(true);
 
 
     return (
         <div>
             <Modal
-                opened={true}
+                opened={opened}
                 onClose={props.onClose}
                 size={"lg"}
             >
@@ -63,7 +66,8 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                             </Button>
                                         </Popover.Target>
                                         <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
-                                            <Button color="gray">
+                                            <Button color="gray"
+                                                    onClick={() => setOpened(false)}>
                                                 Bestätigen
                                             </Button>
                                         </Popover.Dropdown>
@@ -77,7 +81,8 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                         <Popover.Dropdown sx={(theme) => ({background: theme.white})}>
                                             <Button color="gray"
                                                     onClick={() => {
-                                                        //todo delete customer
+                                                        setOpened(false);
+                                                        deleteCustomer(props.customer.id);
                                                     }}>
                                                 Bestätigen
                                             </Button>

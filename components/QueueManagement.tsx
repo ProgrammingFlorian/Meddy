@@ -1,10 +1,10 @@
-import {ActionIcon, Button, Card, Group, Modal, Text, TextInput} from "@mantine/core";
+import {ActionIcon, Button, Card, Group, Modal, Popover, Text, TextInput} from "@mantine/core";
 import {IconX} from "@tabler/icons-react";
 import {useForm} from "@mantine/form";
 import {User} from "@supabase/auth-helpers-react";
 import {Queue} from "../models/Queue";
 import {StoreContext} from "../lib/store";
-import {useContext} from "react";
+import React, {useContext, useState} from "react";
 
 
 
@@ -21,26 +21,42 @@ export const QueueManagement = (props: QueueManagementProps) => {
             name: (value) => (value.length < 3 ? "Der Name muss mindestens 3 Zeichen besitzen" : null)
         }
     });
+    const [showConfirmation, setShowConfirmation] = useState(false);
+
+    const handleDeleteQueue = (queue: Queue) => {
+        deleteQueue(queue.id);
+        setShowConfirmation(false);
+    };
 
     const {queues, createQueue, deleteQueue} = useContext(StoreContext);
+
+    const [confirmPopoverOpened, setConfirmPopoverOpened] = useState(false);
 
     return (
         <Modal opened={props.isOpen} onClose={props.onClose} size={"sm"} title={"Warteschlangen verwalten"}>
             {queues.map((queue) => (
-                <Card className="mt-1" p="sm" radius="md" withBorder key={queue.id}>
+                <Card className="mt-1" p="xs" radius="sm" withBorder key={queue.id}>
                     <Group position="apart">
-                        <Text weight={500}>{queue.name}</Text>
-                        <ActionIcon onClick={() => {
-                            deleteQueue(queue.id);
-                        }}>
+                        <Text style={{ userSelect: "none" }} weight={500}>{queue.name}</Text>
+                        <ActionIcon onClick={() => setShowConfirmation(true)}>
                             <IconX size={32}/>
                         </ActionIcon>
+                        <Modal
+                            title="Löschen bestätigen"
+                            opened={showConfirmation}
+                            onClose={() => setShowConfirmation(false)}>
+                            <Text>Soll {queue.name} mit allen Kundendaten gelöscht werden? Diese Aktion kann nicht Rückgängig gemacht werden</Text>
+                            <Group className="pt-4" position="center">
+                                <Button color="green" onClick={() => handleDeleteQueue(queue)}>Bestätigen</Button>
+                                <Button color="red" onClick={() => setShowConfirmation(false)}>Abbrechen</Button>
+                            </Group>
+                        </Modal>
                     </Group>
                 </Card>
             ))}
             <Group>
                 <form onSubmit={form.onSubmit((val) => createQueue(val.name))}>
-                    <div className="flex-row flex gap-2 mt-1">
+                    <div className="flex-row flex gap-2 mt-3">
                         <TextInput
                             style={{width: 220}}
                             placeholder="Neue Warteschlange"
