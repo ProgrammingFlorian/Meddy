@@ -7,6 +7,7 @@ import {SidebarConfirm} from "./SidebarConfirm";
 import {useSupabaseClient} from "@supabase/auth-helpers-react";
 import SidebarButton from "./SidebarButton";
 import {useTranslation} from "next-i18next";
+import {useAuth} from "../../../contexts/Auth";
 
 interface SidebarComponentProps {
     openQueueManagement: () => void;
@@ -18,7 +19,10 @@ const SidebarComponent = (props: SidebarComponentProps) => {
     const {organisation, updateOrganisation} = useContext(StoreContext);
     const supabaseClient = useSupabaseClient();
 
-    const signOut = () => {
+    const { signOut } = useAuth();
+
+
+    const signOutOld = () => {
         supabaseClient.auth.signOut();
     };
 

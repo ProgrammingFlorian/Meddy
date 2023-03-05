@@ -36,6 +36,7 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "18.2.0",
     "react-i18next": "^12.2.0",
+    "react-router-dom": "^6.8.2",
     "tabler": "^1.0.0-alpha.8",
     "uuid": "^9.0.0"
   },

@@ -2,9 +2,12 @@ import {Box, Button, Group, PasswordInput, TextInput} from '@mantine/core';
 import {useForm} from '@mantine/form';
 import {NextPage} from "next";
 import {customLabel} from "../helpers/Functions";
-import Link from "next/link";
 import {IconAt} from "@tabler/icons-react";
-
+import React, {useRef} from "react";
+import {AuthProvider, useAuth} from "../contexts/Auth";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
+import Link from "next/link";
 
 const registrationPage: NextPage = () => {
     const form = useForm({
@@ -21,17 +24,41 @@ const registrationPage: NextPage = () => {
         },
     });
 
+    // const { signUp } = useAuth();
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        // e.preventDefault()
+        //
+        // const email = form.values.email;
+        // const password = form.values.password;
+        //
+        //
+        // // Calls `signUp` function from the context
+        // const { error } = await signUp({ email , password })
+        //
+        // if (error) {
+        //     alert('error signing in')
+        // } else {
+        //
+        //     // Redirect user to Dashboard
+        //     window.location.href = '/';
+        //
+        // }
+    }
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center py-2" >
             <div className="relative inline-block text-left " style={{minWidth: 500}}>
-                <div className=" p-10 bg-gray-100 justify-center">
+                <div className=" p-10 justify-center">
                     <label htmlFor="select"
-                           className=" text-center font-semibold text text-2xl text-blue-500 block py-2">
-                        Registration
+                           className=" text-center font-semibold text text-3xl text-blue-500 block py-2">
+                        SignUp
                     </label>
                     <br/>
                     <Box sx={{ maxWidth: 340 }} mx="auto">
-                        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+                        <form onSubmit={form.onSubmit((values) => {
+                            handleSubmit
+                            console.log(values)
+                        })}>
                             <TextInput
                                 label={customLabel("Praxis Name", true)}
                                 placeholder="Name"
@@ -39,19 +66,20 @@ const registrationPage: NextPage = () => {
                             <br/>
                             <TextInput
                                 label={customLabel("E-Mail:", true)}
-                                placeholder="Your email" icon={<IconAt />}
-                                {...form.getInputProps('email')}/>
+                                placeholder="email" icon={<IconAt />}
+                                {...form.getInputProps('email')}
+                                />
                             <br/>
                             <PasswordInput
-                                label={customLabel("Password", true)}
-                                placeholder="Password"
+                                label={customLabel("Passwort", true)}
+                                placeholder="Passwort"
                                 {...form.getInputProps('password')}
                             />
                             <br/>
                             <PasswordInput
                                 mt="sm"
-                                label={customLabel("Confirm password", true)}
-                                placeholder="Confirm password"
+                                label={customLabel("Passwort wiederholen", true)}
+                                placeholder="Passwort wiederholen"
                                 {...form.getInputProps('confirmPassword')}
                             />
                             <br/>
@@ -61,7 +89,7 @@ const registrationPage: NextPage = () => {
                                             onClick={() => {
 
                                             }}>
-                                        Register
+                                        Registrieren
                                     </Button>
                                     <br/>
                                     <div>

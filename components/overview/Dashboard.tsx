@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import QueueViewer from "./queue_viewer/QueueViewer";
 import {StoreContext} from "../../lib/store";
-import {Container, Flex, Group, Space, Title} from "@mantine/core";
+import {Container, Flex, Group, Space, Title, Center} from "@mantine/core";
 import CheckinPopup from "../CheckinPopup";
 
 const Dashboard = () => {
@@ -28,20 +28,23 @@ const Dashboard = () => {
 
     // TODO: connect "Verwaltungsrechner" to database
     return (
-        <Container className="h-screen" fluid>
+        <Container className="h-screen" fluid style={{userSelect: "none"}}>
             <Group position="apart">
                 <Flex direction="column">
                     {/* TODO: Integrate color into mantine theme and use theme color */}
-                    <Title order={4} color="#0099ff">{organisation.name}</Title>
-                    <Title order={4} color="#0099ff">Verwaltungsrechner</Title>
+                    <Title size={30} order={4} color="#0099ff">{organisation.name}</Title>
+                    <Title size={20} order={4} color="#0099ff">Verwaltungsrechner</Title>
                 </Flex>
                 <Flex>
-                    <Title order={4} color="#0099ff">{time} Uhr</Title>
+                    <Title size={30} order={4} color="#0099ff">{time} Uhr</Title>
                 </Flex>
             </Group>
-            <Space h={20}/>
+            <Space h={60}/>
             <Container fluid>
-                <QueueViewer/>
+                <Center>
+                    <QueueViewer/>
+                </Center>
+
             </Container>
             <Space h={40}/>
             <Container>
