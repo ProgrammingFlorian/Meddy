@@ -24,88 +24,91 @@ const registrationPage: NextPage = () => {
         },
     });
 
-    // const { signUp } = useAuth();
+     const { signUp } = useAuth();
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        // e.preventDefault()
-        //
-        // const email = form.values.email;
-        // const password = form.values.password;
-        //
-        //
-        // // Calls `signUp` function from the context
-        // const { error } = await signUp({ email , password })
-        //
-        // if (error) {
-        //     alert('error signing in')
-        // } else {
-        //
-        //     // Redirect user to Dashboard
-        //     window.location.href = '/';
-        //
-        // }
+        e.preventDefault()
+
+        const email = form.values.email;
+        const password = form.values.password;
+
+
+        // Calls `signUp` function from the context
+        const { error } = await signUp({ email , password })
+
+        if (error) {
+            alert('error signing in')
+        } else {
+
+            // Redirect user to Dashboard
+            window.location.href = '/';
+
+        }
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center py-2" >
-            <div className="relative inline-block text-left " style={{minWidth: 500}}>
-                <div className=" p-10 justify-center">
-                    <label htmlFor="select"
-                           className=" text-center font-semibold text text-3xl text-blue-500 block py-2">
-                        SignUp
-                    </label>
-                    <br/>
-                    <Box sx={{ maxWidth: 340 }} mx="auto">
-                        <form onSubmit={form.onSubmit((values) => {
-                            handleSubmit
-                            console.log(values)
-                        })}>
-                            <TextInput
-                                label={customLabel("Praxis Name", true)}
-                                placeholder="Name"
-                                {...form.getInputProps('name')} />
-                            <br/>
-                            <TextInput
-                                label={customLabel("E-Mail:", true)}
-                                placeholder="email" icon={<IconAt />}
-                                {...form.getInputProps('email')}
+        <AuthProvider>
+            <div className="min-h-screen flex flex-col items-center justify-center py-2" >
+                <div className="relative inline-block text-left " style={{minWidth: 500}}>
+                    <div className=" p-10 justify-center">
+                        <label htmlFor="select"
+                               className=" text-center font-semibold text text-3xl text-blue-500 block py-2">
+                            SignUp
+                        </label>
+                        <br/>
+                        <Box sx={{ maxWidth: 340 }} mx="auto">
+                            <form onSubmit={form.onSubmit((values) => {
+                                handleSubmit
+                                console.log(values)
+                            })}>
+                                <TextInput
+                                    label={customLabel("Praxis Name", true)}
+                                    placeholder="Name"
+                                    {...form.getInputProps('name')} />
+                                <br/>
+                                <TextInput
+                                    label={customLabel("E-Mail:", true)}
+                                    placeholder="email" icon={<IconAt />}
+                                    {...form.getInputProps('email')}
                                 />
-                            <br/>
-                            <PasswordInput
-                                label={customLabel("Passwort", true)}
-                                placeholder="Passwort"
-                                {...form.getInputProps('password')}
-                            />
-                            <br/>
-                            <PasswordInput
-                                mt="sm"
-                                label={customLabel("Passwort wiederholen", true)}
-                                placeholder="Passwort wiederholen"
-                                {...form.getInputProps('confirmPassword')}
-                            />
-                            <br/>
-                            <Group position="center" mt="md">
-                                <div className="flex flex-col items-center justify-content-center">
-                                    <Button type="submit" mt="sm"
-                                            onClick={() => {
+                                <br/>
+                                <PasswordInput
+                                    label={customLabel("Passwort", true)}
+                                    placeholder="Passwort"
+                                    {...form.getInputProps('password')}
+                                />
+                                <br/>
+                                <PasswordInput
+                                    mt="sm"
+                                    label={customLabel("Passwort wiederholen", true)}
+                                    placeholder="Passwort wiederholen"
+                                    {...form.getInputProps('confirmPassword')}
+                                />
+                                <br/>
+                                <Group position="center" mt="md">
+                                    <div className="flex flex-col items-center justify-content-center">
+                                        <Button type="submit" mt="sm"
+                                                onClick={() => {
 
-                                            }}>
-                                        Registrieren
-                                    </Button>
-                                    <br/>
-                                    <div>
-                                        Schon registriert?&nbsp;
-                                        <Link href="/loginPage" className="text-blue-600 underline">Login</Link>
+                                                }}>
+                                            Registrieren
+                                        </Button>
+                                        <br/>
+                                        <div>
+                                            Schon registriert?&nbsp;
+                                            <Link href="/loginPage" className="text-blue-600 underline">Login</Link>
+                                        </div>
                                     </div>
-                                </div>
-                            </Group>
-                        </form>
-                    </Box>
-                    <br/>
-                    <br/>
+                                </Group>
+                            </form>
+                        </Box>
+                        <br/>
+                        <br/>
 
+                    </div>
                 </div>
             </div>
-        </div>
+        </AuthProvider>
+
 
     );
 

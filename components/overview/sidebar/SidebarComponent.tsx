@@ -19,7 +19,7 @@ const SidebarComponent = (props: SidebarComponentProps) => {
     const {organisation, updateOrganisation} = useContext(StoreContext);
     const supabaseClient = useSupabaseClient();
 
-    const { signOut } = useAuth();
+    const { signOut, user } = useAuth();
 
 
     const signOutOld = () => {
