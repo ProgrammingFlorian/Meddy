@@ -1,10 +1,12 @@
 import type {NextPage} from 'next'
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import {Customer} from "../models/Customer";
-import {LoadingOverlay} from "@mantine/core";
+import {Alert, Container, LoadingOverlay} from "@mantine/core";
 import {useRouter} from "next/router";
 import CustomerService from "../services/CustomerService";
-import {IconUser, IconUsers} from "@tabler/icons-react";
+import {IconAlertCircle, IconUser, IconUsers} from "@tabler/icons-react";
+import {useTranslation} from "next-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 const custerMessageBuilder = (personsInQueue: number) => {
     if (personsInQueue === 1) {
@@ -24,24 +26,58 @@ const personInQueue = (personsInQueue: number) => {
     }
 };
 
-const waitingPage: NextPage = () => {
+const wait: NextPage = () => {
+    // TODO: Use translation!
+    const {t} = useTranslation();
+
     const [customer, setCustomer] = useState(null as Customer | null);
-    const [waitingTime, setWaitingTime] = useState(0);
+    const [error, setError] = useState(null as string | null);
+
+    const [fixedWaitingTime, setFixedWaitingTime] = useState(0);
+    const [liveWaitingTime, setLiveWaitingTime] = useState(0);
+    const [latestAppointmentStart, setLatestAppointmentStart] = useState(null as null | Date);
     const [personsAhead, setPersonsAhead] = useState(0);
     const [organisationName, setOrganisationName] = useState('');
 
+    const [isOvertime, setOvertime] = useState(false);
+
+    const [actualTime, setActualTime] = useState(0);
+
     const router = useRouter();
+
+    // TODO: Use useCallback (didn't update the state values for some reason..)
+    const calculateTimeLeft = useMemo(() => {
+        if (latestAppointmentStart) {
+            const difference = +(new Date()) - +(new Date(latestAppointmentStart));
+            const minuteDifference = Math.floor((difference / 1000 / 60) % 60);
+            setActualTime(fixedWaitingTime + Math.max(0, liveWaitingTime - minuteDifference));
+            setOvertime(liveWaitingTime - minuteDifference < 0);
+        } else {
+            setActualTime(fixedWaitingTime);
+        }
+    }, [latestAppointmentStart, liveWaitingTime, fixedWaitingTime]);
 
     useEffect(() => {
         const id = router.query['id'];
         if (id) {
-            CustomerService.fetchCustomersInSameQueue(+id).then(([c, otherCustomers, organisation]) => {
+            CustomerService.fetchCustomersInSameQueue(+id).then(([c, otherCustomers, organisation, queue]) => {
                 setCustomer(c);
                 setPersonsAhead(otherCustomers.length);
-                setWaitingTime(otherCustomers.reduce((previous, currentCustomer) => previous + currentCustomer.duration, 0))
+                setFixedWaitingTime(otherCustomers.filter(c => c.id !== queue.active_customer)
+                    .reduce((previous, currentCustomer) => previous + currentCustomer.duration, 0));
+                setLiveWaitingTime(otherCustomers.find(c => c.id === queue.active_customer)?.duration ?? 0);
+                console.log("live waiting time", otherCustomers.find(c => c.id === queue.active_customer)?.duration ?? 0);
+                setLatestAppointmentStart(queue.latest_appointment_start);
                 setOrganisationName(organisation.name);
             });
+        } else {
+            setError(t('error.parameterMissing'));
         }
+
+        // @ts-ignore see the TODO above the calculateTimeLeft function
+        const timer = setInterval(calculateTimeLeft, 30000);
+
+        return () => clearInterval(timer);
     }, [router.query]);
 
     return customer ? (
@@ -52,14 +88,14 @@ const waitingPage: NextPage = () => {
                     <h1 className="">Herzlichen Willkommen bei {organisationName}, {customer.name}!</h1>
                     <br/>
                     <br/>
-                    <div className='blue-color text-center' style={{
+                    <div className={`${isOvertime ? "" : "blue-color"} text-center`} style={{
                         width: "150px",
                         height: "150px",
                         border: "15px solid",
                         borderRadius: "75px",
                         margin: "0 auto"
                     }}>
-                        <h1 className="pt-5 pb-0 text-black font-bold">{waitingTime}</h1>
+                        <h1 className="pt-5 pb-0 text-black font-bold">{actualTime}</h1>
                         <h4 className="text-black font-bold pt-0">min</h4>
                     </div>
                     <h2 className='pt-5 font-bold'>Ihre geschätze Wartezeit</h2>
@@ -83,9 +119,26 @@ const waitingPage: NextPage = () => {
                 */}
             </div>
         </div>
+    ) : error ? (
+        <Container mt={50}>
+            <Alert icon={<IconAlertCircle size="1rem"/>} title={t('error.title')} color="red">
+                {error}
+            </Alert>
+        </Container>
     ) : (
         <LoadingOverlay visible={true}/>
     );
 };
 
-export default waitingPage;
+export async function getStaticProps({locale}: { locale: string }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'common'
+            ])),
+            // Will be passed to the page component as props
+        },
+    }
+}
+
+export default wait;

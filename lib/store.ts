@@ -142,7 +142,7 @@ export const useStore = (): StoreType => {
                 return newQueues;
             });
         });
-    }
+    };
 
     const updateCustomersInQueue = (newValue: {
         [id: number]: Customer[]
@@ -155,12 +155,12 @@ export const useStore = (): StoreType => {
             });
         });
         setCustomersInQueue(newValue);
-    }
+    };
 
     const updateOrganisation = (name: string) => {
         setOrganisation({id: organisation.id, name: name});
         OrganisationService.updateOrganisation({id: organisation.id, name: name});
-    }
+    };
 
     const deleteCustomer = (customer: Customer) => {
         setCustomersInQueue(previous => {
@@ -169,7 +169,7 @@ export const useStore = (): StoreType => {
             return newValue;
         });
         CustomerService.deleteCustomer(customer.id);
-    }
+    };
 
     const updateQueue = (queue: Queue) => {
         setQueues(previous => {
@@ -179,7 +179,7 @@ export const useStore = (): StoreType => {
             return newQueues;
         });
         QueueService.updateQueue(queue); // TODO: Handle error
-    }
+    };
 
     return {
         queues,

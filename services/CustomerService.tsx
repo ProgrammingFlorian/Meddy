@@ -4,27 +4,33 @@ import {supabase} from "../lib/store";
 import {TABLE_ACCOUNT_INFORMATION} from "./AccountService";
 import {Organisation} from "../models/Organisation";
 import {TABLE_QUEUES} from "./QueueService";
+import {Queue} from "../models/Queue";
 
 const TABLE_CUSTOMERS = 'customers';
 
 interface CustomersInSameQueue extends Customer {
-    queues: {
-        customers: Customer[],
-        organisations: Organisation
-    }
+    queues: QueueWithCustomersAndOrganisation;
 }
 
-const fetchCustomersInSameQueue = async (customerId: number): Promise<[Customer, Customer[], Organisation]> => {
+interface QueueWithCustomersAndOrganisation extends Queue {
+    customers: Customer[],
+    organisations: Organisation
+}
+
+
+const fetchCustomersInSameQueue = async (customerId: number): Promise<[Customer, Customer[], Organisation, Queue]> => {
     try {
         // @ts-ignore ignore type not perfect
         const response: PostgrestResponse<CustomersInSameQueue> = await supabase.from(TABLE_CUSTOMERS).select(`
-        *, queues!customers_queue_id_fkey(customers!customers_queue_id_fkey(*), organisations(*))`).eq('id', customerId);
+        *, queues!customers_queue_id_fkey(*, customers!customers_queue_id_fkey(*), organisations(*))`).eq('id', customerId);
         console.log(response);
         if (response.data && response.data.length > 0) {
             const customer = response.data[0] as Customer;
+            const queue = response.data[0].queues as Queue;
             const otherCustomers = response.data[0].queues.customers.filter(c => c.id !== customerId);
             const organisation = response.data[0].queues.organisations;
-            return Promise.resolve([customer, otherCustomers, organisation]);
+            console.log(queue);
+            return Promise.resolve([customer, otherCustomers, organisation, queue]);
         }
     } catch (error) {
         console.error('Error retrieving waiting_queue from database', error);

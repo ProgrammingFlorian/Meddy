@@ -25,5 +25,9 @@
   "checkout": "Abmelden",
   "saveChanges": "Änderungen speichern",
   "confirm": "Bestätigen",
-  "logout": "Abmelden"
+  "logout": "Abmelden",
+  "error": {
+    "title": "Fehler",
+    "parameterMissing": "Ein Parameter wurde nicht übergeben. Überprüfe ob du auf der richtigen Seite bist."
+  }
 }
