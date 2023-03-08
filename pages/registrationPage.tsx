@@ -24,25 +24,25 @@ const registrationPage: NextPage = () => {
         },
     });
 
-     const { signUp } = useAuth();
+    // const { signUp } = useAuth();
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault()
-
-        const email = form.values.email;
-        const password = form.values.password;
-
-
-        // Calls `signUp` function from the context
-        const { error } = await signUp({ email , password })
-
-        if (error) {
-            alert('error signing in')
-        } else {
-
-            // Redirect user to Dashboard
-            window.location.href = '/';
-
-        }
+        // e.preventDefault()
+        //
+        // const email = form.values.email;
+        // const password = form.values.password;
+        //
+        //
+        // // Calls `signUp` function from the context
+        // const { error } = await signUp({ email , password })
+        //
+        // if (error) {
+        //     alert('error signing in')
+        // } else {
+        //
+        //     // Redirect user to Dashboard
+        //     window.location.href = '/';
+        //
+        // }
     }
 
     return (
