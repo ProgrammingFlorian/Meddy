@@ -1,13 +1,13 @@
-import {createContext, useCallback, useEffect, useState} from 'react'
+import {createContext, ReactNode, useCallback, useEffect, useState} from 'react'
 import {createClient} from '@supabase/supabase-js'
 import {Customer} from '../models/Customer'
 import {RealtimeChannel} from "@supabase/realtime-js";
 import {Queue} from "../models/Queue";
-import {useUser} from "@supabase/auth-helpers-react";
 import QueueService from "../services/QueueService";
 import CustomerService from "../services/CustomerService";
 import {Organisation} from "../models/Organisation";
 import OrganisationService from "../services/OrganisationService";
+import {useAuth} from "./Auth";
 
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -44,7 +44,8 @@ export const useStore = (): StoreType => {
 
     let channel: RealtimeChannel | null = null;
 
-    const account = useUser();
+    const auth = useAuth();
+    const account = auth.user;
 
     useEffect(() => {
         // Fetch current state of customers
@@ -198,3 +199,18 @@ export const useStore = (): StoreType => {
 
 // @ts-ignore default state should never be used and is initialized empty
 export const StoreContext = createContext<StoreType>({});
+
+interface StoreProviderProps {
+    children: ReactNode;
+}
+
+export const StoreProvider = ({children}: StoreProviderProps) => {
+    const store = useStore();
+
+    return (
+        <StoreContext.Provider value={store}>
+            {children}
+        </StoreContext.Provider>
+    );
+
+}

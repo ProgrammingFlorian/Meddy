@@ -1,5 +1,5 @@
 import {PostgrestResponse} from "@supabase/supabase-js";
-import {supabase} from "../lib/store";
+import {supabase} from "../lib/Store";
 import {Queue} from "../models/Queue";
 import {TABLE_ACCOUNT_INFORMATION} from "./AccountService";
 

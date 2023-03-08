@@ -1,5 +1,5 @@
 import type {NextPage} from 'next'
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {Customer} from "../models/Customer";
 import {Alert, Container, LoadingOverlay} from "@mantine/core";
 import {useRouter} from "next/router";
@@ -71,7 +71,7 @@ const wait: NextPage = () => {
                 setOrganisationName(organisation.name);
             });
         } else {
-            setError(t('error.parameterMissing'));
+            setError(t('errors.parameterMissing'));
         }
 
         // @ts-ignore see the TODO above the calculateTimeLeft function
@@ -121,7 +121,7 @@ const wait: NextPage = () => {
         </div>
     ) : error ? (
         <Container mt={50}>
-            <Alert icon={<IconAlertCircle size="1rem"/>} title={t('error.title')} color="red">
+            <Alert icon={<IconAlertCircle size="1rem"/>} title={t('errors.title')} color="red">
                 {error}
             </Alert>
         </Container>

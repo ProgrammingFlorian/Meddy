@@ -4,7 +4,8 @@
   "sidebar": {
     "organisationName": "Praxisname",
     "changeOrganisationName": "Praxisnamen ändern",
-    "manageQueues": "Warteschlangen verwalten"
+    "manageQueues": "Warteschlangen verwalten",
+    "changePassword": "Passwort ändern"
   },
   "customer": {
     "editTitle": "Bearbeiten",
@@ -16,6 +17,20 @@
     "notesPlaceholder": "Nur interne Informationen",
     "showQRCode": "QR Code anzeigen"
   },
+  "password_reset": {
+    "title": "Passwort zurücksetzen",
+    "password_field": {
+      "label": "Neues Passwort",
+      "placeholder": "Passwort"
+    },
+    "submit": "Abschicken"
+  },
+  "login": {
+    "title": "Anmelden",
+    "submit": "Anmelden",
+    "reset_password_text": "Passwort vergessen?",
+    "reset_password_success": "Passwort erfolgreich zurückgesetzt!"
+  },
   "duration": "Dauer",
   "since": "Seit",
   "minutesAbbreviation": "min",
@@ -26,8 +41,10 @@
   "saveChanges": "Änderungen speichern",
   "confirm": "Bestätigen",
   "logout": "Abmelden",
-  "error": {
+  "errors": {
     "title": "Fehler",
-    "parameterMissing": "Ein Parameter wurde nicht übergeben. Überprüfe ob du auf der richtigen Seite bist."
+    "parameterMissing": "Ein Parameter wurde nicht übergeben. Überprüfe ob du auf der richtigen Seite bist.",
+    "passwordLength": "Das Passwort muss mindest 4 Zeichen besitzen.",
+    "loginFailed": "Anmeldung fehlgeschlagen! Bitte überprüfen E-Mail und Passwort"
   }
 }

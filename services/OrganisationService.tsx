@@ -1,5 +1,5 @@
 import {PostgrestResponse} from "@supabase/supabase-js";
-import {supabase} from "../lib/store";
+import {supabase} from "../lib/Store";
 import {Organisation} from "../models/Organisation";
 import {PostgrestResponseFailure, PostgrestResponseSuccess} from "@supabase/postgrest-js";
 

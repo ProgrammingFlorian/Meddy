@@ -1,6 +1,6 @@
 import {Customer} from "../models/Customer";
 import {PostgrestResponse} from "@supabase/supabase-js";
-import {supabase} from "../lib/store";
+import {supabase} from "../lib/Store";
 import {TABLE_ACCOUNT_INFORMATION} from "./AccountService";
 import {Organisation} from "../models/Organisation";
 import {TABLE_QUEUES} from "./QueueService";

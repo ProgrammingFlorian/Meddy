@@ -1,7 +1,7 @@
 import React from "react";
 import {QRCodeSVG} from "qrcode.react";
 import {Modal, useMantineTheme} from "@mantine/core";
-import {Customer} from "../models/Customer";
+import {Customer} from "../../models/Customer";
 
 interface QRCodePopupProps {
     visible: boolean;

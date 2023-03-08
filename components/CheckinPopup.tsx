@@ -4,9 +4,9 @@ import {Language} from "../models/Language";
 import {customLabel} from "../helpers/Functions";
 import {useForm} from "@mantine/form";
 import {Customer} from "../models/Customer";
-import QRCodePopup from "./QRCodePopup";
+import QRCodePopup from "./overview/QRCodePopup";
 import CustomerService from "../services/CustomerService";
-import {StoreContext} from "../lib/store";
+import {StoreContext} from "../lib/Store";
 import {useTranslation} from "next-i18next";
 
 const CheckinPopup = () => {

@@ -4,7 +4,7 @@ import {Customer, getCustomerIdAsString} from '../../../models/Customer';
 import {move, reorder} from "../../../util/ListUtil";
 import React, {useContext, useMemo, useState} from "react";
 import CustomerPopup from "../CustomerPopup";
-import {StoreContext} from "../../../lib/store";
+import {StoreContext} from "../../../lib/Store";
 import QueueCustomerActive from "./QueueCustomerActive";
 import QueueCustomer from "./QueueCustomer";
 
@@ -21,13 +21,6 @@ const QueueViewer = () => {
 
         const sourceId = +source.droppableId;
         const destinationId = +destination.droppableId;
-
-        const sourceQueue = queues.find(q => q.id === sourceId);
-        const destinationQueue = queues.find(q => q.id === destinationId);
-
-        if (sourceQueue?.active_customer !== null) {
-
-        }
 
         if (sourceId === destinationId) {
             const items = reorder(customersInQueue[sourceId], source.index, destination.index);

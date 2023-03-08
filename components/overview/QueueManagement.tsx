@@ -1,17 +1,14 @@
-import {ActionIcon, Button, Card, Group, Modal, Popover, Text, TextInput} from "@mantine/core";
+import {ActionIcon, Button, Card, Group, Modal, Text, TextInput} from "@mantine/core";
 import {IconX} from "@tabler/icons-react";
 import {useForm} from "@mantine/form";
-import {User} from "@supabase/auth-helpers-react";
-import {Queue} from "../models/Queue";
-import {StoreContext} from "../lib/store";
+import {Queue} from "../../models/Queue";
+import {StoreContext} from "../../lib/Store";
 import React, {useContext, useState} from "react";
-
 
 
 interface QueueManagementProps {
     isOpen: boolean,
-    onClose: () => void,
-    user: User
+    onClose: () => void
 }
 
 export const QueueManagement = (props: QueueManagementProps) => {
@@ -29,8 +26,6 @@ export const QueueManagement = (props: QueueManagementProps) => {
     };
 
     const {queues, createQueue, deleteQueue} = useContext(StoreContext);
-
-    const [confirmPopoverOpened, setConfirmPopoverOpened] = useState(false);
 
     return (
         <Modal opened={props.isOpen} onClose={props.onClose} size={"sm"} title={"Warteschlangen verwalten"}>

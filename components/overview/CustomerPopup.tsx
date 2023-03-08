@@ -1,9 +1,9 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {Button, Flex, Group, Modal, NumberInput, Select, Textarea, TextInput} from '@mantine/core';
 import {Customer} from "../../models/Customer";
-import QRCodePopup from "../QRCodePopup";
+import QRCodePopup from "./QRCodePopup";
 import {Queue} from "../../models/Queue";
-import {StoreContext} from "../../lib/store";
+import {StoreContext} from "../../lib/Store";
 import {useTranslation} from "next-i18next";
 import ConfirmButton from "../ConfirmButton";
 

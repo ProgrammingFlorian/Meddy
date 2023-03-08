@@ -2,12 +2,12 @@ import {Navbar} from "@mantine/core";
 import {SidebarTextField} from "./SidebarTextField";
 import {IconDeviceDesktop, IconLogout, IconSubtask} from "@tabler/icons-react";
 import React, {useContext} from "react";
-import {StoreContext} from "../../../lib/store";
+import {StoreContext} from "../../../lib/Store";
 import {SidebarConfirm} from "./SidebarConfirm";
-import {useSupabaseClient} from "@supabase/auth-helpers-react";
 import SidebarButton from "./SidebarButton";
 import {useTranslation} from "next-i18next";
-import {useAuth} from "../../../contexts/Auth";
+import {useAuth} from "../../../lib/Auth";
+import {useRouter} from "next/router";
 
 interface SidebarComponentProps {
     openQueueManagement: () => void;
@@ -16,15 +16,14 @@ interface SidebarComponentProps {
 const SidebarComponent = (props: SidebarComponentProps) => {
     const {t} = useTranslation();
 
+    const router = useRouter();
+
     const {organisation, updateOrganisation} = useContext(StoreContext);
-    const supabaseClient = useSupabaseClient();
+    const { signOut } = useAuth();
 
-    const { signOut, user } = useAuth();
-
-
-    const signOutOld = () => {
-        supabaseClient.auth.signOut();
-    };
+    const changePassword = () => {
+        router.replace('/change-password');
+    }
 
     // wait for organisation to initialise, otherwise default text is set to zero
     return organisation.name ? (
@@ -46,8 +45,10 @@ const SidebarComponent = (props: SidebarComponentProps) => {
                 */}
                 <SidebarButton icon={<IconSubtask/>} iconColor="yellow" label={t('sidebar.manageQueues')}
                                onClick={props.openQueueManagement}/>
+                <SidebarButton icon={<IconSubtask/>} iconColor="orange" label={t('sidebar.changePassword')}
+                               onClick={changePassword}/>
                 <SidebarConfirm initialText="" label={t('logout')} confirmLabel={t('logout')}
-                                onConfirm={() => signOut()} icon={<IconLogout/>} iconColor="red"/>
+                                onConfirm={signOut} icon={<IconLogout/>} iconColor="red"/>
             </Navbar.Section>
         </Navbar>
     ) : (<></>);
