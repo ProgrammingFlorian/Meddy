@@ -23,10 +23,10 @@ const QRCodePopup = (props: QRCodePopupProps) => {
                 overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
                 overlayOpacity={0.55}
                 overlayBlur={3}
-                size={"lg"}
+                size="lg"
             >
 
-                <div className="min-h-screen flex flex-col items-center justify-center py-2">
+                <div className="flex flex-col items-center justify-center py-2">
                     <div className='p-10 justify-center flex-1'>
                         <div className="text-center">
                             <br/>

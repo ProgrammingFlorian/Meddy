@@ -1,11 +1,9 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {Button, Flex, Group, Modal, NumberInput, Select, Textarea, TextInput} from '@mantine/core';
 import {Customer} from "../../models/Customer";
 import QRCodePopup from "./QRCodePopup";
 import {Queue} from "../../models/Queue";
-import {StoreContext} from "../../lib/Store";
 import {useTranslation} from "next-i18next";
-import ConfirmButton from "../ConfirmButton";
 
 interface CustomerPopupProps {
     customer: Customer;
@@ -17,8 +15,6 @@ interface CustomerPopupProps {
 const CustomerPopup = (props: CustomerPopupProps) => {
     const {t} = useTranslation();
 
-    const {deleteCustomer} = useContext(StoreContext);
-
     const initialName = props.customer.name;
     const [name, setName] = useState(initialName)
     const initialQueue = props.queues.find(queue => props.customer.queue_id === queue.id)?.name ?? null;
@@ -29,7 +25,6 @@ const CustomerPopup = (props: CustomerPopupProps) => {
     const [durationOfAppointment, setDurationOfAppointment] = useState(initialDuration)
 
     const [qrCodeShown, showQRCode] = useState(false);
-    const [opened, setOpened] = useState(true);
 
     const propertiesChanged = useMemo(() => {
         return name !== initialName || queue !== initialQueue || notes !== initialNotes || durationOfAppointment !== initialDuration
@@ -49,8 +44,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
 
     return (
         <>
-            <QRCodePopup visible={qrCodeShown} onClose={() => showQRCode(false)} customer={props.customer}/>
-            <Modal opened={opened} onClose={props.onClose} size="lg" title={t('customer.editTitle')}>
+            <Modal opened={true} onClose={props.onClose} size="lg" title={t('customer.editTitle')}>
                 <Flex direction="column" justify="flex-start" gap="xl" p="xl">
                     {/* TODO: Find out how to override classes from mantine */}
                     <TextInput className="text-center font-blue" variant="unstyled"
@@ -58,6 +52,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                defaultValue={name}
                                onChange={(e) => setName(e.target.value)} size="xl"
                                sx={{color: 'blue'}}/>
+                    {/* TODO
                     <Flex justify="center" gap="md">
                         <ConfirmButton fullWidth label={t('call')} onClick={() => setOpened(false)} color="green"/>
                         <ConfirmButton fullWidth label={t('checkout')} onClick={() => {
@@ -65,6 +60,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                             deleteCustomer(props.customer);
                         }} color="red"/>
                     </Flex>
+                    */}
                     <Flex direction="column" gap="xs">
                         <Group grow>
                             <NumberInput label={t('customer.appointmentDuration')} value={durationOfAppointment}
@@ -111,6 +107,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                     </Flex>
                 </Flex>
             </Modal>
+            <QRCodePopup visible={qrCodeShown} onClose={() => showQRCode(false)} customer={props.customer}/>
         </>
     );
 };

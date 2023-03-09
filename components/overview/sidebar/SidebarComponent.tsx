@@ -22,7 +22,7 @@ const SidebarComponent = (props: SidebarComponentProps) => {
     const { signOut } = useAuth();
 
     const changePassword = () => {
-        router.replace('/change-password');
+        router.push('/change-password');
     }
 
     // wait for organisation to initialise, otherwise default text is set to zero
