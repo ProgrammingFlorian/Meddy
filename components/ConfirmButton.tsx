@@ -7,6 +7,7 @@ interface ConfirmButtonProps {
     color: string;
     fullWidth: boolean;
     onClick: () => void;
+    disabled?: boolean
 }
 
 const ConfirmButton = (props: ConfirmButtonProps) => {
@@ -15,7 +16,7 @@ const ConfirmButton = (props: ConfirmButtonProps) => {
     return (
         <Popover trapFocus position="bottom" withArrow shadow="md">
             <Popover.Target>
-                <Button color={props.color} fullWidth={props.fullWidth}>
+                <Button disabled={props.disabled} color={props.color} fullWidth={props.fullWidth}>
                     {props.label}
                 </Button>
             </Popover.Target>

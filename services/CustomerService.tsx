@@ -120,11 +120,12 @@ const saveCustomer = async (customer: Customer): Promise<Customer> => {
     return Promise.reject();
 };
 
+
 export default {
     fetchCustomersInSameQueue,
     fetchCustomersFromAccountOrganisationGroupedByQueue,
     updateCustomer,
     saveCustomer,
-    deleteCustomer
+    deleteCustomer,
 }
 

@@ -12,12 +12,12 @@ const Home: NextPage = () => {
                        ta="center"
                        size="100px"
                        fw={700}
-                >Swait</Title>
+                >Meddy</Title>
 
                 <a href="overview"
                    className="rounded-xl text-left mt-12">
                     <Card shadow="sm" p="lg" radius="md" withBorder>
-                        <h3 className="text-2xl font-bold text-center hover:text-blue-600 focus:text-blue-600">Eintauchen &rarr;</h3>
+                        <h3 className="text-2xl font-bold text-center hover:text-blue-600 focus:text-blue-600">Starten &rarr;</h3>
                     </Card>
                 </a>
             </main>

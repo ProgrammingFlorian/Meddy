@@ -1,4 +1,4 @@
-import {Box, Button, createStyles, Group, Modal, Select, Textarea, TextInput} from "@mantine/core";
+import {Box, Button, createStyles, Group, Modal, Select, Space, Textarea, TextInput} from "@mantine/core";
 import {useContext, useEffect, useState} from "react";
 import {Language} from "../models/Language";
 import {customLabel} from "../helpers/Functions";
@@ -24,7 +24,6 @@ const CheckinPopup = () => {
     }));
 
 
-    const language = Language.GERMAN;
     const {classes} = useStyles();
     const [isLoading, setLoading] = useState(false);
     const [customer, setCustomer] = useState(null as null | Customer);
@@ -82,6 +81,7 @@ const CheckinPopup = () => {
                                         const customer: Customer = {
                                             duration: values.duration,
                                             name: values.name,
+                                            notes: values.notes,
                                             position: 0,
                                             queue_id: queueId
                                         }
@@ -90,15 +90,16 @@ const CheckinPopup = () => {
                                             setLoading(false);
                                         });
                                         setLoading(true);
+                                        setTimeout(()=> form.reset(), 500);
                                     }
                                 })}>
                                     <TextInput
-                                        label={customLabel("Patienten Name", true)}
-                                        placeholder="Name"
+                                        label={customLabel(t('customer.customerName'), true)}
+                                        placeholder={`${t('customer.name')}`}
                                         {...form.getInputProps('name')} />
                                     <br/>
                                     <TextInput
-                                        label={customLabel(language == Language.GERMAN ? "Geschätze Termindauer in Minuten:" : "Approximate duration of appointment:")}
+                                        label={customLabel(t('customer.approximateAppointmentDuration')+":")}
                                         placeholder={"5"}
                                         classNames={{input: classes.textColor}}
                                         {...form.getInputProps('duration')}
@@ -125,13 +126,13 @@ const CheckinPopup = () => {
                                     <br/>
                                     <Select
                                         data={queues.map(queue => queue.name)}
-                                        label={customLabel(language == Language.GERMAN ? "Behandelnde/r Ärztin/Arzt" : "Doctor:")}
+                                        label={customLabel(t('checkIn.assignedDoctor'))}
                                         {...form.getInputProps('queue')}
                                     />
                                     <br/>
                                     <Textarea
-                                        label={customLabel(language == Language.GERMAN ? "Notizen:" : "Notes")}
-                                        placeholder="Nur interne Informationen"
+                                        label={customLabel(t('customer.notes'))}
+                                        placeholder={`${t('customer.notesPlaceholder')}`}
                                         minRows={3}
                                         maxRows={10}
                                         autosize
@@ -141,7 +142,7 @@ const CheckinPopup = () => {
                                     <div className="flex flex-col items-center justify-content-center">
                                         <Button type="submit"
                                                 loading={isLoading}>
-                                            Kunde erstellen
+                                            {t('customer.createCostumer')}
                                         </Button>
                                         <br/>
                                     </div>

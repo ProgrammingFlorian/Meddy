@@ -1,15 +1,18 @@
-import React, {useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import {Button, Flex, Group, Modal, NumberInput, Select, Textarea, TextInput} from '@mantine/core';
 import {Customer} from "../../models/Customer";
 import QRCodePopup from "./QRCodePopup";
 import {Queue} from "../../models/Queue";
 import {useTranslation} from "next-i18next";
+import ConfirmButton from "../ConfirmButton";
+import {StoreContext} from "../../lib/Store";
 
 interface CustomerPopupProps {
     customer: Customer;
     queues: Queue[];
     updateCustomer: (customer: Customer) => void;
     onClose: () => void;
+    appointmentStart: Date | null
 }
 
 const CustomerPopup = (props: CustomerPopupProps) => {
@@ -23,6 +26,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
     const [notes, setNotes] = useState(initialNotes);
     const initialDuration = props.customer.duration;
     const [durationOfAppointment, setDurationOfAppointment] = useState(initialDuration)
+    const {deleteCustomer, } = useContext(StoreContext);
 
     const [qrCodeShown, showQRCode] = useState(false);
 
@@ -41,7 +45,6 @@ const CustomerPopup = (props: CustomerPopupProps) => {
         props.onClose();
     };
 
-
     return (
         <>
             <Modal opened={true} onClose={props.onClose} size="lg" title={t('customer.editTitle')}>
@@ -52,15 +55,20 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                defaultValue={name}
                                onChange={(e) => setName(e.target.value)} size="xl"
                                sx={{color: 'blue'}}/>
-                    {/* TODO
+
+                    { props.customer.position == 0 ? <div style={{fontSize: 16, fontWeight: "bold"}}>{t('remainingAppointmentDuration')}:TODO{t('multipleMinutes')}</div> : <></> }
+
                     <Flex justify="center" gap="md">
-                        <ConfirmButton fullWidth label={t('call')} onClick={() => setOpened(false)} color="green"/>
+                        <ConfirmButton disabled={props.appointmentStart != null || props.customer.position != 0} fullWidth label={t('call')}  onClick={() => { //todo should work but doesn't
+                            props.onClose();
+                        }} color="green" />
                         <ConfirmButton fullWidth label={t('checkout')} onClick={() => {
                             props.onClose();
                             deleteCustomer(props.customer);
                         }} color="red"/>
                     </Flex>
-                    */}
+
+
                     <Flex direction="column" gap="xs">
                         <Group grow>
                             <NumberInput label={t('customer.appointmentDuration')} value={durationOfAppointment}
@@ -86,12 +94,12 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                         onChange={setQueue}
                     />
                     <Textarea
-                        label={t('waitingScreen.notes')}
+                        label={t('customer.notes')}
                         defaultValue={notes}
                         onChange={event => {
                             setNotes(event.target.value)
                         }}
-                        placeholder={`${t('waitingScreen.notesPlaceholder')}`}
+                        placeholder={`${t('customer.notesPlaceholder')}`}
                         minRows={3}
                         maxRows={10}
                         autosize
@@ -102,7 +110,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                         </Button>
                         <Button fullWidth
                                 onClick={() => showQRCode(true)}>
-                            {t('waitingScreen.showQRCode')}
+                            {t('customer.showQRCode')}
                         </Button>
                     </Flex>
                 </Flex>

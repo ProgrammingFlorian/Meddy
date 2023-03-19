@@ -28,13 +28,13 @@ const QueueCustomer = (props: QueueCustomerProps) => {
             margin: 0,
             padding: 0
         }}>
-            <div className="text-gray-500 font-bold m-2"
+            <div className="text-gray-500 text-center font-bold m-2"
                  onClick={() => props.setPopup(props.customer)}>
                 <Text>{props.customer.name}</Text>
                 <Text size="sm">
                     {t('duration')}: {props.customer.duration} {t('multipleMinutes')}
                 </Text>
-                <div className="mt-2"
+                <div className="flex mt-2 justify-center"
                      onClick={(e) => e.stopPropagation()}>
                     {props.isHighlighted ?
                         <Popover trapFocus position="bottom"
@@ -52,6 +52,7 @@ const QueueCustomer = (props: QueueCustomerProps) => {
                             <Popover.Dropdown
                                 sx={(theme) => ({background: theme.white})}>
                                 <Button color="gray"
+
                                         onClick={() => {
                                             const newQueue = {...props.queue};
                                             newQueue.active_customer = props.customer.id;
