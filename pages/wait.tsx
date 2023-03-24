@@ -63,7 +63,7 @@ const wait: NextPage = () => {
             CustomerService.fetchCustomersInSameQueue(+id).then(([c, otherCustomers, organisation, queue]) => {
                 setCustomer(c);
                 setPersonsAhead(otherCustomers.length);
-                setFixedWaitingTime(otherCustomers.filter(c => c.id !== queue.active_customer)
+                setFixedWaitingTime(otherCustomers.filter(oc => oc.id !== queue.active_customer && oc.position < c.position)
                     .reduce((previous, currentCustomer) => previous + currentCustomer.duration, 0));
                 setLiveWaitingTime(otherCustomers.find(c => c.id === queue.active_customer)?.duration ?? 0);
                 console.log("live waiting time", otherCustomers.find(c => c.id === queue.active_customer)?.duration ?? 0);
@@ -76,6 +76,7 @@ const wait: NextPage = () => {
 
         // @ts-ignore see the TODO above the calculateTimeLeft function
         const timer = setInterval(calculateTimeLeft, 30000);
+        calculateTimeLeft;
 
         return () => clearInterval(timer);
     }, [router.query]);
@@ -88,24 +89,30 @@ const wait: NextPage = () => {
                     <h1 className="">Herzlichen Willkommen bei {organisationName}, {customer.name}!</h1>
                     <br/>
                     <br/>
-                    <div className={`${isOvertime ? "" : "blue-color"} text-center`} style={{
-                        width: "150px",
-                        height: "150px",
-                        border: "15px solid",
-                        borderRadius: "75px",
-                        margin: "0 auto"
-                    }}>
-                        <h1 className="pt-5 pb-0 text-black font-bold">{actualTime}</h1>
-                        <h4 className="text-black font-bold pt-0">min</h4>
-                    </div>
-                    <h2 className='pt-5 font-bold'>Ihre geschätze Wartezeit</h2>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <div className=' flex justify-items-center justify-center' style={{}}>
-                        {personInQueue(personsAhead)}
-                    </div>
-                    <p className=' font-bold'>{custerMessageBuilder(personsAhead)}</p>
+                    {!isOvertime && fixedWaitingTime === 0 ?
+                        <>
+                            <div className={`${isOvertime ? "" : "blue-color"} text-center`} style={{
+                                width: "150px",
+                                height: "150px",
+                                border: "15px solid",
+                                borderRadius: "75px",
+                                margin: "0 auto"
+                            }}>
+                                <h1 className="pt-5 pb-0 text-black font-bold">{actualTime}</h1>
+                                <h4 className="text-black font-bold pt-0">min</h4>
+                            </div>
+                            <h2 className='pt-5 font-bold'>Ihre geschätze Wartezeit</h2>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div className=' flex justify-items-center justify-center' style={{}}>
+                                {personInQueue(personsAhead)}
+                            </div>
+                            <p className=' font-bold'>{custerMessageBuilder(personsAhead)}</p>
+                        </>
+                        : <>
+                            <p>Sie sind gleich dran.</p>
+                        </>}
                 </div>
                 <br/>
                 {/* TODO: Notifications
