@@ -21,7 +21,7 @@ const App = ({Component, pageProps}: AppProps<{ initialSession: Session }>) => {
     return (
         <>
             <Head>
-                <title>Swait</title>
+                <title>Meddy</title>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
                 <meta name="description" content="Wartezeiten intelligent verkürzen"/>
             </Head>
@@ -36,7 +36,7 @@ const App = ({Component, pageProps}: AppProps<{ initialSession: Session }>) => {
                 >
                     <Component {...pageProps} />
                     <Space h={100}/>
-                    <FooterComponent />
+                    <FooterComponent/>
                 </MantineProvider>
             </SessionContextProvider>
         </>

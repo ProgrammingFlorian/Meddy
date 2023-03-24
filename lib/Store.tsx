@@ -213,6 +213,11 @@ export const useStore = (): StoreType => {
         QueueService.updateQueue(queue); // TODO: Handle error
     };
 
+
+    const fetchQueue = (queue_id: number) => {
+        return QueueService.fetchQueue(queue_id);
+    }
+
     return {
         queues,
         customersInQueue,
@@ -225,7 +230,8 @@ export const useStore = (): StoreType => {
         organisation,
         updateOrganisation,
         deleteCustomer,
-        updateCustomer
+        updateCustomer,
+
     }
 };
 

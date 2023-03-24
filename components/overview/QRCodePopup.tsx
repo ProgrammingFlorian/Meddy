@@ -26,7 +26,7 @@ const QRCodePopup = (props: QRCodePopupProps) => {
                 size="lg"
             >
 
-                <div className="flex flex-col items-center justify-center py-2">
+                <div className="flex flex-col items-center justify-center py-2" style={{minHeight: 750}}>
                     <div className='p-10 justify-center flex-1'>
                         <div className="text-center">
                             <br/>

@@ -29,7 +29,7 @@ export const QueueManagement = (props: QueueManagementProps) => {
 
     return (
         <Modal opened={props.isOpen} onClose={props.onClose} size={"sm"} title={"Warteschlangen verwalten"}>
-            {queues.map((queue) => (
+            {queues.sort((q1, q2) => q1.name.localeCompare(q2.name)).map((queue) => (
                 <Card className="mt-1" p="xs" radius="sm" withBorder key={queue.id}>
                     <Group position="apart">
                         <Text style={{ userSelect: "none" }} weight={500}>{queue.name}</Text>

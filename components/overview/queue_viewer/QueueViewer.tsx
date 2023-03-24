@@ -2,11 +2,12 @@ import {Container, Grid, Center, Title} from '@mantine/core';
 import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
 import {Customer, getCustomerIdAsString} from '../../../models/Customer';
 import {move, reorder} from "../../../util/ListUtil";
-import React, {useContext, useMemo, useState} from "react";
+import React, {useContext, useEffect, useMemo, useState} from "react";
 import CustomerPopup from "../CustomerPopup";
 import {StoreContext} from "../../../lib/Store";
 import QueueCustomerActive from "./QueueCustomerActive";
 import QueueCustomer from "./QueueCustomer";
+import {Queue} from "../../../models/Queue";
 
 const QueueViewer = () => {
     const [popup, setPopup] = useState(null as Customer | null);
@@ -49,20 +50,23 @@ const QueueViewer = () => {
         queues.forEach((queue) => {
             result[queue.id] = customersInQueue[queue.id]?.filter(customer => customer.id !== queue.active_customer) ?? [];
         });
+
+
         return result;
     }, [queues, customersInQueue]);
 
     return (
         <>
             {popup ?
-                <CustomerPopup customer={popup} queues={queues} updateCustomer={updateCustomer}
+                <CustomerPopup customer={popup} appointmentStart={null}//Todo{queues ? queues.find(q => q.id == popup.queue_id).latest_appointment_start : null}
+                               queues={queues} updateCustomer={updateCustomer}
                                onClose={() => setPopup(null)}/>
                 : <></>
             }
             <div  className="" >
                 <Grid style={{maxWidth: 1400}}>
                     <DragDropContext onDragEnd={onDragEnd}>
-                        {queues.map(((queue, queue_index) => (
+                        {queues.sort((q1, q2) => q1.name.localeCompare(q2.name)).map(((queue, queue_index) => (
                             <Grid.Col span={3} key={queue_index} style={{width: 350, padding: 0, marginTop: 20, minHeight: 500}}>
                                 <Center className="h-full p-0 m-0">
                                     <Container p={10} m={10} className="bg-gray-100 rounded h-full p-0 w-0"
@@ -72,7 +76,9 @@ const QueueViewer = () => {
                                         </Container>
                                         <QueueCustomerActive activeCustomer={activeCustomer[queue.id]} queue={queue}
                                                              setPopup={setPopup} deleteCustomer={deleteCustomer}
-                                                             appointmentStart={queue.latest_appointment_start}/>
+                                                             updateCustomer = {updateCustomer}
+                                                             appointmentStart={queue.latest_appointment_start}
+                                        />
                                         <Droppable key={queue.id} droppableId={`${queue.id}`} direction="vertical">
                                             {(provided) => (
                                                 <div className="m-2"
@@ -101,8 +107,6 @@ const QueueViewer = () => {
                             </Grid.Col>
                         )))}
                     </DragDropContext>
-
-
                 </Grid>
             </div>
         </>

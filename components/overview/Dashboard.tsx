@@ -3,6 +3,7 @@ import QueueViewer from "./queue_viewer/QueueViewer";
 import {StoreContext} from "../../lib/Store";
 import {Container, Flex, Group, Space, Title, Center} from "@mantine/core";
 import CheckinPopup from "../CheckinPopup";
+import FooterComponent from "../FooterComponent";
 
 const Dashboard = () => {
     const getCurrentTime = () => {
@@ -19,7 +20,7 @@ const Dashboard = () => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             setTime(getCurrentTime());
-        }, 30000);
+        }, 10000);
 
         return () => {
             clearInterval(intervalId);
@@ -28,12 +29,12 @@ const Dashboard = () => {
 
     // TODO: connect "Verwaltungsrechner" to database
     return (
-        <Container className="h-screen" fluid style={{userSelect: "none"}}>
+        <Container fluid style={{userSelect: "none"}}>
             <Group position="apart">
                 <Flex direction="column">
                     {/* TODO: Integrate color into mantine theme and use theme color */}
                     <Title size={30} order={4} color="#0099ff">{organisation.name}</Title>
-                    <Title size={20} order={4} color="#0099ff">Verwaltungsrechner</Title>
+                    {/*Todo <Title size={20} order={4} color="#0099ff">Verwaltungsrechner</Title>*/}
                 </Flex>
                 <Flex>
                     <Title size={30} order={4} color="#0099ff">{time} Uhr</Title>
@@ -43,6 +44,7 @@ const Dashboard = () => {
             <Container fluid>
                 <Center>
                     <QueueViewer/>
+
                 </Center>
 
             </Container>
@@ -51,6 +53,7 @@ const Dashboard = () => {
                 <CheckinPopup/>
             </Container>
         </Container>
+
     );
 }
 

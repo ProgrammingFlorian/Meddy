@@ -1,5 +1,5 @@
 {
-  "appName": "Swait",
+  "appName": "Meddy",
   "madeBy": "",
   "sidebar": {
     "organisationName": "Praxisname",
@@ -8,6 +8,7 @@
     "changePassword": "Passwort ändern"
   },
   "customer": {
+    "customerName": "Patienten Name",
     "editTitle": "Bearbeiten",
     "name": "Name",
     "appointmentDuration": "Termindauer",
@@ -15,7 +16,9 @@
     "queue": "Behandelnde/r Ärztin/Arzt",
     "notes": "Notizen",
     "notesPlaceholder": "Nur interne Informationen",
-    "showQRCode": "QR Code anzeigen"
+    "showQRCode": "QR Code anzeigen",
+    "approximateAppointmentDuration": "Geschätze Termindauer in Minuten",
+    "createCostumer": "Kunde erstellen"
   },
   "password_reset": {
     "title": "Passwort zurücksetzen",
@@ -31,8 +34,9 @@
     "reset_password_text": "Passwort vergessen?",
     "reset_password_success": "Passwort erfolgreich zurückgesetzt!"
   },
-  "duration": "Dauer",
-  "since": "Seit",
+  "duration": "Termindauer",
+  "remainingAppointmentDuration": "Die verbleibende Termindauer beträgt",
+  "remaining": "Noch",
   "minutesAbbreviation": "min",
   "singleMinute": "Minute",
   "multipleMinutes": "Minuten",
@@ -46,5 +50,8 @@
     "parameterMissing": "Ein Parameter wurde nicht übergeben. Überprüfe ob du auf der richtigen Seite bist.",
     "passwordLength": "Das Passwort muss mindest 4 Zeichen besitzen.",
     "loginFailed": "Anmeldung fehlgeschlagen! Bitte überprüfen E-Mail und Passwort"
+  },
+  "checkIn": {
+    "assignedDoctor": "Behandelnde/r Ärztin/Arzt"
   }
 }

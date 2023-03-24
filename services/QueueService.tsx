@@ -2,6 +2,7 @@ import {PostgrestResponse} from "@supabase/supabase-js";
 import {supabase} from "../lib/Store";
 import {Queue} from "../models/Queue";
 import {TABLE_ACCOUNT_INFORMATION} from "./AccountService";
+import {PostgrestResponseSuccess} from "@supabase/postgrest-js";
 
 export const TABLE_QUEUES = 'queues';
 
@@ -15,6 +16,20 @@ const fetchQueues = async (account_id: string): Promise<Queue[]> => {
         }
     } catch (error) {
         console.error('Error retrieving waiting_queues from database', error);
+    }
+    return Promise.reject();
+}
+
+const fetchQueue = async (queue_id: number): Promise<Awaited<PostgrestResponseSuccess<Queue[]>>> => {
+    try {
+        // @ts-ignore
+        const response: PostgrestResponse<Queue> = await supabase.from(TABLE_QUEUES).select().eq('id', queue_id);
+        if (response.data !== null) {
+            return Promise.resolve(response);
+        }
+
+    } catch (error) {
+        console.error('Error fetching the  queue', error);
     }
     return Promise.reject();
 }
@@ -60,5 +75,6 @@ export default {
     fetchQueues,
     createQueue,
     updateQueue,
-    deleteQueue
+    deleteQueue,
+    fetchQueue
 }
