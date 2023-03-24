@@ -5,7 +5,6 @@ import {customLabel} from "../helpers/Functions";
 import {useForm} from "@mantine/form";
 import {Customer} from "../models/Customer";
 import QRCodePopup from "./overview/QRCodePopup";
-import CustomerService from "../services/CustomerService";
 import {StoreContext} from "../lib/Store";
 import {useTranslation} from "next-i18next";
 
@@ -45,7 +44,7 @@ const CheckinPopup = () => {
         },
     });
 
-    const {queues} = useContext(StoreContext);
+    const {queues, createCustomer} = useContext(StoreContext);
 
     useEffect(() => {
         if (queues.length > 0) {
@@ -85,7 +84,7 @@ const CheckinPopup = () => {
                                             position: 0,
                                             queue_id: queueId
                                         }
-                                        CustomerService.saveCustomer(customer).then(createdCustomer => {
+                                        createCustomer(customer).then(createdCustomer => {
                                             setCustomer(createdCustomer);
                                             setLoading(false);
                                         });

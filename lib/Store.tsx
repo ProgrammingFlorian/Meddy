@@ -22,6 +22,7 @@ interface StoreType {
     createQueue: (name: string) => void;
     updateQueue: (queue: Queue) => void;
     deleteQueue: (queue_id: number) => void;
+    createCustomer: (customer: Customer) => Promise<Customer>;
     updateCustomersInQueue: (newValue: { [p: number]: Customer[] }) => void,
     customersInQueue: { [queue: number]: Customer[] };
     organisation: Organisation;
@@ -126,6 +127,36 @@ export const useStore = (): StoreType => {
         QueueService.deleteQueue(queue_id); // TODO: Handle deletion error
     }
 
+    // TODO: Resolve before waiting for server
+    const createCustomer = (newCustomer: Customer): Promise<Customer> => {
+        const temporaryId = local_preview_counter--;
+        setCustomersInQueue(previous => {
+            const newQueues = {...previous};
+            newQueues[newCustomer.queue_id].push({
+                id: temporaryId,
+                name: newCustomer.name,
+                queue_id: newCustomer.queue_id,
+                notes: newCustomer.notes,
+                duration: newCustomer.duration,
+                position: newCustomer.position,
+                appointmentTime: newCustomer.appointmentTime
+            });
+            return newQueues;
+        });
+        return CustomerService.saveCustomer(newCustomer).then(serverValue => {
+            setCustomersInQueue(previous => {
+                const newQueues = {...previous};
+                newQueues[serverValue.queue_id].map(q =>
+                    q.id === serverValue.id ? serverValue : q
+                );
+                return newQueues;
+            });
+            return Promise.resolve(serverValue);
+        }).catch(() => {
+            return Promise.reject();
+        });
+    }
+
     const updateCustomer = (newValue: Customer) => {
         setCustomersInQueue(previous => {
             const newQueues = {...previous};
@@ -188,6 +219,7 @@ export const useStore = (): StoreType => {
         createQueue,
         updateQueue,
         deleteQueue,
+        createCustomer,
         updateCustomersInQueue,
         sendUpdate,
         organisation,
