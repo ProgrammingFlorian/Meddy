@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import {AppProps} from 'next/app';
 import Head from 'next/head';
-import {createEmotionCache, MantineProvider, Space} from '@mantine/core';
+import {createEmotionCache, MantineProvider} from '@mantine/core';
 import React, {useState} from "react";
 import {createBrowserSupabaseClient} from "@supabase/auth-helpers-nextjs";
 import {SessionContextProvider} from "@supabase/auth-helpers-react";
@@ -34,8 +34,9 @@ const App = ({Component, pageProps}: AppProps<{ initialSession: Session }>) => {
                     theme={{colorScheme: 'light'}}
                     emotionCache={mantineCache}
                 >
-                    <Component {...pageProps} />
-                    <Space h={100}/>
+                    <div className="min-h-full">
+                        <Component {...pageProps} />
+                    </div>
                     <FooterComponent/>
                 </MantineProvider>
             </SessionContextProvider>

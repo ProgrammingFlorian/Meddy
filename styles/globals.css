@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+#__next {
+    height: 100%;
+}
+
 .blue-color {
     color: #0099ff;
    
