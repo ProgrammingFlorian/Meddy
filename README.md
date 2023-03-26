@@ -24,7 +24,7 @@ Build docker Image: \
 `docker build -t swait .`
 
 Run docker on port 3000: \
-`docker run -p 3000:3000 swait`
+`docker run -d -p 3000:3000 swait`
 
 ## Technical Overview
 
