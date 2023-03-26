@@ -1,4 +1,4 @@
-import {PostgrestResponse} from "@supabase/supabase-js";
+import {PostgrestResponse, PostgrestSingleResponse} from "@supabase/supabase-js";
 import {supabase} from "../lib/Store";
 import {Queue} from "../models/Queue";
 import {TABLE_ACCOUNT_INFORMATION} from "./AccountService";
@@ -63,9 +63,14 @@ const createQueue = async (name: string, organisation_id: number): Promise<Queue
     return Promise.reject();
 }
 
-const deleteQueue = async (queue_id: number) => {
+const deleteQueue = async (queue_id: number): Promise<void> => {
     try {
-        await supabase.from(TABLE_QUEUES).delete().eq("id", queue_id);
+        const response: PostgrestSingleResponse<null> = await supabase.from(TABLE_QUEUES).delete().eq("id", queue_id);
+        if(response.error !== null) {
+            return Promise.reject(response.error.message);
+        } else {
+            return Promise.resolve();
+        }
     } catch (error) {
         console.error('Error delete a queue from database', error);
     }

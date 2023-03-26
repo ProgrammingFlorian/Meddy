@@ -21,7 +21,7 @@ interface StoreType {
     queues: Queue[];
     createQueue: (name: string) => void;
     updateQueue: (queue: Queue) => void;
-    deleteQueue: (queue_id: number) => void;
+    deleteQueue: (queue_id: number) => Promise<void>;
     createCustomer: (customer: Customer) => Promise<Customer>;
     updateCustomersInQueue: (newValue: { [p: number]: Customer[] }) => void,
     customersInQueue: { [queue: number]: Customer[] };
@@ -122,9 +122,11 @@ export const useStore = (): StoreType => {
         });
     }
 
-    const deleteQueue = (queue_id: number) => {
-        setQueues(previous => previous.filter(queue => queue.id !== queue_id));
-        QueueService.deleteQueue(queue_id); // TODO: Handle deletion error
+    const deleteQueue = (queue_id: number): Promise<void> => {
+        return QueueService.deleteQueue(queue_id).then(() => {
+                setQueues(previous => previous.filter(queue => queue.id !== queue_id));
+                return Promise.resolve();
+            });
     }
 
     // TODO: Resolve before waiting for server

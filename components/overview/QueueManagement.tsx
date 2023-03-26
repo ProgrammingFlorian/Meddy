@@ -18,39 +18,62 @@ export const QueueManagement = (props: QueueManagementProps) => {
             name: (value) => (value.length < 3 ? "Der Name muss mindestens 3 Zeichen besitzen" : null)
         }
     });
-    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showConfirmation, setShowConfirmation] = useState(null as Queue | null);
+    const [showDeleteError, setShowDeleteError] = useState(false);
 
-    const handleDeleteQueue = (queue: Queue) => {
-        deleteQueue(queue.id);
-        setShowConfirmation(false);
+    const handleDeleteQueue = (queueId: number) => {
+        deleteQueue(queueId)
+            .finally(() => setShowConfirmation(null))
+            .catch(() => {
+                console.log("error")
+                setShowDeleteError(true);
+            });
     };
 
     const {queues, createQueue, deleteQueue} = useContext(StoreContext);
 
+    // TODO: Use language file
+
     return (
         <Modal opened={props.isOpen} onClose={props.onClose} size={"sm"} title={"Warteschlangen verwalten"}>
-            {queues.sort((q1, q2) => q1.name.localeCompare(q2.name)).map((queue) => (
-                <Card className="mt-1" p="xs" radius="sm" withBorder key={queue.id}>
+            {queues.sort((q1, q2) => q1.name.localeCompare(q2.name)).map((queue) => {
+                const queueId = queue.id;
+                return <Card className="mt-1" p="xs" radius="sm" withBorder key={queueId}>
                     <Group position="apart">
-                        <Text style={{ userSelect: "none" }} weight={500}>{queue.name}</Text>
-                        <ActionIcon onClick={() => setShowConfirmation(true)}>
+                        <Text style={{userSelect: "none"}} weight={500}>{queue.name}</Text>
+                        <ActionIcon onClick={() => setShowConfirmation(queue)}>
                             <IconX size={32}/>
                         </ActionIcon>
-                        <Modal
-                            title="Löschen bestätigen"
-                            opened={showConfirmation}
-                            onClose={() => setShowConfirmation(false)}>
-                            <Text>Soll {queue.name} mit allen Kundendaten gelöscht werden? Diese Aktion kann nicht Rückgängig gemacht werden</Text>
-                            <Group className="pt-4" position="center">
-                                <Button color="green" onClick={() => handleDeleteQueue(queue)}>Bestätigen</Button>
-                                <Button color="red" onClick={() => setShowConfirmation(false)}>Abbrechen</Button>
-                            </Group>
-                        </Modal>
                     </Group>
                 </Card>
-            ))}
+            })}
+            <Modal
+                title="Löschen bestätigen"
+                opened={showConfirmation !== null}
+                onClose={() => setShowConfirmation(null)}>
+                <Text>Soll {showConfirmation?.name} mit allen Kundendaten gelöscht werden? Diese Aktion kann nicht
+                    Rückgängig gemacht werden</Text>
+                <Group className="pt-4" position="center">
+                    <Button color="green"
+                            onClick={() => handleDeleteQueue(showConfirmation?.id ?? -1)}>Bestätigen</Button>
+                    <Button color="red" onClick={() => setShowConfirmation(null)}>Abbrechen</Button>
+                </Group>
+            </Modal>
+            <Modal
+                title="Löschen fehlgeschlagen"
+                opened={showDeleteError}
+                onClose={() => setShowDeleteError(false)}>
+                <Text>{showConfirmation?.name} konnte nicht gelöscht werden. Sind noch Kunden in der Warteschlange?</Text>
+                <Group className="pt-4" position="center">
+                    <Button color="gray" onClick={() => setShowDeleteError(false)}>Schließen</Button>
+                </Group>
+            </Modal>
             <Group>
-                <form onSubmit={form.onSubmit((val) => createQueue(val.name))}>
+                <form onSubmit={form.onSubmit((val) => {
+                    // TODO: Handle errors
+                    createQueue(val.name);
+                    form.reset();
+                })}>
                     <div className="flex-row flex gap-2 mt-3">
                         <TextInput
                             style={{width: 220}}
