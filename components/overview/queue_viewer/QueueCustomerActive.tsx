@@ -3,8 +3,7 @@ import {Queue} from "../../../models/Queue";
 import {Button, Card, Group, Popover, Text} from "@mantine/core";
 import React, {useContext, useEffect, useState} from "react";
 import {useTranslation} from "next-i18next";
-import {StoreContext} from "../../../lib/Store";
-import {use} from "i18next";
+
 
 interface QueueCustomerActiveProps {
     activeCustomer: Customer | null;
@@ -18,20 +17,24 @@ interface QueueCustomerActiveProps {
 const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
     const {t} = useTranslation();
     const activeCustomer = props.activeCustomer;
-    const [remainingTime, setRemainingTime] = useState(activeCustomer ? activeCustomer.duration : 5)
+    const [remainingTime, setRemainingTime] = useState(activeCustomer ? activeCustomer.duration : 0)
 
+
+    const updateRemainingTime = () => {
+        if (props.appointmentStart && activeCustomer) {
+            //appointment duration - (time of appointment start in milliseconds - current time in milliseconds)/(60000) -> 60000 milliseconds = 1 min
+            const remainingTime = Math.round(activeCustomer.duration +
+                (new Date(props.appointmentStart).getTime() - new Date().getTime()) / (1000 * 60));
+            setRemainingTime(remainingTime)
+            console.log(remainingTime)
+        }
+    }
 
     useEffect(() => {
-
         const intervalId = setInterval(() => {
-            if (props.appointmentStart && activeCustomer) {
-                //appointment duration - (time of appointment start in milliseconds - current time in milliseconds)/(60000) -> 60000 milliseconds = 1 min
-                const remainingTime = Math.round(activeCustomer.duration +
-                    (new Date(props.appointmentStart).getTime() - new Date().getTime()) / (1000*60));
-                setRemainingTime(remainingTime)
-                console.log(remainingTime)
-            }
+            updateRemainingTime();
         }, 10000);
+        updateRemainingTime()
         return () => {
             clearInterval(intervalId);
         };

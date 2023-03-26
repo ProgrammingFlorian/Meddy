@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {Button, Flex, Group, Modal, NumberInput, Select, Textarea, TextInput} from '@mantine/core';
 import {Customer} from "../../models/Customer";
 import QRCodePopup from "./QRCodePopup";
@@ -26,9 +26,10 @@ const CustomerPopup = (props: CustomerPopupProps) => {
     const [notes, setNotes] = useState(initialNotes);
     const initialDuration = props.customer.duration;
     const [durationOfAppointment, setDurationOfAppointment] = useState(initialDuration)
-    const {deleteCustomer, } = useContext(StoreContext);
-
+    const {deleteCustomer, updateQueue, customersInQueue} = useContext(StoreContext);
+    const [remainingTime, setRemainingTime] = useState(0)
     const [qrCodeShown, showQRCode] = useState(false);
+    const customerQueue = props.queues.find(q => q.id === props.customer.queue_id);
 
     const propertiesChanged = useMemo(() => {
         return name !== initialName || queue !== initialQueue || notes !== initialNotes || durationOfAppointment !== initialDuration
@@ -45,6 +46,29 @@ const CustomerPopup = (props: CustomerPopupProps) => {
         props.onClose();
     };
 
+    const calculateWaitingTime = () => {
+        return customersInQueue[props.customer.queue_id].filter(oc => oc.id !== customerQueue?.active_customer && oc.position < props.customer.position)
+            .reduce((previous, currentCustomer) => previous + currentCustomer.duration, 0)
+    }
+
+    const updateRemainingTime = () => {
+        const activeCustomer = customersInQueue[props.customer.queue_id].find(c => c.id === customerQueue?.active_customer);
+        //appointment duration - (time of appointment start in milliseconds - current time in milliseconds)/(60000) -> 60000 milliseconds = 1 min
+        const remainingTime = Math.round((activeCustomer?.duration ?? 0) +
+            (new Date(customerQueue?.latest_appointment_start ?? new Date()).getTime() - new Date().getTime()) / (1000 * 60));
+        setRemainingTime(remainingTime + calculateWaitingTime());
+    }
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            updateRemainingTime();
+        }, 10000);
+        updateRemainingTime()
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [props.appointmentStart, remainingTime, props.updateCustomer])
+
     return (
         <>
             <Modal opened={true} onClose={props.onClose} size="lg" title={t('customer.editTitle')}>
@@ -56,12 +80,23 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                onChange={(e) => setName(e.target.value)} size="xl"
                                sx={{color: 'blue'}}/>
 
-                    { props.customer.position == 0 ? <div style={{fontSize: 16, fontWeight: "bold"}}>{t('remainingAppointmentDuration')}:TODO{t('multipleMinutes')}</div> : <></> }
+                    <div style={{fontSize: 16, fontWeight: "bold"}}>{props.customer.id === customerQueue?.active_customer ? t('remainingAppointmentDuration') : t('remainingWaitingTime')} {remainingTime} {t('multipleMinutes')}</div>
 
                     <Flex justify="center" gap="md">
-                        <ConfirmButton disabled={props.appointmentStart != null || props.customer.position != 0} fullWidth label={t('call')}  onClick={() => { //todo should work but doesn't
-                            props.onClose();
-                        }} color="green" />
+                        {
+                            props.queues.find(q => q.id === props.customer.queue_id)?.active_customer === props.customer.id || props.customer.position != 0 ?
+                                <></> : <ConfirmButton fullWidth label={t('call')}  onClick={() => {
+                                    const newQueue = {...props.queues.find(q => q.id === props.customer.queue_id)};
+                                    if (newQueue.id !== undefined) {
+                                        newQueue.active_customer = props.customer.id;
+                                        newQueue.latest_appointment_start = new Date();
+                                        // @ts-ignore
+                                        updateQueue(newQueue);
+                                    }
+                                    props.onClose();
+                                }} color="green" />
+                        }
+
                         <ConfirmButton fullWidth label={t('checkout')} onClick={() => {
                             props.onClose();
                             deleteCustomer(props.customer);

@@ -79,7 +79,9 @@ const QueueViewer = () => {
                                                              updateCustomer = {updateCustomer}
                                                              appointmentStart={queue.latest_appointment_start}
                                         />
-                                        <Droppable key={queue.id} droppableId={`${queue.id}`} direction="vertical">
+
+
+                                        <Droppable  key={queue.id} droppableId={`${queue.id}`} direction="vertical">
                                             {(provided) => (
                                                 <div className="m-2"
                                                      {...provided.droppableProps}

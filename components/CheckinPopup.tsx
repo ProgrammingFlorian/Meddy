@@ -89,7 +89,7 @@ const CheckinPopup = () => {
                                             setLoading(false);
                                         });
                                         setLoading(true);
-                                        setTimeout(()=> form.reset(), 500);
+                                        setTimeout(() => form.reset(), 500);
                                     }
                                 })}>
                                     <TextInput

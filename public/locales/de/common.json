@@ -36,6 +36,7 @@
   },
   "duration": "Termindauer",
   "remainingAppointmentDuration": "Die verbleibende Termindauer beträgt",
+  "remainingWaitingTime": "Die verbleibende Wartezeit beträgt",
   "remaining": "Noch",
   "minutesAbbreviation": "min",
   "singleMinute": "Minute",
@@ -53,5 +54,8 @@
   },
   "checkIn": {
     "assignedDoctor": "Behandelnde/r Ärztin/Arzt"
+  },
+  "waitingScreen": {
+    "queue": "Arzt"
   }
 }
