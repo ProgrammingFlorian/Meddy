@@ -138,8 +138,7 @@ export const useStore = (): StoreType => {
                 queue_id: newCustomer.queue_id,
                 notes: newCustomer.notes,
                 duration: newCustomer.duration,
-                position: newCustomer.position,
-                appointmentTime: newCustomer.appointmentTime
+                position: newCustomer.position
             });
             return newQueues;
         });
