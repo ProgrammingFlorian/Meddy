@@ -42,17 +42,13 @@ const QueueCustomer = (props: QueueCustomerProps) => {
                                  shadow="md"
                         >
                             <Popover.Target>
-                                <Button color="green"
-                                        onClick={() => {
-
-                                        }}>
+                                <Button color="green">
                                     {t('call')}
                                 </Button>
                             </Popover.Target>
                             <Popover.Dropdown
                                 sx={(theme) => ({background: theme.white})}>
                                 <Button color="gray"
-
                                         onClick={() => {
                                             const newQueue = {...props.queue};
                                             newQueue.active_customer = props.customer.id;
