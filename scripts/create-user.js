@@ -5,8 +5,6 @@ require('dotenv').config({path: '.env.local'});
 const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 const prompt = (query) => new Promise((resolve) => rl.question(query, resolve));
 
-console.log(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE);
-
 const supabase = supabasejs.createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE || '');
@@ -15,7 +13,7 @@ const supabase = supabasejs.createClient(
 (async () => {
     try {
         const email = await prompt('E-Mail to invite: ');
-        const organisationId = await prompt('Organization ID: ');
+        const organisationId = await prompt('Organization ID (can be looked up in the database): ');
         const response_user = await supabase.auth.admin.inviteUserByEmail(email);
         if (response_user.error) {
             console.log('Error signing up email', email, response_user.error.message);
