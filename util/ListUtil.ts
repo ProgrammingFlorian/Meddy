@@ -1,5 +1,3 @@
-import {DraggableLocation} from "react-beautiful-dnd";
-
 export const reorder = <T>(list: T[], startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
@@ -8,16 +6,16 @@ export const reorder = <T>(list: T[], startIndex: number, endIndex: number) => {
     return result;
 };
 
-export const move = <T>(source: T[], destination: T[], droppableSource: DraggableLocation, droppableDestination: DraggableLocation) => {
+export const move = <T>(source: T[], destination: T[], sourceIndex: number, destinationIndex: number, sourceId: number, destinationId: number) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
-    const [removed] = sourceClone.splice(droppableSource.index, 1);
+    const [removed] = sourceClone.splice(sourceIndex, 1);
 
-    destClone.splice(droppableDestination.index, 0, removed);
+    destClone.splice(destinationIndex, 0, removed);
 
     const result = [];
-    result[+droppableSource.droppableId] = sourceClone;
-    result[+droppableDestination.droppableId] = destClone;
+    result[sourceId] = sourceClone;
+    result[destinationId] = destClone;
 
     return result;
 };

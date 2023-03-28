@@ -11,7 +11,14 @@ import QueueCustomer from "./QueueCustomer";
 const QueueViewer = () => {
     const [popup, setPopup] = useState(null as Customer | null);
 
-    const {queues, customersInQueue, updateCustomersInQueue, deleteCustomer, updateQueue, updateCustomer} = useContext(StoreContext);
+    const {
+        queues,
+        customersInQueue,
+        updateCustomersInQueue,
+        deleteCustomer,
+        updateQueue,
+        updateCustomer
+    } = useContext(StoreContext);
 
     const onDragEnd = ({destination, source}: DropResult) => {
         // dropped outside the lists
@@ -22,13 +29,23 @@ const QueueViewer = () => {
         const sourceId = +source.droppableId;
         const destinationId = +destination.droppableId;
 
+        let sourceIndex = source.index;
+        if (activeCustomer[sourceId]) {
+            sourceIndex++;
+        }
+
+        let destinationIndex = destination.index;
+        if (activeCustomer[destinationId]) {
+            destinationIndex++;
+        }
+
         if (sourceId === destinationId) {
-            const items = reorder(customersInQueue[sourceId], source.index, destination.index);
+            const items = reorder(customersInQueue[sourceId], sourceIndex, destinationIndex);
             const newState = {...customersInQueue};
             newState[sourceId] = items;
             updateCustomersInQueue(newState);
         } else {
-            const result = move(customersInQueue[sourceId], customersInQueue[destinationId], source, destination);
+            const result = move(customersInQueue[sourceId], customersInQueue[destinationId], sourceIndex, destinationIndex, sourceId, destinationId);
             const newState = {...customersInQueue};
             newState[sourceId] = result[sourceId];
             newState[destinationId] = result[destinationId];
@@ -49,24 +66,24 @@ const QueueViewer = () => {
         queues.forEach((queue) => {
             result[queue.id] = customersInQueue[queue.id]?.filter(customer => customer.id !== queue.active_customer) ?? [];
         });
-
-
         return result;
     }, [queues, customersInQueue]);
 
     return (
         <>
             {popup ?
-                <CustomerPopup customer={popup} appointmentStart={null}//Todo{queues ? queues.find(q => q.id == popup.queue_id).latest_appointment_start : null}
+                <CustomerPopup customer={popup}
+                               appointmentStart={null}//Todo{queues ? queues.find(q => q.id == popup.queue_id).latest_appointment_start : null}
                                queues={queues} updateCustomer={updateCustomer}
                                onClose={() => setPopup(null)}/>
                 : <></>
             }
-            <div  className="" >
+            <div className="">
                 <Grid style={{maxWidth: 1400}}>
                     <DragDropContext onDragEnd={onDragEnd}>
                         {queues.sort((q1, q2) => q1.name.localeCompare(q2.name)).map(((queue, queue_index) => (
-                            <Grid.Col span={3} key={queue_index} style={{minWidth: 350, padding: 0, marginTop: 20, minHeight: 500}}>
+                            <Grid.Col span={3} key={queue_index}
+                                      style={{minWidth: 350, padding: 0, marginTop: 20, minHeight: 500}}>
                                 <Center className="h-full p-0 m-0">
                                     <Container p={10} m={10} className="bg-gray-100 rounded h-full p-0 w-0"
                                                style={{width: 350}}>
@@ -75,12 +92,12 @@ const QueueViewer = () => {
                                         </Container>
                                         <QueueCustomerActive activeCustomer={activeCustomer[queue.id]} queue={queue}
                                                              setPopup={setPopup} deleteCustomer={deleteCustomer}
-                                                             updateCustomer = {updateCustomer}
+                                                             updateCustomer={updateCustomer}
                                                              appointmentStart={queue.latest_appointment_start}
                                         />
 
 
-                                        <Droppable  key={queue.id} droppableId={`${queue.id}`} direction="vertical">
+                                        <Droppable key={queue.id} droppableId={`${queue.id}`} direction="vertical">
                                             {(provided) => (
                                                 <div className="m-2"
                                                      {...provided.droppableProps}
