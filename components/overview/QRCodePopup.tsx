@@ -12,8 +12,8 @@ interface QRCodePopupProps {
 const QRCodePopup = (props: QRCodePopupProps) => {
     const theme = useMantineTheme();
 
-    const greetingText = `Herzlichen Willkommen in der TUM Praxis, ${props.customer.name}!`;
-    const url = `http://localhost:3000/wait?id=${props.customer.id}`;
+    const greetingText = `Herzlichen Willkommen in der Testing Praxis, ${props.customer.name}!`;
+    const url = `https://meddy.me/wait?id=${props.customer.id}`;
 
     return (
         <>
