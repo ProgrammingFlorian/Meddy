@@ -99,7 +99,7 @@ const QueueViewer = () => {
 
                                         <Droppable key={queue.id} droppableId={`${queue.id}`} direction="vertical">
                                             {(provided) => (
-                                                <div className="m-2"
+                                                <div className="m-2 h-full"
                                                      {...provided.droppableProps}
                                                      ref={provided.innerRef}>
                                                     {passiveCustomersInQueue[queue.id].map((customer, customer_index) => (
