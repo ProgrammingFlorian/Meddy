@@ -147,8 +147,8 @@ export const useStore = (): StoreType => {
         return CustomerService.saveCustomer(newCustomer).then(serverValue => {
             setCustomersInQueue(previous => {
                 const newQueues = {...previous};
-                newQueues[serverValue.queue_id].map(q =>
-                    q.id === serverValue.id ? serverValue : q
+                newQueues[serverValue.queue_id] = newQueues[serverValue.queue_id].map(c =>
+                    c.id === temporaryId ? serverValue : c
                 );
                 return newQueues;
             });

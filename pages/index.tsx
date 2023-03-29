@@ -1,5 +1,6 @@
 import type {NextPage} from 'next'
-import {Card, Text, Title} from "@mantine/core";
+import {Card, Title} from "@mantine/core";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 const Home: NextPage = () => {
     return (
@@ -23,6 +24,17 @@ const Home: NextPage = () => {
             </main>
         </div>
     );
+}
+
+export async function getStaticProps({locale}: { locale: string }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'common'
+            ])),
+            // Will be passed to the page component as props
+        },
+    }
 }
 
 export default Home;

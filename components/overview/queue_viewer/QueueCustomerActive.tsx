@@ -1,7 +1,7 @@
 import {Customer} from "../../../models/Customer";
 import {Queue} from "../../../models/Queue";
 import {Button, Card, Group, Popover, Text} from "@mantine/core";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useTranslation} from "next-i18next";
 
 
@@ -25,8 +25,7 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
             //appointment duration - (time of appointment start in milliseconds - current time in milliseconds)/(60000) -> 60000 milliseconds = 1 min
             const remainingTime = Math.round(activeCustomer.duration +
                 (new Date(props.appointmentStart).getTime() - new Date().getTime()) / (1000 * 60));
-            setRemainingTime(remainingTime)
-            console.log(remainingTime)
+            setRemainingTime(remainingTime);
         }
     }
 
