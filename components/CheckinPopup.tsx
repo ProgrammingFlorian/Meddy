@@ -1,6 +1,5 @@
-import {Box, Button, createStyles, Group, Modal, Select, Space, Textarea, TextInput} from "@mantine/core";
+import {Box, Button, createStyles, Group, Modal, Select, Textarea, TextInput} from "@mantine/core";
 import {useContext, useEffect, useState} from "react";
-import {Language} from "../models/Language";
 import {customLabel} from "../helpers/Functions";
 import {useForm} from "@mantine/form";
 import {Customer} from "../models/Customer";
@@ -37,9 +36,9 @@ const CheckinPopup = () => {
 
         // functions will be used to validate values at corresponding key
         validate: {
-            name: value => (value.length < 2 ? 'Name must have at least 2 letters' : null),
-            duration: value => value < 0 ? "Bitte wähle eine positive Dauer" : null,
-            queue: value => queues.find(queue => queue.name == value) === undefined ? 'Bitte wähle ein Element' : null
+            name: value => (value.length < 3 ? t('errors.invalidName') : null),
+            duration: value => value < 0 ? t('errors.positiveNumber') : null,
+            queue: value => queues.find(queue => queue.name == value) === undefined ? t('errors.noElement') : null
         },
     });
 
@@ -69,7 +68,7 @@ const CheckinPopup = () => {
                         <div className=" p-10 justify-center">
                             <label htmlFor="select"
                                    className=" text-center font-semibold text text-2xl text-blue-500 block py-2">
-                                Neuer Kund*in
+                                {t('checkin.newCustomer')}
                             </label>
                             <br/>
                             <Box sx={{maxWidth: 340}} mx="auto">
@@ -158,7 +157,7 @@ const CheckinPopup = () => {
             </Modal>
 
             <Group position="center">
-                <Button size={"md"} onClick={() => setOpened(true)}>Neuen Patienten einchecken</Button>
+                <Button size={"md"} onClick={() => setOpened(true)}>{t('checkin.checkin')}</Button>
             </Group>
         </>
     );

@@ -20,6 +20,25 @@
     "approximateAppointmentDuration": "Geschätze Termindauer in Minuten",
     "createCostumer": "Kunde erstellen"
   },
+  "qrCode": {
+    "scan": "Scannen Sie den QR-Code um über Ihre Wartezeit informiert zu bleiben",
+    "greeting": "Herzlichen Willkommen in der Testing Praxis, {{name}}!"
+  },
+  "queueManagement": {
+    "confirmDelete": {
+      "title": "Löschen bestätigen",
+      "text": "Soll {{name}} mit allen Kundendaten gelöscht werden? Diese Aktion kann nicht Rückgängig gemacht werden"
+    },
+    "failedDelete": {
+      "title": "Löschen fehlgeschlagen",
+      "text": "{{name}} konnte nicht gelöscht werden. Sind noch Kunden in der Warteschlange?"
+    },
+    "newQueue": "Neue Warteschlange"
+  },
+  "checkin": {
+    "newCustomer": "Neuer Kunde/in",
+    "checkin": "Einchecken"
+  },
   "password_reset": {
     "title": "Passwort zurücksetzen",
     "password_field": {
@@ -46,11 +65,19 @@
   "saveChanges": "Änderungen speichern",
   "confirm": "Bestätigen",
   "logout": "Abmelden",
+  "cancel": "Abbrechen",
+  "change": "Ändern",
+  "close": "Schließen",
+  "add": "Hinzufügen",
   "errors": {
     "title": "Fehler",
     "parameterMissing": "Ein Parameter wurde nicht übergeben. Überprüfe ob du auf der richtigen Seite bist.",
-    "passwordLength": "Das Passwort muss mindest 4 Zeichen besitzen.",
-    "loginFailed": "Anmeldung fehlgeschlagen! Bitte überprüfen E-Mail und Passwort"
+    "passwordLength": "Das Passwort muss mindestens 4 Zeichen besitzen.",
+    "loginFailed": "Anmeldung fehlgeschlagen! Bitte überprüfen E-Mail und Passwort",
+    "invalidEmail": "Keine valide E-Mail Adresse",
+    "invalidName": "Der Name muss mindestens 3 Zeichen besitzen",
+    "positiveNumber": "Bitte wähle eine positive Zahl",
+    "noElement": "Bitte wähle ein Element"
   },
   "checkIn": {
     "assignedDoctor": "Behandelnde/r Ärztin/Arzt"

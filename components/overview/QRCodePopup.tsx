@@ -2,6 +2,8 @@ import React from "react";
 import {QRCodeSVG} from "qrcode.react";
 import {Modal, useMantineTheme} from "@mantine/core";
 import {Customer} from "../../models/Customer";
+import {useTranslation} from "next-i18next";
+import {ROUTE_WAIT} from "../../helpers/Routes";
 
 interface QRCodePopupProps {
     visible: boolean;
@@ -10,10 +12,10 @@ interface QRCodePopupProps {
 }
 
 const QRCodePopup = (props: QRCodePopupProps) => {
-    const theme = useMantineTheme();
+    const {t} = useTranslation();
 
-    const greetingText = `Herzlichen Willkommen in der Testing Praxis, ${props.customer.name}!`;
-    const url = `https://meddy.me/wait?id=${props.customer.id}`;
+    // TODO: Remove theme
+    const theme = useMantineTheme();
 
     return (
         <>
@@ -25,22 +27,23 @@ const QRCodePopup = (props: QRCodePopupProps) => {
                 overlayBlur={3}
                 size="lg"
             >
-
                 <div className="flex flex-col items-center justify-center py-2" style={{minHeight: 750}}>
                     <div className='p-10 justify-center flex-1'>
                         <div className="text-center">
                             <br/>
-                            <h1 className="font-bold text-blue-800">{greetingText}</h1>
+                            <h1 className="font-bold text-blue-800">
+                                {t("qrCode.greeting", {what: props.customer.name})}
+                            </h1>
                             <br/>
                             <br/>
                         </div>
                         <div className='justify-center flex'>
-                            <QRCodeSVG className='' value={url} width={256} height={256}/>
+                            <QRCodeSVG className='' value={ROUTE_WAIT(props.customer.id)} width={256} height={256}/>
                         </div>
                         <br/>
                         <br/>
                         <div className="font-bold text-center text-blue-800" style={{fontSize: 25}}>
-                            Scannen Sie den QR-Code um über Ihre Wartezeit informiert zu bleiben
+                            {t("qrCode.scan")}
                         </div>
                     </div>
                 </div>

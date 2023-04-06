@@ -8,6 +8,7 @@ import SidebarButton from "./SidebarButton";
 import {useTranslation} from "next-i18next";
 import {useAuth} from "../../../lib/Auth";
 import {useRouter} from "next/router";
+import {ROUTE_CHANGE_PASSWORD} from "../../../helpers/Routes";
 
 interface SidebarComponentProps {
     openQueueManagement: () => void;
@@ -22,7 +23,7 @@ const SidebarComponent = (props: SidebarComponentProps) => {
     const { signOut } = useAuth();
 
     const changePassword = () => {
-        router.push('/change-password');
+        router.push(ROUTE_CHANGE_PASSWORD);
     }
 
     // wait for organisation to initialise, otherwise default text is set to zero
