@@ -65,6 +65,9 @@ const QueueViewer = () => {
         const result = [] as { [queue_id: number]: Customer[] };
         queues.forEach((queue) => {
             result[queue.id] = customersInQueue[queue.id]?.filter(customer => customer.id !== queue.active_customer) ?? [];
+            result[queue.id].sort((a, b) => {
+                return a.position - b.position
+            });
         });
         return result;
     }, [queues, customersInQueue]);
