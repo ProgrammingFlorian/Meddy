@@ -57,5 +57,21 @@
   },
   "waitingScreen": {
     "queue": "Arzt"
+  },
+  "indexPage": {
+    "mission": "\"Wir wollen Warteschlangen neu denken\"",
+    "useCase": "Unsere Software Meddy ermöglicht eine effiziente Verwaltung von Warteschlangen und schafft Transparenz über die Wartezeit für Ihre Kunden.",
+    "productDescription": "Meddy als intelligentes Warteschlangentool ermöglicht es Warteschlangen zu verwalten, indem Kunden Warteschlangen zugeteilt werden. Diese können dynamisch von einem oder mehreren Endgeräten verwaltet werden. Kunden können mit wenigen Klicks einfach eingecheckt werden. Sie erhalten eine transparente Übersicht über ihre verbleibende Wartezeit, dafür müssen sie lediglich einen QR-Code scannen und keinerlei zusätzliche Software installieren.",
+    "usability": "Einfache Handhabung",
+    "privacy": "Datenschutz",
+    "clientSatisfaction": "Kundenzufriedenheit",
+    "usabilityText": "Keine Installation notwendig. Leichte Bedinung, für die keine Schulung notwendig ist. Benutzerfreundlich egal für wen.",
+    "privacyText": "Daten werden nicht länger als notwendig gespeichert. Keine Verarbeitung der Daten oder Verkauf. DSGVO-Konform.",
+    "clientSatisfactionText": "Transparenz der Wartezeit gegenüber Kunden steigert die Zufriedenheit zuverlässig.",
+    "checkInToggle": "1. Kunde einchecken",
+    "scanQRToggle": "2. QR-Code scannen",
+    "queueManagement": "3. Verwaltung der Warteschlangen",
+    "applicationQuestion": "Wie wird Meddy verwendet?"
+
   }
 }
