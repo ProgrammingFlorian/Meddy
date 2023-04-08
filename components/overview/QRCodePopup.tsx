@@ -32,7 +32,7 @@ const QRCodePopup = (props: QRCodePopupProps) => {
                         <div className="text-center">
                             <br/>
                             <h1 className="font-bold text-blue-800">
-                                {t("qrCode.greeting", {what: props.customer.name})}
+                                {t("qrCode.greeting", {name: props.customer.name})}
                             </h1>
                             <br/>
                             <br/>

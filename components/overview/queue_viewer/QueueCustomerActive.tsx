@@ -39,9 +39,13 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
         };
     }, [activeCustomer, props.appointmentStart, remainingTime, props.updateCustomer])
 
-
-
-
+    const getRemainingTimeText = () => {
+        if(remainingTime > 0) {
+            return t('queueManagement.remainingTime', {minutes: remainingTime});
+        } else {
+            return t('queueManagement.timeExceeded');
+        }
+    }
 
     return activeCustomer !== null ? (
         <Card shadow="sm" m={8}>
@@ -59,7 +63,7 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
                     </Text>
                     {props.appointmentStart !== null ?
                         <Text size="sm" color={remainingTime < 5 ? "red" : ""}>
-                            {t('remaining')} {remainingTime} {t("minutesAbbreviation")}
+                            {getRemainingTimeText()}
                         </Text>
                         : <></>}
                     <div className="mt-2 flex justify-center"

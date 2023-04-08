@@ -33,7 +33,9 @@
       "title": "Löschen fehlgeschlagen",
       "text": "{{name}} konnte nicht gelöscht werden. Sind noch Kunden in der Warteschlange?"
     },
-    "newQueue": "Neue Warteschlange"
+    "newQueue": "Neue Warteschlange",
+    "remainingTime": "Noch {{minutes}} Minuten",
+    "timeExceeded": "Termindauer überschritten"
   },
   "checkin": {
     "newCustomer": "Neuer Kunde/in",
@@ -56,7 +58,6 @@
   "duration": "Termindauer",
   "remainingAppointmentDuration": "Die verbleibende Termindauer beträgt",
   "remainingWaitingTime": "Die verbleibende Wartezeit beträgt",
-  "remaining": "Noch",
   "minutesAbbreviation": "min",
   "singleMinute": "Minute",
   "multipleMinutes": "Minuten",

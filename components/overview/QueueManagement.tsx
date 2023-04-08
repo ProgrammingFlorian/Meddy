@@ -24,6 +24,8 @@ export const QueueManagement = (props: QueueManagementProps) => {
     const [showConfirmation, setShowConfirmation] = useState(null as Queue | null);
     const [showDeleteError, setShowDeleteError] = useState(false);
 
+    const {queues, createQueue, deleteQueue} = useContext(StoreContext);
+
     const handleDeleteQueue = (queueId: number) => {
         deleteQueue(queueId)
             .finally(() => setShowConfirmation(null))
@@ -32,8 +34,6 @@ export const QueueManagement = (props: QueueManagementProps) => {
                 setShowDeleteError(true);
             });
     };
-
-    const {queues, createQueue, deleteQueue} = useContext(StoreContext);
 
     return (
         <Modal opened={props.isOpen} onClose={props.onClose} size={"sm"} title={t('sidebar.manageQueues')}>
