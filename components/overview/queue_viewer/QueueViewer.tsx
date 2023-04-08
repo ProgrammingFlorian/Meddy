@@ -2,9 +2,9 @@ import {Center, Container, Grid, Title} from '@mantine/core';
 import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
 import {Customer, getCustomerIdAsString} from '../../../models/Customer';
 import {move, reorder} from "../../../util/ListUtil";
-import React, {useContext, useMemo, useState} from "react";
+import React, {useMemo, useState} from "react";
 import CustomerPopup from "../CustomerPopup";
-import {StoreContext} from "../../../lib/Store";
+import {useStore} from "../../../lib/Store";
 import QueueCustomerActive from "./QueueCustomerActive";
 import QueueCustomer from "./QueueCustomer";
 
@@ -16,9 +16,8 @@ const QueueViewer = () => {
         customersInQueue,
         updateCustomersInQueue,
         deleteCustomer,
-        updateQueue,
-        updateCustomer
-    } = useContext(StoreContext);
+        updateQueue
+    } = useStore();
 
     const onDragEnd = ({destination, source}: DropResult) => {
         // dropped outside the lists
@@ -58,6 +57,7 @@ const QueueViewer = () => {
         queues.forEach((queue) => {
             result[queue.id] = customersInQueue[queue.id]?.find(customer => customer.id === queue.active_customer) ?? null;
         });
+        console.log(result);
         return result;
     }, [queues, customersInQueue]);
 
@@ -77,8 +77,7 @@ const QueueViewer = () => {
             {popup ?
                 <CustomerPopup customer={popup}
                                appointmentStart={null}//Todo{queues ? queues.find(q => q.id == popup.queue_id).latest_appointment_start : null}
-                               queues={queues} updateCustomer={updateCustomer}
-                               onClose={() => setPopup(null)}/>
+                               queues={queues} onClose={() => setPopup(null)}/>
                 : <></>
             }
             <div className="">
@@ -95,7 +94,6 @@ const QueueViewer = () => {
                                         </Container>
                                         <QueueCustomerActive activeCustomer={activeCustomer[queue.id]} queue={queue}
                                                              setPopup={setPopup} deleteCustomer={deleteCustomer}
-                                                             updateCustomer={updateCustomer}
                                                              appointmentStart={queue.latest_appointment_start}
                                         />
 

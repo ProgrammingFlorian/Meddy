@@ -100,7 +100,7 @@ const CheckinPopup = () => {
                                         {...form.getInputProps('name')} />
                                     <br/>
                                     <TextInput
-                                        label={customLabel(t('customer.approximateAppointmentDuration')+":")}
+                                        label={customLabel(t('customer.approximateAppointmentDuration'), true)}
                                         placeholder={"5"}
                                         classNames={{input: classes.textColor}}
                                         {...form.getInputProps('duration')}
@@ -127,7 +127,7 @@ const CheckinPopup = () => {
                                     <br/>
                                     <Select
                                         data={queues.map(queue => queue.name)}
-                                        label={customLabel(t('checkIn.assignedDoctor'))}
+                                        label={customLabel(t('checkIn.assignedDoctor'), true)}
                                         {...form.getInputProps('queue')}
                                     />
                                     <br/>

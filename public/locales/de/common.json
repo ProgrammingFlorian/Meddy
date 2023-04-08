@@ -8,16 +8,16 @@
     "changePassword": "Passwort ändern"
   },
   "customer": {
-    "customerName": "Patienten Name",
+    "customerName": "Patienten Name:",
     "editTitle": "Bearbeiten",
     "name": "Name",
     "appointmentDuration": "Termindauer",
     "remainingTime": "Aktuelle Wartezeit",
-    "queue": "Behandelnde/r Ärztin/Arzt",
-    "notes": "Notizen",
+    "queue": "Behandelnde/r Ärztin/Arzt:",
+    "notes": "Notizen:",
     "notesPlaceholder": "Nur interne Informationen",
     "showQRCode": "QR Code anzeigen",
-    "approximateAppointmentDuration": "Geschätze Termindauer in Minuten",
+    "approximateAppointmentDuration": "Geschätze Termindauer in Minuten:",
     "createCostumer": "Kunde erstellen"
   },
   "qrCode": {
@@ -34,6 +34,7 @@
       "text": "{{name}} konnte nicht gelöscht werden. Sind noch Kunden in der Warteschlange?"
     },
     "newQueue": "Neue Warteschlange",
+    "duration": "Termindauer: {{minutes}} Minuten",
     "remainingTime": "Noch {{minutes}} Minuten",
     "timeExceeded": "Termindauer überschritten"
   },
