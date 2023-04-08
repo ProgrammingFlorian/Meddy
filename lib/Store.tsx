@@ -119,6 +119,11 @@ export const useStore = (): StoreType => {
                 newQueues[newQueues.findIndex(element => element.id === temporaryId)] = value;
                 return newQueues;
             });
+            setCustomersInQueue(previous => {
+                const newCustomersInQueue = {...previous};
+                newCustomersInQueue[value.id] = [];
+                return newCustomersInQueue;
+            })
         });
     }
 

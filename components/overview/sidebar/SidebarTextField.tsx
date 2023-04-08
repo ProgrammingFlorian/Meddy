@@ -1,6 +1,7 @@
 import {Button, Popover, TextInput} from "@mantine/core";
 import React, {useState} from "react";
 import SidebarButton from "./SidebarButton";
+import {useTranslation} from "next-i18next";
 
 interface SidebarButtonProps {
     icon: JSX.Element;
@@ -12,6 +13,9 @@ interface SidebarButtonProps {
 }
 
 export const SidebarTextField = (props: SidebarButtonProps) => {
+    const {t} = useTranslation();
+
+
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [text, setText] = useState(props.initialText);
 
@@ -40,10 +44,10 @@ export const SidebarTextField = (props: SidebarButtonProps) => {
                         props.onConfirm(text);
                         setPopupOpen(false);
                     }}>
-                        Ändern
+                        {t("change")}
                     </Button>
                     <Button color="red" onClick={() => setPopupOpen(false)}>
-                        Abbrechen
+                        {t("cancel")}
                     </Button>
                 </div>
             </Popover.Dropdown>

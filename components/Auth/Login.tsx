@@ -19,9 +19,9 @@ const Login = () => {
 
         // functions will be used to validate values at corresponding key
         validate: {
-            email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+            email: (value) => (/^\S+@\S+$/.test(value) ? null : t('errors.invalidEmail')),
             password: (value) => !isLogin ? null :
-                (value.length < 4 ? 'Password must have at least 4 letters' : null),
+                (value.length < 4 ? t('errors.passwordLength') : null),
 
         },
     });

@@ -3,7 +3,8 @@ import {Queue} from "../../../models/Queue";
 import {Button, Card, Group, Popover, Text} from "@mantine/core";
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "next-i18next";
-
+import {useStore} from "../../../lib/Store";
+import {getTimeLeftFunction} from "../../../helpers/Functions";
 
 interface QueueCustomerActiveProps {
     activeCustomer: Customer | null;
@@ -11,39 +12,44 @@ interface QueueCustomerActiveProps {
     appointmentStart: Date | null;
     setPopup: (customer: Customer) => void;
     deleteCustomer: (customer: Customer) => void;
-    updateCustomer: (customer: Customer) => void;
 }
 
 const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
     const {t} = useTranslation();
-    const activeCustomer = props.activeCustomer;
-    const [remainingTime, setRemainingTime] = useState(activeCustomer ? activeCustomer.duration : 0)
+    const [remainingTime, setRemainingTime] = useState(0);
+    const [isOvertime, setIsOvertime] = useState(false);
 
+    const {customersInQueue, updateCustomer} = useStore();
 
-    const updateRemainingTime = () => {
-        if (props.appointmentStart && activeCustomer) {
-            //appointment duration - (time of appointment start in milliseconds - current time in milliseconds)/(60000) -> 60000 milliseconds = 1 min
-            const remainingTime = Math.round(activeCustomer.duration +
-                (new Date(props.appointmentStart).getTime() - new Date().getTime()) / (1000 * 60));
-            setRemainingTime(remainingTime);
+    const refreshTimeLeft = (timeLeftFunction: (() => { actualTime: number, isOvertime: boolean }) | (() => void)) => {
+        const timeLeft = timeLeftFunction();
+        if (timeLeft) {
+            setRemainingTime(timeLeft.actualTime);
+            setIsOvertime(timeLeft.isOvertime);
         }
-    }
+    };
 
     useEffect(() => {
+        const timeLeft = getTimeLeftFunction(props.queue.latest_appointment_start, customersInQueue[props.queue.id], props.queue, props.activeCustomer);
+
         const intervalId = setInterval(() => {
-            updateRemainingTime();
+            refreshTimeLeft(timeLeft);
         }, 10000);
-        updateRemainingTime()
+        refreshTimeLeft(timeLeft);
         return () => {
             clearInterval(intervalId);
         };
-    }, [activeCustomer, props.appointmentStart, remainingTime, props.updateCustomer])
+    }, [props.activeCustomer, customersInQueue, props.appointmentStart, updateCustomer])
 
+    const getRemainingTimeText = () => {
+        if (!isOvertime) {
+            return t('queueManagement.remainingTime', {minutes: remainingTime});
+        } else {
+            return t('queueManagement.timeExceeded');
+        }
+    }
 
-
-
-
-    return activeCustomer !== null ? (
+    return props.activeCustomer !== null ? (
         <Card shadow="sm" m={8}>
             <Group position="center" style={{
                 width: '100%',
@@ -52,14 +58,14 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
                 padding: 0
             }}>
                 <div className="text-gray-500 text-center font-bold m-2"
-                     onClick={() => props.setPopup(activeCustomer)}>
-                    <Text>{activeCustomer.name}</Text>
+                     onClick={() => props.setPopup(props.activeCustomer as Customer)}>
+                    <Text>{props.activeCustomer.name}</Text>
                     <Text size="sm">
-                        {t('duration')}: {activeCustomer.duration} {t('minutesAbbreviation')}
+                        {t('queueManagement.duration', {minutes: props.activeCustomer.duration})}
                     </Text>
                     {props.appointmentStart !== null ?
                         <Text size="sm" color={remainingTime < 5 ? "red" : ""}>
-                            {t('remaining')} {remainingTime} {t("minutesAbbreviation")}
+                            {getRemainingTimeText()}
                         </Text>
                         : <></>}
                     <div className="mt-2 flex justify-center"
@@ -75,17 +81,16 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
                                 <Popover.Dropdown
                                     sx={(theme) => ({background: theme.white})}>
                                     <Button color="gray"
-                                            onClick={() => props.deleteCustomer(activeCustomer)}>
+                                            onClick={() => props.deleteCustomer(props.activeCustomer as Customer)}>
                                         {t('confirm')}
                                     </Button>
                                 </Popover.Dropdown>
                             </Popover>
                             <Button color="gray" onClick={() => {
-                                if (props.activeCustomer && activeCustomer?.duration) {
-                                    setRemainingTime(remainingTime + 5)
-                                    props.updateCustomer({
+                                if (props.activeCustomer && props.activeCustomer?.duration) {
+                                    updateCustomer({
                                         ...props.activeCustomer,
-                                        duration: activeCustomer.duration + 5
+                                        duration: props.activeCustomer.duration + 5
                                     });
                                 }
                             }}>

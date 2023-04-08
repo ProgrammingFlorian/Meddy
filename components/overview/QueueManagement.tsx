@@ -2,8 +2,9 @@ import {ActionIcon, Button, Card, Group, Modal, Text, TextInput} from "@mantine/
 import {IconX} from "@tabler/icons-react";
 import {useForm} from "@mantine/form";
 import {Queue} from "../../models/Queue";
-import {StoreContext} from "../../lib/Store";
-import React, {useContext, useState} from "react";
+import {useStore} from "../../lib/Store";
+import React, {useState} from "react";
+import {useTranslation} from "next-i18next";
 
 
 interface QueueManagementProps {
@@ -12,30 +13,29 @@ interface QueueManagementProps {
 }
 
 export const QueueManagement = (props: QueueManagementProps) => {
+    const {t} = useTranslation();
+
     const form = useForm({
         initialValues: {name: ""},
         validate: {
-            name: (value) => (value.length < 3 ? "Der Name muss mindestens 3 Zeichen besitzen" : null)
+            name: (value) => (value.length < 3 ? t('errors.invalidName') : null)
         }
     });
     const [showConfirmation, setShowConfirmation] = useState(null as Queue | null);
     const [showDeleteError, setShowDeleteError] = useState(false);
 
+    const {queues, createQueue, deleteQueue} = useStore();
+
     const handleDeleteQueue = (queueId: number) => {
         deleteQueue(queueId)
             .finally(() => setShowConfirmation(null))
             .catch(() => {
-                console.log("error")
                 setShowDeleteError(true);
             });
     };
 
-    const {queues, createQueue, deleteQueue} = useContext(StoreContext);
-
-    // TODO: Use language file
-
     return (
-        <Modal opened={props.isOpen} onClose={props.onClose} size={"sm"} title={"Warteschlangen verwalten"}>
+        <Modal opened={props.isOpen} onClose={props.onClose} size={"sm"} title={t('sidebar.manageQueues')}>
             {queues.sort((q1, q2) => q1.name.localeCompare(q2.name)).map((queue) => {
                 const queueId = queue.id;
                 return <Card className="mt-1" p="xs" radius="sm" withBorder key={queueId}>
@@ -48,24 +48,23 @@ export const QueueManagement = (props: QueueManagementProps) => {
                 </Card>
             })}
             <Modal
-                title="Löschen bestätigen"
+                title={t('queueManagement.confirmDelete.title')}
                 opened={showConfirmation !== null}
                 onClose={() => setShowConfirmation(null)}>
-                <Text>Soll {showConfirmation?.name} mit allen Kundendaten gelöscht werden? Diese Aktion kann nicht
-                    Rückgängig gemacht werden</Text>
+                <Text>{t('queueManagement.confirmDelete.text', {name: showConfirmation?.name})}</Text>
                 <Group className="pt-4" position="center">
                     <Button color="green"
-                            onClick={() => handleDeleteQueue(showConfirmation?.id ?? -1)}>Bestätigen</Button>
-                    <Button color="red" onClick={() => setShowConfirmation(null)}>Abbrechen</Button>
+                            onClick={() => handleDeleteQueue(showConfirmation?.id ?? -1)}>{t('confirm')}</Button>
+                    <Button color="red" onClick={() => setShowConfirmation(null)}>{t('cancel')}</Button>
                 </Group>
             </Modal>
             <Modal
-                title="Löschen fehlgeschlagen"
+                title={t('queueManagement.failedDelete.title')}
                 opened={showDeleteError}
                 onClose={() => setShowDeleteError(false)}>
-                <Text>{showConfirmation?.name} konnte nicht gelöscht werden. Sind noch Kunden in der Warteschlange?</Text>
+                <Text>{t('queueManagement.failedDelete.text', {name: showConfirmation?.name})}</Text>
                 <Group className="pt-4" position="center">
-                    <Button color="gray" onClick={() => setShowDeleteError(false)}>Schließen</Button>
+                    <Button color="gray" onClick={() => setShowDeleteError(false)}>{t('close')}</Button>
                 </Group>
             </Modal>
             <Group>
@@ -77,10 +76,10 @@ export const QueueManagement = (props: QueueManagementProps) => {
                     <div className="flex-row flex gap-2 mt-3">
                         <TextInput
                             style={{width: 220}}
-                            placeholder="Neue Warteschlange"
+                            placeholder={t('queueManagement.newQueue') ?? ""}
                             {...form.getInputProps("name")}
                         />
-                        <Button type="submit">Hinzufügen</Button>
+                        <Button type="submit">{t('add')}</Button>
                     </div>
                 </form>
             </Group>

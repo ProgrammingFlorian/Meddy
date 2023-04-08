@@ -21,7 +21,6 @@ const PasswordRecovery = () => {
     });
 
     const submit = (values: { password: string }) => {
-        console.log('submitted', values.password);
         supabase.auth.updateUser({
             password: values.password,
         }).then((v) => {

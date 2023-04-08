@@ -1,6 +1,5 @@
-import {Box, Button, createStyles, Group, Modal, Select, Space, Textarea, TextInput} from "@mantine/core";
+import {Box, Button, createStyles, Group, Modal, Select, Textarea, TextInput} from "@mantine/core";
 import {useContext, useEffect, useState} from "react";
-import {Language} from "../models/Language";
 import {customLabel} from "../helpers/Functions";
 import {useForm} from "@mantine/form";
 import {Customer} from "../models/Customer";
@@ -37,13 +36,13 @@ const CheckinPopup = () => {
 
         // functions will be used to validate values at corresponding key
         validate: {
-            name: value => (value.length < 2 ? 'Name must have at least 2 letters' : null),
-            duration: value => value < 0 ? "Bitte wähle eine positive Dauer" : null,
-            queue: value => queues.find(queue => queue.name == value) === undefined ? 'Bitte wähle ein Element' : null
+            name: value => (value.length < 3 ? t('errors.invalidName') : null),
+            duration: value => value < 0 ? t('errors.positiveNumber') : null,
+            queue: value => queues.find(queue => queue.name == value) === undefined ? t('errors.noElement') : null
         },
     });
 
-    const {queues, createCustomer} = useContext(StoreContext);
+    const {queues, customersInQueue, createCustomer} = useContext(StoreContext);
 
     useEffect(() => {
         if (queues.length > 0) {
@@ -69,19 +68,19 @@ const CheckinPopup = () => {
                         <div className=" p-10 justify-center">
                             <label htmlFor="select"
                                    className=" text-center font-semibold text text-2xl text-blue-500 block py-2">
-                                Neuer Kund*in
+                                {t('checkin.newCustomer')}
                             </label>
                             <br/>
                             <Box sx={{maxWidth: 340}} mx="auto">
                                 <form onSubmit={form.onSubmit((values) => {
                                     const queueId = queues.find(queue => queue.name === values.queue)?.id;
                                     if (queueId) {
-                                        // @ts-ignore TODO
+                                        // @ts-ignore ID is created by server
                                         const customer: Customer = {
                                             duration: values.duration,
                                             name: values.name,
                                             notes: values.notes,
-                                            position: 0,
+                                            position: customersInQueue[queueId].length,
                                             queue_id: queueId
                                         }
                                         createCustomer(customer).then(createdCustomer => {
@@ -101,7 +100,7 @@ const CheckinPopup = () => {
                                         {...form.getInputProps('name')} />
                                     <br/>
                                     <TextInput
-                                        label={customLabel(t('customer.approximateAppointmentDuration')+":")}
+                                        label={customLabel(t('customer.approximateAppointmentDuration'), true)}
                                         placeholder={"5"}
                                         classNames={{input: classes.textColor}}
                                         {...form.getInputProps('duration')}
@@ -128,7 +127,7 @@ const CheckinPopup = () => {
                                     <br/>
                                     <Select
                                         data={queues.map(queue => queue.name)}
-                                        label={customLabel(t('checkIn.assignedDoctor'))}
+                                        label={customLabel(t('checkIn.assignedDoctor'), true)}
                                         {...form.getInputProps('queue')}
                                     />
                                     <br/>
@@ -158,7 +157,7 @@ const CheckinPopup = () => {
             </Modal>
 
             <Group position="center">
-                <Button size={"md"} onClick={() => setOpened(true)}>Neuen Patienten einchecken</Button>
+                <Button size={"md"} onClick={() => setOpened(true)}>{t('checkin.checkin')}</Button>
             </Group>
         </>
     );

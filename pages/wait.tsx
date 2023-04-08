@@ -7,6 +7,7 @@ import CustomerService from "../services/CustomerService";
 import {IconAlertCircle, IconUser, IconUsers} from "@tabler/icons-react";
 import {useTranslation} from "next-i18next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {calculateFixedWaitingTime, calculateTimeLeft, getActiveCustomerDuration} from "../helpers/Functions";
 
 const custerMessageBuilder = (personsInQueue: number) => {
     if (personsInQueue === 1) {
@@ -39,23 +40,18 @@ const wait: NextPage = () => {
     const [personsAhead, setPersonsAhead] = useState(0);
     const [organisationName, setOrganisationName] = useState('');
 
-    const [isOvertime, setOvertime] = useState(false);
+    const [isOvertime, setIsOvertime] = useState(false);
 
     const [actualTime, setActualTime] = useState(0);
 
     const router = useRouter();
 
     // TODO: Use useCallback (didn't update the state values for some reason..)
-    const calculateTimeLeft = useMemo(() => {
-        if (latestAppointmentStart) {
-            const difference = +(new Date()) - +(new Date(latestAppointmentStart));
-            const minuteDifference = Math.floor((difference / 1000 / 60) % 60);
-            setActualTime(fixedWaitingTime + Math.max(0, liveWaitingTime - minuteDifference));
-            setOvertime(liveWaitingTime - minuteDifference < 0);
-        } else {
-            setActualTime(fixedWaitingTime);
-        }
-    }, [latestAppointmentStart, liveWaitingTime, fixedWaitingTime]);
+    const refreshTimeLeft = () => {
+        const timeLeft = calculateTimeLeft(latestAppointmentStart, fixedWaitingTime, liveWaitingTime);
+        setActualTime(timeLeft.actualTime);
+        setIsOvertime(timeLeft.isOvertime);
+    };
 
     useEffect(() => {
         const id = router.query['id'];
@@ -63,10 +59,8 @@ const wait: NextPage = () => {
             CustomerService.fetchCustomersInSameQueue(+id).then(([c, otherCustomers, organisation, queue]) => {
                 setCustomer(c);
                 setPersonsAhead(otherCustomers.length);
-                setFixedWaitingTime(otherCustomers.filter(oc => oc.id !== queue.active_customer && oc.position < c.position)
-                    .reduce((previous, currentCustomer) => previous + currentCustomer.duration, 0));
-                setLiveWaitingTime(otherCustomers.find(c => c.id === queue.active_customer)?.duration ?? 0);
-                console.log("live waiting time", otherCustomers.find(c => c.id === queue.active_customer)?.duration ?? 0);
+                setFixedWaitingTime(calculateFixedWaitingTime(otherCustomers, queue, c));
+                setLiveWaitingTime(getActiveCustomerDuration(otherCustomers, queue));
                 setLatestAppointmentStart(queue.latest_appointment_start);
                 setOrganisationName(organisation.name);
             });
@@ -75,8 +69,8 @@ const wait: NextPage = () => {
         }
 
         // @ts-ignore see the TODO above the calculateTimeLeft function
-        const timer = setInterval(calculateTimeLeft, 30000);
-        calculateTimeLeft;
+        const timer = setInterval(refreshTimeLeft, 30000);
+        refreshTimeLeft();
 
         return () => clearInterval(timer);
     }, [router.query]);

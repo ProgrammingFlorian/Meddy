@@ -5,12 +5,12 @@ import QRCodePopup from "./QRCodePopup";
 import {Queue} from "../../models/Queue";
 import {useTranslation} from "next-i18next";
 import ConfirmButton from "../ConfirmButton";
-import {StoreContext} from "../../lib/Store";
+import {StoreContext, useStore} from "../../lib/Store";
+import {getTimeLeftFunction} from "../../helpers/Functions";
 
 interface CustomerPopupProps {
     customer: Customer;
     queues: Queue[];
-    updateCustomer: (customer: Customer) => void;
     onClose: () => void;
     appointmentStart: Date | null
 }
@@ -27,16 +27,21 @@ const CustomerPopup = (props: CustomerPopupProps) => {
     const initialDuration = props.customer.duration;
     const [durationOfAppointment, setDurationOfAppointment] = useState(initialDuration)
     const {deleteCustomer, updateQueue, customersInQueue} = useContext(StoreContext);
-    const [remainingTime, setRemainingTime] = useState(0)
+
+    const [remainingTime, setRemainingTime] = useState(0);
+    const [isOvertime, setIsOvertime] = useState(false);
+
     const [qrCodeShown, showQRCode] = useState(false);
     const customerQueue = props.queues.find(q => q.id === props.customer.queue_id);
+
+    const {updateCustomer} = useStore();
 
     const propertiesChanged = useMemo(() => {
         return name !== initialName || queue !== initialQueue || notes !== initialNotes || durationOfAppointment !== initialDuration
     }, [name, queue, notes, durationOfAppointment]);
 
     const saveChanges = () => {
-        props.updateCustomer({
+        updateCustomer({
             ...props.customer,
             name: name,
             duration: durationOfAppointment,
@@ -46,29 +51,30 @@ const CustomerPopup = (props: CustomerPopupProps) => {
         props.onClose();
     };
 
-    const calculateWaitingTime = () => {
-        return customersInQueue[props.customer.queue_id].filter(oc => oc.id !== customerQueue?.active_customer && oc.position < props.customer.position)
-            .reduce((previous, currentCustomer) => previous + currentCustomer.duration, 0)
-    }
-
-    const updateRemainingTime = () => {
-        const activeCustomer = customersInQueue[props.customer.queue_id].find(c => c.id === customerQueue?.active_customer);
-        //appointment duration - (time of appointment start in milliseconds - current time in milliseconds)/(60000) -> 60000 milliseconds = 1 min
-        const remainingTime = Math.round((activeCustomer?.duration ?? 0) +
-            (new Date(customerQueue?.latest_appointment_start ?? new Date()).getTime() - new Date().getTime()) / (1000 * 60));
-        setRemainingTime(remainingTime + calculateWaitingTime());
-    }
+    const refreshTimeLeft = (timeLeftFunction: (() => { actualTime: number, isOvertime: boolean }) | (() => void)) => {
+        const timeLeft = timeLeftFunction();
+        if (timeLeft) {
+            setRemainingTime(timeLeft.actualTime);
+            setIsOvertime(timeLeft.isOvertime);
+        }
+    };
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            updateRemainingTime();
-        }, 10000);
-        updateRemainingTime()
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, [props.appointmentStart, remainingTime, props.updateCustomer])
+        if (customerQueue) {
+            const timeLeft = getTimeLeftFunction(customerQueue.latest_appointment_start, customersInQueue[customerQueue.id], customerQueue, props.customer);
 
+            const intervalId = setInterval(() => {
+                refreshTimeLeft(timeLeft);
+            }, 10000);
+            refreshTimeLeft(timeLeft);
+
+            return () => {
+                clearInterval(intervalId);
+            };
+        }
+    }, [customerQueue, customersInQueue, props.customer, refreshTimeLeft]);
+
+    // TODO: use form
     return (
         <>
             <Modal opened={true} onClose={props.onClose} size="lg" title={t('customer.editTitle')}>
@@ -80,12 +86,15 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                onChange={(e) => setName(e.target.value)} size="xl"
                                sx={{color: 'blue'}}/>
 
-                    <div style={{fontSize: 16, fontWeight: "bold"}}>{props.customer.id === customerQueue?.active_customer ? t('remainingAppointmentDuration') : t('remainingWaitingTime')} {remainingTime} {t('multipleMinutes')}</div>
+                    <div style={{
+                        fontSize: 16,
+                        fontWeight: "bold"
+                    }}>{props.customer.id === customerQueue?.active_customer ? t('remainingAppointmentDuration') : t('remainingWaitingTime')} {remainingTime} {t('multipleMinutes')}</div>
 
                     <Flex justify="center" gap="md">
                         {
                             props.queues.find(q => q.id === props.customer.queue_id)?.active_customer === props.customer.id || props.customer.position != 0 ?
-                                <></> : <ConfirmButton fullWidth label={t('call')}  onClick={() => {
+                                <></> : <ConfirmButton fullWidth label={t('call')} onClick={() => {
                                     const newQueue = {...props.queues.find(q => q.id === props.customer.queue_id)};
                                     if (newQueue.id !== undefined) {
                                         newQueue.active_customer = props.customer.id;
@@ -94,7 +103,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                         updateQueue(newQueue);
                                     }
                                     props.onClose();
-                                }} color="green" />
+                                }} color="green"/>
                         }
 
                         <ConfirmButton fullWidth label={t('checkout')} onClick={() => {
