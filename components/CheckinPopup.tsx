@@ -42,7 +42,7 @@ const CheckinPopup = () => {
         },
     });
 
-    const {queues, createCustomer} = useContext(StoreContext);
+    const {queues, customersInQueue, createCustomer} = useContext(StoreContext);
 
     useEffect(() => {
         if (queues.length > 0) {
@@ -75,12 +75,12 @@ const CheckinPopup = () => {
                                 <form onSubmit={form.onSubmit((values) => {
                                     const queueId = queues.find(queue => queue.name === values.queue)?.id;
                                     if (queueId) {
-                                        // @ts-ignore TODO
+                                        // @ts-ignore ID is created by server
                                         const customer: Customer = {
                                             duration: values.duration,
                                             name: values.name,
                                             notes: values.notes,
-                                            position: 0,
+                                            position: customersInQueue[queueId].length,
                                             queue_id: queueId
                                         }
                                         createCustomer(customer).then(createdCustomer => {
