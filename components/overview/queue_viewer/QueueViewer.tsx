@@ -2,9 +2,9 @@ import {Center, Container, Grid, Title} from '@mantine/core';
 import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
 import {Customer, getCustomerIdAsString} from '../../../models/Customer';
 import {move, reorder} from "../../../util/ListUtil";
-import React, {useMemo, useState} from "react";
+import React, {useContext, useMemo, useState} from "react";
 import CustomerPopup from "../CustomerPopup";
-import {useStore} from "../../../lib/Store";
+import {StoreContext} from "../../../lib/Store";
 import QueueCustomerActive from "./QueueCustomerActive";
 import QueueCustomer from "./QueueCustomer";
 
@@ -17,7 +17,7 @@ const QueueViewer = () => {
         updateCustomersInQueue,
         deleteCustomer,
         updateQueue
-    } = useStore();
+    } = useContext(StoreContext);
 
     const onDragEnd = ({destination, source}: DropResult) => {
         // dropped outside the lists

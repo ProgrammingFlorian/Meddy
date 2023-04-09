@@ -82,7 +82,7 @@ const CheckinPopup = () => {
                                             notes: values.notes,
                                             position: customersInQueue[queueId].length,
                                             queue_id: queueId
-                                        }
+                                        };
                                         createCustomer(customer).then(createdCustomer => {
                                             setCustomer(createdCustomer);
                                             setLoading(false);

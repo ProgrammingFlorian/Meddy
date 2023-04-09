@@ -33,10 +33,13 @@
       "title": "Löschen fehlgeschlagen",
       "text": "{{name}} konnte nicht gelöscht werden. Sind noch Kunden in der Warteschlange?"
     },
-    "newQueue": "Neue Warteschlange",
+    "newQueue": "Neue Warteschlange"
+  },
+  "administration": {
     "duration": "Termindauer: {{minutes}} Minuten",
     "remainingTime": "Noch {{minutes}} Minuten",
-    "timeExceeded": "Termindauer überschritten"
+    "timeExceeded": "Termindauer überschritten",
+    "extraMinutes": "+5min"
   },
   "checkin": {
     "newCustomer": "Neuer Kunde/in",
@@ -82,7 +85,7 @@
     "noElement": "Bitte wähle ein Element"
   },
   "checkIn": {
-    "assignedDoctor": "Behandelnde/r Ärztin/Arzt"
+    "assignedDoctor": "Behandelnde/r Ärztin/Arzt:"
   },
   "waitingScreen": {
     "queue": "Arzt"
