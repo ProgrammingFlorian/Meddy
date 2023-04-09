@@ -88,7 +88,17 @@
     "assignedDoctor": "Behandelnde/r Ärztin/Arzt:"
   },
   "waitingScreen": {
-    "queue": "Arzt"
+    "queue": "Warteschlange"
+  },
+  "wait": {
+    "welcomeMessage": "Herzlichen Willkommen bei {{organisation}}, {{customer}}!",
+    "expectedWaitingTime": "Ihre geschätze Wartezeit",
+    "soon": "Sie sind gleich dran.",
+    "peopleAhead": {
+      "1": "Vor Ihnen befinden sich noch eine Person",
+      "number": "Vor Ihnen befinden sich noch {{count}} Personen",
+      "more": "Vor Ihnen befinden sich noch mehr als vier Personen"
+    }
   },
   "indexPage": {
     "mission": "\"Wir wollen Warteschlangen neu denken\"",

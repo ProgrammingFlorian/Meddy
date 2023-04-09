@@ -14,17 +14,11 @@ interface QRCodePopupProps {
 const QRCodePopup = (props: QRCodePopupProps) => {
     const {t} = useTranslation();
 
-    // TODO: Remove theme
-    const theme = useMantineTheme();
-
     return (
         <>
             <Modal
                 opened={props.visible}
                 onClose={props.onClose}
-                overlayColor={theme.colorScheme === 'dark' ? theme.colors.dark[9] : theme.colors.gray[2]}
-                overlayOpacity={0.55}
-                overlayBlur={3}
                 size="lg"
             >
                 <div className="flex flex-col items-center justify-center py-2" style={{minHeight: 750}}>

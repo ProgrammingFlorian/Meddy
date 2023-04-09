@@ -62,7 +62,6 @@ export const useStore = (): StoreType => {
 
                 setOrganisation({id: data.organisation_id, name: data.organisations.name});
                 setCustomersInQueue(result);
-
             });
             QueueService.fetchQueues(account.id).then(setQueues);
         }
@@ -136,7 +135,7 @@ export const useStore = (): StoreType => {
 
     // TODO: Resolve before waiting for server
     const createCustomer = (newCustomer: Customer): Promise<Customer> => {
-        const temporaryId = local_preview_counter--;
+        const temporaryId = String(local_preview_counter--);
         setCustomersInQueue(previous => {
             const newQueues = {...previous};
             newQueues[newCustomer.queue_id].push({

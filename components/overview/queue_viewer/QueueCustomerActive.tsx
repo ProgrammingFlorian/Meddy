@@ -21,21 +21,13 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
 
     const {customersInQueue, updateCustomer} = useStore();
 
-    const refreshTimeLeft = (timeLeftFunction: (() => { actualTime: number, isOvertime: boolean }) | (() => void)) => {
-        const timeLeft = timeLeftFunction();
-        if (timeLeft) {
-            setRemainingTime(timeLeft.actualTime);
-            setIsOvertime(timeLeft.isOvertime);
-        }
-    };
-
     useEffect(() => {
-        const timeLeft = getTimeLeftFunction(props.queue.latest_appointment_start, customersInQueue[props.queue.id], props.queue, props.activeCustomer);
+        const timeLeft = getTimeLeftFunction(props.queue.latest_appointment_start, customersInQueue[props.queue.id], props.queue, props.activeCustomer,
+            setRemainingTime, setIsOvertime);
 
-        const intervalId = setInterval(() => {
-            refreshTimeLeft(timeLeft);
-        }, 10000);
-        refreshTimeLeft(timeLeft);
+        const intervalId = setInterval(timeLeft, 10000);
+        timeLeft();
+
         return () => {
             clearInterval(intervalId);
         };

@@ -1,5 +1,5 @@
 export interface Customer {
-    id: number;
+    id: string;
     // Foreign key for queue
     queue_id: number;
     position: number;

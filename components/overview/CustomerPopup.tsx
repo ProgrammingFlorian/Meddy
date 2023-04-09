@@ -46,33 +46,23 @@ const CustomerPopup = (props: CustomerPopupProps) => {
             name: name,
             duration: durationOfAppointment,
             notes: notes,
-            queue_id: props.queues.find(q => q.name === queue)?.id ?? props.customer.id
+            queue_id: props.queues.find(q => q.name === queue)?.id ?? props.customer.queue_id
         });
         props.onClose();
     };
 
-    const refreshTimeLeft = (timeLeftFunction: (() => { actualTime: number, isOvertime: boolean }) | (() => void)) => {
-        const timeLeft = timeLeftFunction();
-        if (timeLeft) {
-            setRemainingTime(timeLeft.actualTime);
-            setIsOvertime(timeLeft.isOvertime);
-        }
-    };
-
     useEffect(() => {
         if (customerQueue) {
-            const timeLeft = getTimeLeftFunction(customerQueue.latest_appointment_start, customersInQueue[customerQueue.id], customerQueue, props.customer);
+            const timeLeft = getTimeLeftFunction(customerQueue.latest_appointment_start, customersInQueue[customerQueue.id], customerQueue, props.customer, setRemainingTime, setIsOvertime);
 
-            const intervalId = setInterval(() => {
-                refreshTimeLeft(timeLeft);
-            }, 10000);
-            refreshTimeLeft(timeLeft);
+            const intervalId = setInterval(timeLeft, 10000);
+            timeLeft();
 
             return () => {
                 clearInterval(intervalId);
             };
         }
-    }, [customerQueue, customersInQueue, props.customer, refreshTimeLeft]);
+    }, [customerQueue, customersInQueue, props.customer]);
 
     // TODO: use form
     return (

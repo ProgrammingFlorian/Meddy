@@ -1,21 +1,23 @@
 import type {NextPage} from 'next'
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useState} from "react";
 import {Customer} from "../models/Customer";
 import {Alert, Container, LoadingOverlay} from "@mantine/core";
 import {useRouter} from "next/router";
 import CustomerService from "../services/CustomerService";
 import {IconAlertCircle, IconUser, IconUsers} from "@tabler/icons-react";
-import {useTranslation} from "next-i18next";
+import {TFunction, useTranslation} from "next-i18next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {calculateFixedWaitingTime, calculateTimeLeft, getActiveCustomerDuration} from "../helpers/Functions";
+import {getTimeLeftFunction} from "../helpers/Functions";
+import {supabase} from "../lib/Store";
+import {RealtimeChannel} from "@supabase/realtime-js";
 
-const custerMessageBuilder = (personsInQueue: number) => {
+const custerMessageBuilder = (personsInQueue: number, t: TFunction) => {
     if (personsInQueue === 1) {
-        return "Vor Ihnen befinden sich noch eine Person";
+        return t('wait.peopleAhead.1');
     } else if (personsInQueue > 4) {
-        return "Vor Ihnen befinden sich noch mehr als vier Personen";
+        return t('wait.peopleAhead.more');
     } else {
-        return "Vor Ihnen befinden sich noch " + personsInQueue + " Personen";
+        return t('wait.peopleAhead.number', {count: personsInQueue});
     }
 };
 
@@ -28,51 +30,65 @@ const personInQueue = (personsInQueue: number) => {
 };
 
 const wait: NextPage = () => {
-    // TODO: Use translation!
     const {t} = useTranslation();
 
     const [customer, setCustomer] = useState(null as Customer | null);
     const [error, setError] = useState(null as string | null);
 
-    const [fixedWaitingTime, setFixedWaitingTime] = useState(0);
-    const [liveWaitingTime, setLiveWaitingTime] = useState(0);
-    const [latestAppointmentStart, setLatestAppointmentStart] = useState(null as null | Date);
+    const [remainingTime, setRemainingTime] = useState(0);
+    const [isOvertime, setIsOvertime] = useState(false);
     const [personsAhead, setPersonsAhead] = useState(0);
     const [organisationName, setOrganisationName] = useState('');
 
-    const [isOvertime, setIsOvertime] = useState(false);
-
-    const [actualTime, setActualTime] = useState(0);
+    const [intervalId, setIntervalId] = useState(null as null | NodeJS.Timer);
+    const [channel, setChannel] = useState(null as null | RealtimeChannel);
 
     const router = useRouter();
 
-    // TODO: Use useCallback (didn't update the state values for some reason..)
-    const refreshTimeLeft = () => {
-        const timeLeft = calculateTimeLeft(latestAppointmentStart, fixedWaitingTime, liveWaitingTime);
-        setActualTime(timeLeft.actualTime);
-        setIsOvertime(timeLeft.isOvertime);
-    };
+    const loadData = (id: string) => {
+        CustomerService.fetchCustomersInSameQueue(id).then(([c, otherCustomers, organisation, queue]) => {
+            setCustomer(c);
+            setPersonsAhead(otherCustomers.length);
+            setOrganisationName(organisation.name);
+
+            const timeLeft = getTimeLeftFunction(queue.latest_appointment_start, otherCustomers, queue, c, setRemainingTime, setIsOvertime);
+
+            setIntervalId(oldIntervalId => {
+                if (oldIntervalId) {
+                    clearInterval(oldIntervalId);
+                }
+                return setInterval(() => {
+                    timeLeft();
+                    console.log("interval", intervalId);
+                }, 10000)
+            });
+            timeLeft();
+        });
+    }
 
     useEffect(() => {
-        const id = router.query['id'];
+        const id = router.query['id'] as string;
         if (id) {
-            CustomerService.fetchCustomersInSameQueue(+id).then(([c, otherCustomers, organisation, queue]) => {
-                setCustomer(c);
-                setPersonsAhead(otherCustomers.length);
-                setFixedWaitingTime(calculateFixedWaitingTime(otherCustomers, queue, c));
-                setLiveWaitingTime(getActiveCustomerDuration(otherCustomers, queue));
-                setLatestAppointmentStart(queue.latest_appointment_start);
-                setOrganisationName(organisation.name);
-            });
+            loadData(id);
+            const realtimeChannel = supabase.channel('any').on('postgres_changes', {event: 'UPDATE', schema: 'public', table: 'customers'},
+                _ => {
+                    loadData(id);
+                }).subscribe();
+            setChannel(realtimeChannel);
         } else {
-            setError(t('errors.parameterMissing'));
+            setTimeout(() => {
+                setError(t('errors.parameterMissing'));
+            }, 1000);
         }
 
-        // @ts-ignore see the TODO above the calculateTimeLeft function
-        const timer = setInterval(refreshTimeLeft, 30000);
-        refreshTimeLeft();
-
-        return () => clearInterval(timer);
+        return () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+            if (channel) {
+                supabase.removeChannel(channel);
+            }
+        };
     }, [router.query]);
 
     return customer ? (
@@ -80,10 +96,13 @@ const wait: NextPage = () => {
             <div className='p-10 bg-gray-100 justify-center'>
                 <div className="text-center" style={{width: "400px"}}>
                     <br/>
-                    <h1 className="">Herzlichen Willkommen bei {organisationName}, {customer.name}!</h1>
+                    <h1 className="">{t('wait.welcomeMessage', {
+                        organisation: organisationName,
+                        customer: customer.name
+                    })}</h1>
                     <br/>
                     <br/>
-                    {!isOvertime && fixedWaitingTime === 0 ?
+                    {remainingTime > 0 ?
                         <>
                             <div className={`${isOvertime ? "" : "blue-color"} text-center`} style={{
                                 width: "150px",
@@ -92,20 +111,20 @@ const wait: NextPage = () => {
                                 borderRadius: "75px",
                                 margin: "0 auto"
                             }}>
-                                <h1 className="pt-5 pb-0 text-black font-bold">{actualTime}</h1>
+                                <h1 className="pt-5 pb-0 text-black font-bold">{remainingTime}</h1>
                                 <h4 className="text-black font-bold pt-0">min</h4>
                             </div>
-                            <h2 className='pt-5 font-bold'>Ihre geschätze Wartezeit</h2>
+                            <h2 className='pt-5 font-bold'>{t('wait.expectedWaitingTime')}</h2>
                             <br/>
                             <br/>
                             <br/>
                             <div className=' flex justify-items-center justify-center' style={{}}>
                                 {personInQueue(personsAhead)}
                             </div>
-                            <p className=' font-bold'>{custerMessageBuilder(personsAhead)}</p>
+                            <p className=' font-bold'>{custerMessageBuilder(personsAhead, t)}</p>
                         </>
                         : <>
-                            <p>Sie sind gleich dran.</p>
+                            <p>{t('wait.soon')}</p>
                         </>}
                 </div>
                 <br/>
