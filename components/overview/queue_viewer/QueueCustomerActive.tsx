@@ -91,6 +91,10 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
                                     updateCustomer({
                                         ...props.activeCustomer,
                                         duration: props.activeCustomer.duration + 5
+                                    }).finally(() => {
+                                        if (props.activeCustomer) {
+                                            props.activeCustomer.duration += 5;
+                                        }
                                     });
                                 }
                             }}>

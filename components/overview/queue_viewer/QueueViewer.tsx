@@ -57,7 +57,6 @@ const QueueViewer = () => {
         queues.forEach((queue) => {
             result[queue.id] = customersInQueue[queue.id]?.find(customer => customer.id === queue.active_customer) ?? null;
         });
-        console.log(result);
         return result;
     }, [queues, customersInQueue]);
 
