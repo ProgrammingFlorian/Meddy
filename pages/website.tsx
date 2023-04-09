@@ -6,29 +6,28 @@ import {
     Accordion,
     BackgroundImage,
     Box,
+    Button,
     Card,
     Center,
+    Collapse,
     Container,
     Flex,
     Grid,
     Image,
+    Progress,
     Space,
     Text,
-    Carousel,
-    Button,
-    Title, Group, Collapse, Progress
+    Title
 } from '@mantine/core';
-import {IconAccessible, IconLock, IconMoodSmile, IconUserCheck, IconQrcode, IconPencil} from "@tabler/icons-react";
+import {IconAccessible, IconLock, IconMoodSmile, IconPencil, IconQrcode, IconUserCheck} from "@tabler/icons-react";
 import {useTranslation} from "next-i18next";
 import {useDisclosure} from "@mantine/hooks";
-import { Embla} from "@mantine/carousel";
-
-
+import {Carousel, Embla} from "@mantine/carousel";
 
 
 const Website: NextPage = () => {
     const {t} = useTranslation();
-    const [opened, { toggle }] = useDisclosure(false);
+    const [opened, {toggle}] = useDisclosure(false);
     const [scrollProgress, setScrollProgress] = useState(0);
     const [embla, setEmbla] = useState<Embla | null>(null);
 
@@ -47,14 +46,16 @@ const Website: NextPage = () => {
 
     return (
         <Box>
-            <div  style={{height: '100vh'}}>
-                <BackgroundImage className=""  w={"100%"} h={"100%"} src="./Images/website_image_2.jpg">
+            <div style={{height: '100vh'}}>
+                <BackgroundImage className="" w={"100%"} h={"100%"} src="./Images/website_image_2.jpg">
                     <Container fluid className="h-full " style={{position: "relative"}}>
                         <Container style={{position: "absolute", top: 0, right: 0}}>
-                            <Button size={"lg"} className="m-5" >Kontakt</Button>
-                            <Button size={"lg"} onClick={() => window.location.href = "https://meddy.me/overview"}>Anmelden</Button>
+                            <Button size={"lg"} className="m-5">Kontakt</Button>
+                            <Button size={"lg"}
+                                    onClick={() => window.location.href = "https://meddy.me/overview"}>Anmelden</Button>
                         </Container>
-                        <Text className="" style={{position: "absolute", top: "25%", left: 0, right: 0, textAlign: "center"}}>
+                        <Text className=""
+                              style={{position: "absolute", top: "25%", left: 0, right: 0, textAlign: "center"}}>
                             <Title order={1}
                                    variant="gradient"
                                    gradient={{from: 'indigo', to: 'cyan', deg: 45}}
@@ -66,7 +67,8 @@ const Website: NextPage = () => {
                             <Center>
                                 <Text style={{color: "white", fontSize: "50px", maxWidth: 1500}}>
                                     “Verwalten Sie Ihre Warteschlangen
-                                    <span className="blue-color"> einfach und effizient</span>. Schaffen Sie gleichzeitig
+                                    <span className="blue-color"> einfach und effizient</span>. Schaffen Sie
+                                    gleichzeitig
                                     <span className="blue-color"> Transparenz</span> über Wartezeiten für Ihre Kunden.”
                                 </Text>
 
@@ -126,14 +128,16 @@ const Website: NextPage = () => {
                     </Text>
                 </Container>
                 <Space h={150}/>
-                <Container fluid className="p-5 text-xl bg-white shadow-md rounded-xl" style={{maxWidth: 1300, borderWidth: 1}}>
+                <Container fluid className="p-5 text-xl bg-white shadow-md rounded-xl"
+                           style={{maxWidth: 1300, borderWidth: 1}}>
                     <Flex>
                         <Text style={{fontSize: 35}} weight={500}>{t("indexPage.applicationQuestion")}</Text>
                     </Flex>
 
                     <Accordion variant="filled" defaultValue="1">
                         <Accordion.Item value="1">
-                            <Accordion.Control icon={<IconUserCheck className="blue-color" size={35}/>}><Text style={{fontSize: 30}} weight={500}>
+                            <Accordion.Control icon={<IconUserCheck className="blue-color" size={35}/>}><Text
+                                style={{fontSize: 30}} weight={500}>
                                 {t("indexPage.checkInToggle")}</Text></Accordion.Control>
                             <Accordion.Panel className="py-5">
                                 <Grid justify={"space-evenly"}>
@@ -150,8 +154,9 @@ const Website: NextPage = () => {
                         </Accordion.Item>
 
                         <Accordion.Item value="2">
-                            <Accordion.Control icon={<IconQrcode className="blue-color" size={35}/>}><Text style={{fontSize: 30}}
-                                                     weight={500}>{t("indexPage.scanQRToggle")}</Text></Accordion.Control>
+                            <Accordion.Control icon={<IconQrcode className="blue-color" size={35}/>}><Text
+                                style={{fontSize: 30}}
+                                weight={500}>{t("indexPage.scanQRToggle")}</Text></Accordion.Control>
                             <Accordion.Panel>
                                 <Grid justify={"space-evenly"}>
                                     <Grid.Col span={4} style={{display: 'flex', alignItems: 'center'}}>
@@ -163,8 +168,9 @@ const Website: NextPage = () => {
                         </Accordion.Item>
 
                         <Accordion.Item value="3">
-                            <Accordion.Control icon={<IconPencil className="blue-color" size={35}/>}><Text style={{fontSize: 30}}
-                                                     weight={500}>{t("indexPage.queueManagement")}</Text></Accordion.Control>
+                            <Accordion.Control icon={<IconPencil className="blue-color" size={35}/>}><Text
+                                style={{fontSize: 30}}
+                                weight={500}>{t("indexPage.queueManagement")}</Text></Accordion.Control>
                             <Accordion.Panel>
                                 <Grid justify={"space-evenly"}>
                                     <Grid.Col span={4} style={{display: 'flex', alignItems: 'center'}}>
@@ -193,8 +199,8 @@ const Website: NextPage = () => {
             <Container fluid className="text-center m-0" style={{maxWidth: 1300}}>
                 <Title>Über uns</Title>
                 <Space h={50}/>
-                <Text  style={{fontSize: 30}}>{t("indexPage.aboutUsIntroduction")}
-                    </Text>
+                <Text style={{fontSize: 30}}>{t("indexPage.aboutUsIntroduction")}
+                </Text>
                 <Collapse in={opened}>
                     <Text style={{fontSize: 30}}>{t("indexPage.aboutUs")}</Text>
                 </Collapse>
@@ -217,7 +223,7 @@ const Website: NextPage = () => {
                 </Carousel>
                 <Progress
                     value={scrollProgress}
-                    styles={{ bar: { transitionDuration: '0ms' }, root: { maxWidth: 1300 } }}
+                    styles={{bar: {transitionDuration: '0ms'}, root: {maxWidth: 1300}}}
                     size="sm"
                     mt="xl"
                     mx="auto"
