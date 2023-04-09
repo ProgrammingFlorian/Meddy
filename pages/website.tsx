@@ -14,14 +14,13 @@ import {
     Image,
     Space,
     Text,
-    Carousel,
     Button,
     Title, Group, Collapse, Progress
 } from '@mantine/core';
 import {IconAccessible, IconLock, IconMoodSmile, IconUserCheck, IconQrcode, IconPencil} from "@tabler/icons-react";
 import {useTranslation} from "next-i18next";
 import {useDisclosure} from "@mantine/hooks";
-import { Embla} from "@mantine/carousel";
+import {Carousel, Embla} from "@mantine/carousel";
 
 
 
