@@ -2,8 +2,8 @@ import {ActionIcon, Button, Card, Group, Modal, Text, TextInput} from "@mantine/
 import {IconX} from "@tabler/icons-react";
 import {useForm} from "@mantine/form";
 import {Queue} from "../../models/Queue";
-import {useStore} from "../../lib/Store";
-import React, {useState} from "react";
+import {StoreContext, useStore} from "../../lib/Store";
+import React, {useContext, useState} from "react";
 import {useTranslation} from "next-i18next";
 
 
@@ -24,7 +24,7 @@ export const QueueManagement = (props: QueueManagementProps) => {
     const [showConfirmation, setShowConfirmation] = useState(null as Queue | null);
     const [showDeleteError, setShowDeleteError] = useState(false);
 
-    const {queues, createQueue, deleteQueue} = useStore();
+    const {queues, createQueue, deleteQueue} = useContext(StoreContext);
 
     const handleDeleteQueue = (queueId: number) => {
         deleteQueue(queueId)
