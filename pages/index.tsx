@@ -1,37 +1,65 @@
-import type {NextPage} from 'next'
-import {Card, Title} from "@mantine/core";
+import {NextPage} from "next";
+import React from "react";
+
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import Website from "./website";
+import {Box, Container, Flex, Grid, Space, Text} from '@mantine/core';
+import {useTranslation} from "next-i18next";
+import WebsiteImage from "../components/WebsiteComponents/websiteImage";
+import FeatureCards from "../components/WebsiteComponents/featureCards";
+import UseCaseAccordion from "../components/WebsiteComponents/useCaseAccordion";
+import UserStoryComponent from "../components/WebsiteComponents/userStoryComponent";
+import ContactUsComponent from "../components/WebsiteComponents/contactUsComponent";
+import AboutUsComponent from "../components/WebsiteComponents/aboutUsComponent";
 
-const Home: NextPage = () => {
+
+const Index: NextPage = () => {
+    const {t} = useTranslation();
+
     return (
-        <div>
+        <Box>
+            <WebsiteImage/>
+            <Space h={100}/>
+            <Text className="font-bold text-center py-10" style={{fontSize: 60}}>{t("indexPage.mission")}</Text>
+            <Container fluid className="text-center m-0" style={{maxWidth: 1400}}>
+                <Box w={"90%"} className="pb-10" mx="auto">
+                    <Text className="text-center" style={{fontSize: 35}}>{t("indexPage.useCase")}</Text>
+                </Box>
 
-            <Website/>
-            <div className="flex min-h-screen flex-col items-center justify-center py-2">
-                <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
+                <Space h={50}/>
+                <FeatureCards/>
+                <Space h={50}/>
 
-                    <Title order={1}
-                           variant="gradient"
-                           gradient={{from: 'indigo', to: 'cyan', deg: 45}}
-                           sx={{fontFamily: 'Greycliff CF, sans-serif'}}
-                           ta="center"
-                           size="100px"
-                           fw={700}
-                    >Meddy</Title>
+                <Container fluid w={"90%"} className="py-10" style={{maxWidth: 1400}}>
+                    <Text className="text-center" size={30}>
+                        {t("indexPage.productDescription")}
+                    </Text>
+                </Container>
+                <Space h={150}/>
+                <Container fluid className="p-5 text-xl bg-white shadow-md rounded-xl"
+                           style={{maxWidth: 1300, borderWidth: 1}}>
+                    <Flex>
+                        <Text style={{fontSize: 35}} weight={500}>{t("indexPage.applicationQuestion")}</Text>
+                    </Flex>
+                    <UseCaseAccordion/>
+                </Container>
 
-                    <a href="overview"
-                       className="rounded-xl text-left mt-12">
-                        <Card shadow="sm" p="lg" radius="md" withBorder>
-                            <h3 className="text-2xl font-bold text-center hover:text-blue-600 focus:text-blue-600">Starten &rarr;</h3>
-                        </Card>
-                    </a>
-                </main>
-            </div>
-        </div>
+                <Space h={200}/>
+                <UserStoryComponent/>
+                <Space h={200}/>
+
+                <Grid className="py-10  p-10 text-center" w={"100%"} columns={2} justify={"space-between"}>
+                    <ContactUsComponent/>
+                    <AboutUsComponent/>
+
+                </Grid>
+
+                <Space h={200}/>
+            </Container>
+
+        </Box>
 
     );
-}
+};
 
 export async function getStaticProps({locale}: { locale: string }) {
     return {
@@ -44,4 +72,4 @@ export async function getStaticProps({locale}: { locale: string }) {
     }
 }
 
-export default Home;
+export default Index;

@@ -22,7 +22,7 @@ const App = ({Component, pageProps}: AppProps<{ initialSession: Session }>) => {
         <>
             <Head>
                 <title>Meddy</title>
-                <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
+                <meta name="viewport" content="initial-scale=0.6, width=device-width"/>
                 <meta name="description" content="Wartezeiten intelligent verkürzen"/>
             </Head>
 
