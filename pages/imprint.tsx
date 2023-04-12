@@ -1,0 +1,33 @@
+import {Container, Center, Space} from "@mantine/core";
+import {NextPage} from "next";
+import MeddyTextComponent from "../components/WebsiteComponents/meddyTextComponent";
+
+const Imprint: NextPage = () => {
+
+    return (
+        <Container className="py-10">
+            <Center>
+            <MeddyTextComponent size={40}/>
+            </Center>
+            <Space h={100}/>
+                <p>Marius Weigt</p>
+                <p>Implerstraße 10</p>
+                <p>81371 München</p>
+                <p>Deutschland</p>
+                <br/>
+                <p>Tel.: +49 1573 2128812</p>
+                <p>E-Mail: info@meddy.me</p>
+                <br/>
+                <p>Plattform der EU-Kommission zur Online-Streitbeilegung: <a href="https://ec.europa.eu/odr">https://ec.europa.eu/odr</a></p>
+                <br/>
+                <br/>
+                <p>Wir sind zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle weder verpflichtet noch bereit.</p>
+                <br/>
+                <br/>
+                <a className="underline" href="https://meddy.me/privacy">Datenschutz</a>
+        </Container>
+    )
+
+}
+
+export default Imprint;
