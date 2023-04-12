@@ -21,21 +21,13 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
 
     const {customersInQueue, updateCustomer} = useStore();
 
-    const refreshTimeLeft = (timeLeftFunction: (() => { actualTime: number, isOvertime: boolean }) | (() => void)) => {
-        const timeLeft = timeLeftFunction();
-        if (timeLeft) {
-            setRemainingTime(timeLeft.actualTime);
-            setIsOvertime(timeLeft.isOvertime);
-        }
-    };
-
     useEffect(() => {
-        const timeLeft = getTimeLeftFunction(props.queue.latest_appointment_start, customersInQueue[props.queue.id], props.queue, props.activeCustomer);
+        const timeLeft = getTimeLeftFunction(props.queue.latest_appointment_start, customersInQueue[props.queue.id], props.queue, props.activeCustomer,
+            setRemainingTime, setIsOvertime);
 
-        const intervalId = setInterval(() => {
-            refreshTimeLeft(timeLeft);
-        }, 10000);
-        refreshTimeLeft(timeLeft);
+        const intervalId = setInterval(timeLeft, 10000);
+        timeLeft();
+
         return () => {
             clearInterval(intervalId);
         };
@@ -43,9 +35,9 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
 
     const getRemainingTimeText = () => {
         if (!isOvertime) {
-            return t('queueManagement.remainingTime', {minutes: remainingTime});
+            return t('administration.remainingTime', {minutes: remainingTime});
         } else {
-            return t('queueManagement.timeExceeded');
+            return t('administration.timeExceeded');
         }
     }
 
@@ -55,13 +47,14 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
                 width: '100%',
                 height: '100%',
                 margin: 0,
-                padding: 0
+                padding: 0,
+                cursor: "pointer"
             }}>
                 <div className="text-gray-500 text-center font-bold m-2"
                      onClick={() => props.setPopup(props.activeCustomer as Customer)}>
                     <Text>{props.activeCustomer.name}</Text>
                     <Text size="sm">
-                        {t('queueManagement.duration', {minutes: props.activeCustomer.duration})}
+                        {t('administration.duration', {minutes: props.activeCustomer.duration})}
                     </Text>
                     {props.appointmentStart !== null ?
                         <Text size="sm" color={remainingTime < 5 ? "red" : ""}>
@@ -91,10 +84,14 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
                                     updateCustomer({
                                         ...props.activeCustomer,
                                         duration: props.activeCustomer.duration + 5
+                                    }).finally(() => {
+                                        if (props.activeCustomer) {
+                                            props.activeCustomer.duration += 5;
+                                        }
                                     });
                                 }
                             }}>
-                                + 5 {t('minutesAbbreviation')}
+                                {t('administration.extraMinutes')}
                             </Button>
                         </div>
                     </div>

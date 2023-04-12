@@ -33,10 +33,13 @@
       "title": "Löschen fehlgeschlagen",
       "text": "{{name}} konnte nicht gelöscht werden. Sind noch Kunden in der Warteschlange?"
     },
-    "newQueue": "Neue Warteschlange",
+    "newQueue": "Neue Warteschlange"
+  },
+  "administration": {
     "duration": "Termindauer: {{minutes}} Minuten",
     "remainingTime": "Noch {{minutes}} Minuten",
-    "timeExceeded": "Termindauer überschritten"
+    "timeExceeded": "Termindauer überschritten",
+    "extraMinutes": "+5min"
   },
   "checkin": {
     "newCustomer": "Neuer Kunde/in",
@@ -82,10 +85,20 @@
     "noElement": "Bitte wähle ein Element"
   },
   "checkIn": {
-    "assignedDoctor": "Behandelnde/r Ärztin/Arzt"
+    "assignedDoctor": "Behandelnde/r Ärztin/Arzt:"
   },
   "waitingScreen": {
-    "queue": "Arzt"
+    "queue": "Warteschlange"
+  },
+  "wait": {
+    "welcomeMessage": "Herzlichen Willkommen bei {{organisation}}, {{customer}}!",
+    "expectedWaitingTime": "Ihre geschätze Wartezeit",
+    "soon": "Sie sind gleich dran.",
+    "peopleAhead": {
+      "1": "Vor Ihnen befinden sich noch eine Person",
+      "number": "Vor Ihnen befinden sich noch {{count}} Personen",
+      "more": "Vor Ihnen befinden sich noch mehr als vier Personen"
+    }
   },
   "indexPage": {
     "mission": "\"Wir wollen Warteschlangen neu denken\"",

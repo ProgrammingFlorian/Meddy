@@ -22,23 +22,27 @@ export const getActiveCustomerDuration = (customers: Customer[], queue: Queue) =
     return customers?.find(c => c.id === queue.active_customer)?.duration ?? 0;
 }
 
-export const calculateTimeLeft = (latestAppointmentStart: Date | null, fixedWaitingTime: number, liveWaitingTime: number) => {
+export const calculateTimeLeft = (latestAppointmentStart: Date | null, fixedWaitingTime: number, liveWaitingTime: number,
+                                  setRemainingTime: (time: number) => void, setIsOvertime: (overtime: boolean) => void) => {
     if (latestAppointmentStart) {
         const difference = +(new Date()) - +(new Date(latestAppointmentStart));
         const minuteDifference = Math.floor((difference / 1000 / 60) % 60);
         const actualTime = (fixedWaitingTime + Math.max(0, liveWaitingTime - minuteDifference));
         const isOvertime = liveWaitingTime - minuteDifference < 0;
-        return {actualTime, isOvertime};
+        setRemainingTime(actualTime);
+        setIsOvertime(isOvertime);
     } else {
-        return {actualTime: fixedWaitingTime, isOvertime: false};
+        setRemainingTime(fixedWaitingTime);
+        setIsOvertime(false);
     }
 }
 
-export const getTimeLeftFunction = (latestAppointmentStart: Date | null, customers: Customer[], queue: Queue, currentCustomer: Customer | null) => {
+export const getTimeLeftFunction = (latestAppointmentStart: Date | null, customers: Customer[], queue: Queue, currentCustomer: Customer | null,
+                                    setRemainingTime: (time: number) => void, setIsOvertime: (overtime: boolean) => void) => {
     if (currentCustomer) {
         const fixedWaitingTime = calculateFixedWaitingTime(customers, queue, currentCustomer);
         const liveWaitingTime = getActiveCustomerDuration(customers, queue);
-        return () => calculateTimeLeft(latestAppointmentStart, fixedWaitingTime, liveWaitingTime);
+        return () => calculateTimeLeft(latestAppointmentStart, fixedWaitingTime, liveWaitingTime, setRemainingTime, setIsOvertime);
     } else {
         return () => {
         };

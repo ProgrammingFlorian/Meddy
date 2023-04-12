@@ -27,7 +27,7 @@ interface StoreType {
     customersInQueue: { [queue: number]: Customer[] };
     organisation: Organisation;
     updateOrganisation: (name: string) => void;
-    updateCustomer: (customer: Customer) => void;
+    updateCustomer: (customer: Customer) => Promise<void>;
     deleteCustomer: (customer: Customer) => void;
 }
 
@@ -62,7 +62,6 @@ export const useStore = (): StoreType => {
 
                 setOrganisation({id: data.organisation_id, name: data.organisations.name});
                 setCustomersInQueue(result);
-
             });
             QueueService.fetchQueues(account.id).then(setQueues);
         }
@@ -136,7 +135,7 @@ export const useStore = (): StoreType => {
 
     // TODO: Resolve before waiting for server
     const createCustomer = (newCustomer: Customer): Promise<Customer> => {
-        const temporaryId = local_preview_counter--;
+        const temporaryId = String(local_preview_counter--);
         setCustomersInQueue(previous => {
             const newQueues = {...previous};
             newQueues[newCustomer.queue_id].push({
@@ -171,7 +170,7 @@ export const useStore = (): StoreType => {
             );
             return newQueues;
         });
-        CustomerService.updateCustomer(newValue).then(serverValue => {
+        return CustomerService.updateCustomer(newValue).then(serverValue => {
             setCustomersInQueue(previous => {
                 const newQueues = {...previous};
                 newQueues[serverValue.queue_id].map(q =>
@@ -179,6 +178,7 @@ export const useStore = (): StoreType => {
                 );
                 return newQueues;
             });
+            return Promise.resolve();
         });
     };
 

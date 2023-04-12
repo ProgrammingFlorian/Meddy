@@ -18,7 +18,7 @@ interface QueueWithCustomersAndOrganisation extends Queue {
 }
 
 
-const fetchCustomersInSameQueue = async (customerId: number): Promise<[Customer, Customer[], Organisation, Queue]> => {
+const fetchCustomersInSameQueue = async (customerId: string): Promise<[Customer, Customer[], Organisation, Queue]> => {
     try {
         // @ts-ignore ignore type not perfect
         const response: PostgrestResponse<CustomersInSameQueue> = await supabase.from(TABLE_CUSTOMERS).select(`
@@ -69,7 +69,7 @@ const fetchCustomersFromAccountOrganisationGroupedByQueue = async (accountId: st
     return Promise.reject();
 }
 
-const deleteCustomer = async (id: number) => {
+const deleteCustomer = async (id: string) => {
     try {
         // First, remove active_customer from queues to avoid foreign key constraints
         // @ts-ignore
