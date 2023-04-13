@@ -6,7 +6,6 @@ import {useDisclosure} from "@mantine/hooks";
 const UserStoryComponent = () => {
     const { t } = useTranslation();
     const [opened, { toggle }] = useDisclosure(false);
-    const [buttonText, setButtonText] = useState(t("indexPage.readStory"));
 
     return (
         <Box style={{maxWidth: 1300}}>
@@ -20,8 +19,8 @@ const UserStoryComponent = () => {
                     {t("indexPage.aboutUs")}
                 </Text>
             </Collapse>
-            <Button size={"lg"} className="m-10" onClick={toggle}>
-                {opened ? t("indexPage.closeStory") : buttonText}
+            <Button size={"xl"} className="m-10" onClick={toggle}>
+                {opened ? t("indexPage.closeStory") : t("indexPage.readStory")}
             </Button>
         </Box>
     );

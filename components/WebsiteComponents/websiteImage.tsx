@@ -4,12 +4,19 @@ import MeddyTextComponent from "./meddyTextComponent";
 
 const WebsiteImage = () => {
 
+    let scrollDiv = typeof document !== 'undefined' ? document.getElementById("contact")?.offsetTop : null;
+
+
     return (
         <div style={{height: '100vh', backgroundColor: "black"}}>
             <BackgroundImage className="" style={{opacity: "90%"}} w={"100%"} h={"100%"} src="./Images/website_image.jpg">
                 <Container fluid className="h-full " style={{position: "relative"}}>
                     <Container style={{position: "absolute", top: 0, right: 0}}>
-                        <Button size={"lg"} className="m-5">Kontakt</Button>
+                        <Button size={"lg"} className="m-5" onClick={() => {
+                            if (scrollDiv != null) {
+                                window.scrollTo({ top: scrollDiv, behavior: 'smooth'})
+                            }
+                        }}>Kontakt</Button>
                         <Button size={"lg"}
                                 onClick={() => window.location.href = "https://meddy.me/overview"}>Anmelden</Button>
                     </Container>

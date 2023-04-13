@@ -4,10 +4,11 @@ import {IconPhone, IconAt} from '@tabler/icons-react';
 
 const ContactUsComponent = () => {
     return (
-        <Card shadow="sm" padding="lg" radius="md" withBorder style={{minWidth: "40%", maxWidth: 500, fontSize: 25}}>
+        <Card w={"100%"} h={"100%"} shadow="sm" padding="lg" radius="md" withBorder
+              style={{fontSize: 25}} id="contact">
             <Text size={30} weight={500}>Kontaktieren Sie uns</Text>
-                <Space h={50}/>
-                <Container className=" ">
+            <Container fluid className="h-full align-middle" style={{display: 'flex', alignItems: 'center'}}>
+                <Box>
                     <Group className="m-5">
                         <IconAt size={40} className="blue-color"/>
                         <Box className="text-start">
@@ -22,8 +23,11 @@ const ContactUsComponent = () => {
                             <Text weight={500}>+49 1573 2128812</Text>
                         </Box>
                     </Group>
-                </Container>
+                    <Space h={50}/>
+                </Box>
 
+
+            </Container>
 
         </Card>
     )

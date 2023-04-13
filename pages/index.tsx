@@ -2,7 +2,7 @@ import {NextPage} from "next";
 import React from "react";
 
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {Box, Container, Flex, Grid, Space, Text} from '@mantine/core';
+import {Box, Container, Center, Flex, Grid, Space, Text} from '@mantine/core';
 import {useTranslation} from "next-i18next";
 import WebsiteImage from "../components/WebsiteComponents/websiteImage";
 import FeatureCards from "../components/WebsiteComponents/featureCards";
@@ -46,12 +46,16 @@ const Index: NextPage = () => {
                 <Space h={200}/>
                 <UserStoryComponent/>
                 <Space h={200}/>
-
-                <Grid className="py-10  p-10 text-center" w={"100%"} columns={2} justify={"space-between"}>
-                    <ContactUsComponent/>
-                    <AboutUsComponent/>
-
-                </Grid>
+                <Center>
+                    <Grid gutter={20} className="" w={"100%"} justify={"space-between"}>
+                        <Grid.Col md={5} lg={5}  span={12} style={{display: 'flex', alignItems: 'center'}}>
+                            <ContactUsComponent/>
+                        </Grid.Col >
+                        <Grid.Col md={7} lg={7} span={12} style={{display: 'flex', alignItems: 'center'}}>
+                            <AboutUsComponent/>
+                        </Grid.Col >
+                    </Grid>
+                </Center>
 
                 <Space h={200}/>
             </Container>

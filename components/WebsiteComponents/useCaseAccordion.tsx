@@ -1,10 +1,16 @@
-import {Accordion, Grid, Image, Space, Text} from "@mantine/core";
+import {Accordion, Grid, Image, Space, Text, Button, Center, List, Group, Modal} from "@mantine/core";
 import {IconPencil, IconQrcode, IconUserCheck} from "@tabler/icons-react";
-import React from "react";
+import React, {useState} from "react";
 import {useTranslation} from "next-i18next";
+import {useDisclosure} from "@mantine/hooks";
+import TextAndPictureAccordionComponent from "./textAndPictureAccordionComponent";
 
 const UseCaseAccordion = () => {
     const {t} = useTranslation();
+    const [openedCheckIn, setOpenedCheckIn] = useState(false);
+    const [openedOrder, setOpenedOrder] = useState(false);
+    const [openedEdit, setOpenedEdit] = useState(false);
+    const [openedQueue, setOpenedQueue] = useState(false);
 
     return (
         <Accordion className="pt-5" variant="filled" defaultValue="1" style={{fontSize: 25, fontWeight: 500}}>
@@ -13,16 +19,29 @@ const UseCaseAccordion = () => {
                     style={{fontSize: 30}} weight={500}>
                     {t("indexPage.checkInToggle")}</Text></Accordion.Control>
                 <Accordion.Panel className="py-5">
-                    <Grid justify={"space-evenly"}>
-                        <Grid.Col className="text-start" span={5} style={{display: 'flex', alignItems: 'center'}}>
-                            1. Kunden Name eingeben<br/>
-                            2. Geschätze Termindauer anklicken (bzw. eingeben)<br/>
-                            3. Warteschlange auswählen<br/>
-                            4. Kunde erstellen
-                        </Grid.Col>
-                        <Grid.Col span={4}><Image src="./Images/checkInCustomer.png"/></Grid.Col>
-                    </Grid>
+                    <Grid justify={"space-evenly"} gutter={50} gutterLg={0}>
+                        <Grid.Col  md={12} lg={5} style={{display: 'flex', alignItems: 'center'}}>
+                            <Center className="w-full">
+                                <Text className="text-start">
+                                    <List type="ordered" size={"xxl"}>
+                                        <List.Item>1. Kunden Name eingeben</List.Item>
+                                        <List.Item>2. Geschätze Termindauer anklicken (bzw. eingeben)</List.Item>
+                                        <List.Item>3. Warteschlange auswählen</List.Item>
+                                        <List.Item>4. Kunde erstellen</List.Item>
+                                    </List>
+                                </Text>
 
+                            </Center>
+                        </Grid.Col>
+                        <Grid.Col md={8} lg={5}>
+                            <Modal size={"xl"} style={{width: "50%"}} opened={openedCheckIn} onClose={() => setOpenedCheckIn(false)} title="Reihenfolge/ Warteschlange der Kunden verändern">
+                                <Image src="./Images/checkInCustomer.png" />
+                            </Modal>
+                            <Group position="center">
+                                <Image onClick={() => setOpenedCheckIn(true)} src="./Images/checkInCustomer.png" />
+                            </Group>
+                        </Grid.Col>
+                    </Grid>
                 </Accordion.Panel>
             </Accordion.Item>
 
@@ -31,12 +50,18 @@ const UseCaseAccordion = () => {
                     style={{fontSize: 30}}
                     weight={500}>{t("indexPage.scanQRToggle")}</Text></Accordion.Control>
                 <Accordion.Panel>
-                    <Grid justify={"space-evenly"}>
-                        <Grid.Col className="text-start" span={4} style={{display: 'flex', alignItems: 'center'}}>
-                            1. Kunde scannt QR-Code<br/>
-                            2. Wartezeit wird auf seinem Smartphone angezeigt<br/>
+                    <Grid justify={"space-evenly"} gutter={50} gutterLg={0}>
+                        <Grid.Col className="text-start" md={12} lg={5} style={{display: 'flex', alignItems: 'center'}}>
+                            <Center className="w-full" >
+                                <List style={{fontSize:25}}>
+                                    <List.Item>1. Kunde scannt QR-Code</List.Item>
+                                    <List.Item>2. Wartezeit wird auf seinem Smartphone angezeigt</List.Item>
+                                </List>
+                            </Center>
                         </Grid.Col>
-                        <Grid.Col span={4}><Image src="./Images/waitingView.png"/></Grid.Col>
+                        <Grid.Col span={4}>
+                            <Image src="./Images/waitingView.png" />
+                        </Grid.Col>
                     </Grid></Accordion.Panel>
             </Accordion.Item>
 
@@ -46,29 +71,11 @@ const UseCaseAccordion = () => {
                     weight={500}>{t("indexPage.queueManagement")}</Text></Accordion.Control>
                 <Accordion.Panel>
                     <Space h={50}/>
-                    <Grid justify={"space-evenly"}>
-                        <Grid.Col span={4} style={{display: 'flex', alignItems: 'center'}}>
-                            Ändern der Reihenfolge/ Warteschlange
-                        </Grid.Col >
-                        <Grid.Col span={5} className="rounded-5 bg-white shadow" style={{borderRadius: 10}}>  <Image src="./Images/changeOrder.png" />
-                        </Grid.Col>
-                    </Grid>
+                    <TextAndPictureAccordionComponent image="./Images/changeOrder.png" description="Reihenfolge/ Warteschlange der Kunden verändern" opened={openedOrder} setOpened={setOpenedOrder}/>
                     <Space h={50}/>
-                    <Grid justify={"space-evenly"}>
-                        <Grid.Col span={4} style={{display: 'flex', alignItems: 'center'}}>
-                            Bearbeiten von Kunden
-                        </Grid.Col>
-                        <Grid.Col span={5} className="rounded-5 bg-white shadow" style={{borderRadius: 10}}>  <Image className="p-5" src="./Images/editCustomer.png" />
-                        </Grid.Col>
-                    </Grid>
+                    <TextAndPictureAccordionComponent image="./Images/editCustomer.png" description="Kunde bearbeiten" opened={openedEdit} setOpened={setOpenedEdit}/>
                     <Space h={50}/>
-                    <Grid justify={"space-evenly"}>
-                        <Grid.Col span={4} style={{display: 'flex', alignItems: 'center'}}>
-                            Warteschlangen verwalten
-                        </Grid.Col>
-                        <Grid.Col span={5} className="rounded-5 bg-white shadow" style={{borderRadius: 10}}>  <Image className="p-5" src="./Images/queueManagement.png" />
-                        </Grid.Col>
-                    </Grid>
+                    <TextAndPictureAccordionComponent image="./Images/queueManagement.png" description="Warteschlangen verwalten" opened={openedQueue} setOpened={setOpenedQueue}/>
                 </Accordion.Panel>
             </Accordion.Item>
         </Accordion>
