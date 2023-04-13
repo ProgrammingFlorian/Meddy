@@ -4,11 +4,12 @@ import {useDisclosure} from "@mantine/hooks";
 
 interface TextAndPictureAccordionComponentProps {
     image: string,
-    description: string
+    description: string,
+    opened: boolean,
+    setOpened: (opened: boolean) => void
 }
 
 const TextAndPictureAccordionComponent = (props: TextAndPictureAccordionComponentProps) => {
-    const [opened, { open, close }] = useDisclosure(false);
     return (
         <Grid justify={"space-evenly"}>
             <Grid.Col span={5} style={{display: 'flex', alignItems: 'center'}}>
@@ -17,11 +18,11 @@ const TextAndPictureAccordionComponent = (props: TextAndPictureAccordionComponen
                 </Text>
             </Grid.Col >
             <Grid.Col span={5} className="rounded-5 bg-white shadow" style={{borderRadius: 10}}>
-                <Modal size={"xl"} style={{width: "50%"}} opened={opened} onClose={close} title="Reihenfolge/ Warteschlange der Kunden verändern">
+                <Modal size={"xl"} style={{width: "50%"}} opened={props.opened} onClose={() => props.setOpened(false)} title="Reihenfolge/ Warteschlange der Kunden verändern">
                     <Image src="./Images/changeOrder.png" />
                 </Modal>
                 <Group position="center">
-                    <Image onClick={open} src={props.image} />
+                    <Image onClick={() => props.setOpened(true)} src={props.image} />
                 </Group>
             </Grid.Col>
         </Grid>

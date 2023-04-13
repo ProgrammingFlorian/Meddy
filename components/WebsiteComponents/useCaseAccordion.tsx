@@ -8,7 +8,9 @@ import TextAndPictureAccordionComponent from "./textAndPictureAccordionComponent
 const UseCaseAccordion = () => {
     const {t} = useTranslation();
     const [openedCheckIn, setOpenedCheckIn] = useState(false);
-    const [openedWaiting, setOpenedWaiting] = useState(false);
+    const [openedOrder, setOpenedOrder] = useState(false);
+    const [openedEdit, setOpenedEdit] = useState(false);
+    const [openedQueue, setOpenedQueue] = useState(false);
 
     return (
         <Accordion className="pt-5" variant="filled" defaultValue="1" style={{fontSize: 25, fontWeight: 500}}>
@@ -69,11 +71,11 @@ const UseCaseAccordion = () => {
                     weight={500}>{t("indexPage.queueManagement")}</Text></Accordion.Control>
                 <Accordion.Panel>
                     <Space h={50}/>
-                    <TextAndPictureAccordionComponent image="./Images/changeOrder.png" description="Reihenfolge/ Warteschlange der Kunden verändern"/>
+                    <TextAndPictureAccordionComponent image="./Images/changeOrder.png" description="Reihenfolge/ Warteschlange der Kunden verändern" opened={openedOrder} setOpened={setOpenedOrder}/>
                     <Space h={50}/>
-                    <TextAndPictureAccordionComponent image="./Images/editCustomer.png" description="Kunde bearbeiten"/>
+                    <TextAndPictureAccordionComponent image="./Images/editCustomer.png" description="Kunde bearbeiten" opened={openedEdit} setOpened={setOpenedEdit}/>
                     <Space h={50}/>
-                    <TextAndPictureAccordionComponent image="./Images/queueManagement.png" description="Warteschlangen verwalten"/>
+                    <TextAndPictureAccordionComponent image="./Images/queueManagement.png" description="Warteschlangen verwalten" opened={openedQueue} setOpened={setOpenedQueue}/>
                 </Accordion.Panel>
             </Accordion.Item>
         </Accordion>
