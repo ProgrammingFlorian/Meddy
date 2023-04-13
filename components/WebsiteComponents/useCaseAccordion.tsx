@@ -1,8 +1,7 @@
-import {Accordion, Grid, Image, Space, Text, Button, Center, List, Group, Modal} from "@mantine/core";
+import {Accordion, Center, Grid, Group, Image, List, Modal, Space, Text} from "@mantine/core";
 import {IconPencil, IconQrcode, IconUserCheck} from "@tabler/icons-react";
 import React, {useState} from "react";
 import {useTranslation} from "next-i18next";
-import {useDisclosure} from "@mantine/hooks";
 import TextAndPictureAccordionComponent from "./textAndPictureAccordionComponent";
 
 const UseCaseAccordion = () => {
@@ -35,10 +34,10 @@ const UseCaseAccordion = () => {
                         </Grid.Col>
                         <Grid.Col md={8} lg={5}>
                             <Modal size={"xl"} style={{width: "50%"}} opened={openedCheckIn} onClose={() => setOpenedCheckIn(false)} title="Reihenfolge/ Warteschlange der Kunden verändern">
-                                <Image src="./Images/checkInCustomer.png" />
+                                <Image src="./images/check_in_customer.png" />
                             </Modal>
                             <Group position="center">
-                                <Image onClick={() => setOpenedCheckIn(true)} src="./Images/checkInCustomer.png" />
+                                <Image onClick={() => setOpenedCheckIn(true)} src="./images/check_in_customer.png" />
                             </Group>
                         </Grid.Col>
                     </Grid>
@@ -60,7 +59,7 @@ const UseCaseAccordion = () => {
                             </Center>
                         </Grid.Col>
                         <Grid.Col span={4}>
-                            <Image src="./Images/waitingView.png" />
+                            <Image src="./Images/waiting_view.png" />
                         </Grid.Col>
                     </Grid></Accordion.Panel>
             </Accordion.Item>
@@ -71,11 +70,11 @@ const UseCaseAccordion = () => {
                     weight={500}>{t("indexPage.queueManagement")}</Text></Accordion.Control>
                 <Accordion.Panel>
                     <Space h={50}/>
-                    <TextAndPictureAccordionComponent image="./Images/changeOrder.png" description="Reihenfolge/ Warteschlange der Kunden verändern" opened={openedOrder} setOpened={setOpenedOrder}/>
+                    <TextAndPictureAccordionComponent image="./images/change_order.png" description="Reihenfolge/ Warteschlange der Kunden verändern" opened={openedOrder} setOpened={setOpenedOrder}/>
                     <Space h={50}/>
-                    <TextAndPictureAccordionComponent image="./Images/editCustomer.png" description="Kunde bearbeiten" opened={openedEdit} setOpened={setOpenedEdit}/>
+                    <TextAndPictureAccordionComponent image="./images/edit_customer.png" description="Kunde bearbeiten" opened={openedEdit} setOpened={setOpenedEdit}/>
                     <Space h={50}/>
-                    <TextAndPictureAccordionComponent image="./Images/queueManagement.png" description="Warteschlangen verwalten" opened={openedQueue} setOpened={setOpenedQueue}/>
+                    <TextAndPictureAccordionComponent image="./images/queue_management.png" description="Warteschlangen verwalten" opened={openedQueue} setOpened={setOpenedQueue}/>
                 </Accordion.Panel>
             </Accordion.Item>
         </Accordion>

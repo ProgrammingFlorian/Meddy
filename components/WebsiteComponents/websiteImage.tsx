@@ -9,7 +9,7 @@ const WebsiteImage = () => {
 
     return (
         <div style={{height: '100vh', backgroundColor: "black"}}>
-            <BackgroundImage className="" style={{opacity: "90%"}} w={"100%"} h={"100%"} src="./Images/website_image.jpg">
+            <BackgroundImage className="" style={{opacity: "90%"}} w={"100%"} h={"100%"} src="./images/title_background.jpg">
                 <Container fluid className="h-full " style={{position: "relative"}}>
                     <Container style={{position: "absolute", top: 0, right: 0}}>
                         <Button size={"lg"} className="m-5" onClick={() => {

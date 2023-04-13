@@ -1,5 +1,4 @@
-import {Card, Col, Button, Grid, Group, Image, Space, Text} from "@mantine/core";
-import { IconUser} from "@tabler/icons-react";
+import {Button, Card, Col, Grid, Group, Image, Space, Text} from "@mantine/core";
 
 const AboutUsComponent = () => {
     return (
@@ -11,7 +10,7 @@ const AboutUsComponent = () => {
 
                 <Grid className="text-start">
                     <Col span="content">
-                        <Image height={80} width={80} radius={40} src="./Images/florian.jpeg"/>
+                        <Image height={80} width={80} radius={40} src="./images/florian.jpeg"/>
                     </Col>
                     <Col span={"auto"}>
                         <Grid justify={"space-evenly"}>
@@ -28,7 +27,7 @@ const AboutUsComponent = () => {
                 </Grid>
                 <Grid className="text-start">
                     <Col span="content">
-                        <Image height={80} width={80} radius={40} src="./Images/marius.jpeg"/>
+                        <Image height={80} width={80} radius={40} src="./images/marius.jpeg"/>
                     </Col>
                     <Col span={"auto"}>
                         <Grid justify={"space-evenly"}>

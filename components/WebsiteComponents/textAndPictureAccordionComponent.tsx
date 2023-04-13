@@ -1,6 +1,5 @@
 import {Grid, Group, Image, Modal, Text} from "@mantine/core";
 import React from "react";
-import {useDisclosure} from "@mantine/hooks";
 
 interface TextAndPictureAccordionComponentProps {
     image: string,
@@ -19,7 +18,7 @@ const TextAndPictureAccordionComponent = (props: TextAndPictureAccordionComponen
             </Grid.Col >
             <Grid.Col span={5} className="rounded-5 bg-white shadow" style={{borderRadius: 10}}>
                 <Modal size={"xl"} style={{width: "50%"}} opened={props.opened} onClose={() => props.setOpened(false)} title="Reihenfolge/ Warteschlange der Kunden verändern">
-                    <Image src="./Images/changeOrder.png" />
+                    <Image src="./images/change_order.png" />
                 </Modal>
                 <Group position="center">
                     <Image onClick={() => props.setOpened(true)} src={props.image} />
