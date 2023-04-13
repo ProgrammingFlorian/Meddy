@@ -59,7 +59,7 @@ const UseCaseAccordion = () => {
                             </Center>
                         </Grid.Col>
                         <Grid.Col span={4}>
-                            <Image src="./Images/waiting_view.png" />
+                            <Image src="./images/waiting_view.png" />
                         </Grid.Col>
                     </Grid></Accordion.Panel>
             </Accordion.Item>
