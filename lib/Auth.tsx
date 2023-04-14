@@ -2,7 +2,7 @@ import React, {createContext, ReactNode, useContext, useEffect, useState} from '
 import {supabase} from "./Store";
 import {Container, LoadingOverlay} from "@mantine/core";
 import {User} from "@supabase/auth-helpers-react";
-import Login from "../components/Auth/Login";
+import Login from "../components/auth/Login";
 import {AuthResponse} from "@supabase/gotrue-js";
 
 interface AuthContextType {

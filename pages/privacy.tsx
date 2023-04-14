@@ -1,13 +1,13 @@
 import {Container, Center, Space, Text} from "@mantine/core";
 import {NextPage} from "next";
-import MeddyTextComponent from "../components/WebsiteComponents/meddyTextComponent";
+import TitleText from "../components/landing_page/TitleText";
 
 const Privacy: NextPage = () => {
 
     return (
         <Container className="py-10">
             <Center>
-                <MeddyTextComponent size={40}/>
+                <TitleText size={40}/>
 
             </Center>
             <Space h={100}/>

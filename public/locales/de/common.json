@@ -107,7 +107,7 @@
     "usability": "Einfache Handhabung",
     "privacy": "Datenschutz",
     "clientSatisfaction": "Kundenzufriedenheit",
-    "usabilityText": "Keine Installation notwendig. Leichte Bedinung, für die keine Schulung notwendig ist. Kunden einchecken mit nur vier Klicks",
+    "usabilityText": "Keine Installation notwendig. Leichte Bedinung, für die keine Schulung notwendig ist. Kunden einchecken mit nur vier Klicks.",
     "privacyText": "Daten werden nicht länger als notwendig gespeichert. Keine Verarbeitung der Daten oder Verkauf. DSGVO-Konform.",
     "clientSatisfactionText": "Transparenz der Wartezeit gegenüber Kunden steigert die Zufriedenheit zuverlässig.",
     "checkInToggle": "1. Kunde einchecken",
@@ -115,8 +115,54 @@
     "queueManagement": "3. Warteschlangen verwalten",
     "applicationQuestion": "Wie wird Meddy verwendet?",
     "aboutUsIntroduction": "Unsere Geschichte begann während unseres Studiums an der Technischen Universität München. Als vielbeschäftigte Studenten waren wir immer wieder von den langen Wartezeiten genervt, die uns in unserem hektischen Alltag aufhielten. Kurz vor einer wichtigen Analysis",
-    "aboutUs": "Prüfung hatte Florian einen Arzttermin. Er musste fast eine Stunde warten, bevor er endlich drankam. Er wusste, dass er diese Zeit auch effizienter hätte nutzen können. In dieser Zeit machte er sich Gedanken darüber, wie man das Warten effizienter gestalten könnte. Schließlich war die Idee geboren: Ein Tool, dass das Warten angenehmer und produktiver macht. Marius hatte ähnliche Erfahrungen gemacht und war von der Idee sofort begeistert. So arbeiteten wir gemeinsam an einem Konzept und entwickelten Meddy, ein Tool, dass das Warten neugestalten sollte. Ursprünglich dachten wir, dass Meddy nur ein nettes Feature sein würde, aber die Rückmeldungen, die wir erhielten, waren viel positiver als erwartet. Wir erkannten schnell, dass unser Ziel darin bestand, das Warten neu zu gestalten und einen Mehrwert für alle Beteiligten - den Wartenden, wie Patienten und zugehörige Einrichtungen, wie Arztpraxen - zu schaffen. Heute ist Meddy zu einem unverzichtbaren Instrument für viele Ärzte geworden, die ihre Zeit effektiver nutzen möchten. Wir sind stolz darauf, dass wir dazu beitragen konnten, das Warten angenehmer und produktiver zu gestalten und freuen uns darauf, Meddy weiter zu verbessern und auszubauen.",
-    "readStory": "Lies die ganze Story",
-    "closeStory": "Schließe die Story"
+    "contact": "Kontakt",
+    "accordion": {
+      "checkinCustomer": "Kunde einchecken",
+      "customerView": "Kundenansicht",
+      "changeOrder": "Reihenfolge/Warteschlange der Kunden verändern",
+      "editCustomer": "Kunde bearbeiten",
+      "queueManagement": "Warteschlangen verwalten"
+    },
+    "checkinSteps": ["1. Kunden Name eingeben", "2. Geschätze Termindauer anklicken (bzw. eingeben)", "3. Warteschlange auswählen", "4. Kunde erstellen"],
+    "QRCodeSteps": ["1. Kunde scannt QR-Code", "2. Wartezeit wird auf seinem Smartphone angezeigt"],
+    "userStory": {
+      "title": "Über uns",
+      "aboutUs": "Prüfung hatte Florian einen Arzttermin. Er musste fast eine Stunde warten, bevor er endlich drankam. Er wusste, dass er diese Zeit auch effizienter hätte nutzen können. In dieser Zeit machte er sich Gedanken darüber, wie man das Warten effizienter gestalten könnte. Schließlich war die Idee geboren: Ein Tool, dass das Warten angenehmer und produktiver macht. Marius hatte ähnliche Erfahrungen gemacht und war von der Idee sofort begeistert. So arbeiteten wir gemeinsam an einem Konzept und entwickelten Meddy, ein Tool, dass das Warten neugestalten sollte. Ursprünglich dachten wir, dass Meddy nur ein nettes Feature sein würde, aber die Rückmeldungen, die wir erhielten, waren viel positiver als erwartet. Wir erkannten schnell, dass unser Ziel darin bestand, das Warten neu zu gestalten und einen Mehrwert für alle Beteiligten - den Wartenden, wie Patienten und zugehörige Einrichtungen, wie Arztpraxen - zu schaffen. Heute ist Meddy zu einem unverzichtbaren Instrument für viele Ärzte geworden, die ihre Zeit effektiver nutzen möchten. Wir sind stolz darauf, dass wir dazu beitragen konnten, das Warten angenehmer und produktiver zu gestalten und freuen uns darauf, Meddy weiter zu verbessern und auszubauen.",
+      "readStory": "Lies die ganze Story",
+      "closeStory": "Schließe die Story"
+    },
+    "contactCard": {
+      "title": "Kontaktieren Sie uns",
+      "email": "E-Mail",
+      "emailAddress": "info@meddy.me",
+      "telephone": "Telefon",
+      "telephoneNumber": "+49 1573 2128812"
+    },
+    "aboutCard": {
+      "title": "Über die Gründer von Meddy",
+      "linkedIn": "LinkedIn",
+      "cards": [
+        {
+          "name": "Florian Koller",
+          "bio": "Informatik Student der Technischen Universität München",
+          "email": "florian.koller@meddy.me",
+          "image": "/images/florian.jpeg",
+          "linkedIn": "https://de.linkedin.com/in/florian-koller-837902243"
+        },
+        {
+          "name": "Marius Weigt",
+          "bio": "Wirtschaftsinformatik Student der Technischen Universität München",
+          "email": "marius.weigt@meddy.me",
+          "image": "/images/marius.jpeg",
+          "linkedIn": "https://de.linkedin.com/in/marius-weigt-919a4b213"
+        }
+      ]
+    }
+  },
+  "footer": {
+    "home": "Home",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "contact": "Kontakt"
   }
 }

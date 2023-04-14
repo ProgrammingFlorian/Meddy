@@ -1,13 +1,13 @@
 import {Container, Center, Space, Text} from "@mantine/core";
 import {NextPage} from "next";
-import MeddyTextComponent from "../components/WebsiteComponents/meddyTextComponent";
+import TitleText from "../components/landing_page/TitleText";
 
 const Imprint: NextPage = () => {
 
     return (
         <Container className="py-10">
             <Center>
-                <MeddyTextComponent size={40}/>
+                <TitleText size={40}/>
             </Center>
             <Space h={100}/>
             <Text className="text-center" size={40} fw={700}>Impressum</Text>
@@ -21,8 +21,9 @@ const Imprint: NextPage = () => {
             <p>Tel.: +49 1573 2128812</p>
             <p>E-Mail: info@meddy.me</p>
             <br/>
-            <p>Plattform der EU-Kommission zur Online-Streitbeilegung: <a
-                href="https://ec.europa.eu/odr">https://ec.europa.eu/odr</a></p>
+            <p>Plattform der EU-Kommission zur Online-Streitbeilegung:
+                <a href="https://ec.europa.eu/odr">https://ec.europa.eu/odr</a>
+            </p>
             <br/>
             <br/>
             <p>Wir sind zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle weder

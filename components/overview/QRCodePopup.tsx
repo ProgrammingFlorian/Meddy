@@ -1,6 +1,6 @@
 import React from "react";
 import {QRCodeSVG} from "qrcode.react";
-import {Modal, useMantineTheme} from "@mantine/core";
+import {Modal, Text} from "@mantine/core";
 import {Customer} from "../../models/Customer";
 import {useTranslation} from "next-i18next";
 import {ROUTE_WAIT} from "../../helpers/Routes";
@@ -36,9 +36,9 @@ const QRCodePopup = (props: QRCodePopupProps) => {
                         </div>
                         <br/>
                         <br/>
-                        <div className="font-bold text-center text-blue-800" style={{fontSize: 25}}>
+                        <Text className="font-bold text-center text-blue-800" size={25}>
                             {t("qrCode.scan")}
-                        </div>
+                        </Text>
                     </div>
                 </div>
             </Modal>
