@@ -1,6 +1,7 @@
 import {Container, Center, Space, Text} from "@mantine/core";
 import {NextPage} from "next";
 import TitleText from "../components/landing_page/TitleText";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 const Imprint: NextPage = () => {
 
@@ -34,6 +35,17 @@ const Imprint: NextPage = () => {
         </Container>
     )
 
+}
+
+export async function getStaticProps({locale}: { locale: string }) {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, [
+                'common'
+            ])),
+            // Will be passed to the page component as props
+        },
+    }
 }
 
 export default Imprint;
