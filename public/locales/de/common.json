@@ -103,7 +103,7 @@
   "indexPage": {
     "mission": "\"Wir wollen Warteschlangen neu denken\"",
     "useCase": "Unsere Software Meddy ermöglicht eine effiziente Verwaltung von Warteschlangen und schafft Transparenz über die Wartezeit für Ihre Kunden.",
-    "productDescription": "Meddy als intelligentes Warteschlangentool ermöglicht es Warteschlangen zu verwalten, indem Kunden Warteschlangen zugeteilt werden. Diese können dynamisch von einem oder mehreren Endgeräten verwaltet werden. Kunden können mit wenigen Klicks einfach eingecheckt werden. Sie erhalten eine transparente Übersicht über ihre verbleibende Wartezeit, dafür müssen sie lediglich einen QR-Code scannen und keinerlei zusätzliche Software installieren.",
+    "productDescription": "Meddy ist eine Wartemanagementtool, das eine effiziente Verwaltung von Warteschlangen ermöglicht. Kunden können Warteschlangen zugeordnet werden, die dann von einem oder mehreren Endgeräten dynamisch verwertbar sind. Dabei können neue Kunden mit nur vier Klicks eingecheckt werden und erhalten durch das Scannen eines QR-Codes eine transparente Übersicht über ihre verbleibende Wartezeit. Dafür muss keine zusätzliche Software vom Kunden installiert werden.",
     "usability": "Einfache Handhabung",
     "privacy": "Datenschutz",
     "clientSatisfaction": "Kundenzufriedenheit",
@@ -111,7 +111,7 @@
     "privacyText": "Daten werden nicht länger als notwendig gespeichert. Keine Verarbeitung der Daten oder Verkauf. DSGVO-Konform.",
     "clientSatisfactionText": "Transparenz der Wartezeit gegenüber Kunden steigert die Zufriedenheit zuverlässig.",
     "checkInToggle": "1. Kunde einchecken",
-    "scanQRToggle": "2. QR-Code scannen",
+    "scanQRToggle": "2. Kunde scannt QR-Code",
     "queueManagement": "3. Warteschlangen verwalten",
     "applicationQuestion": "Wie wird Meddy verwendet?",
     "aboutUsIntroduction": "Unsere Geschichte begann während unseres Studiums an der Technischen Universität München. Als vielbeschäftigte Studenten waren wir immer wieder von den langen Wartezeiten genervt, die uns in unserem hektischen Alltag aufhielten. Kurz vor einer wichtigen Analysis",
