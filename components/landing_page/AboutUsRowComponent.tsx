@@ -24,7 +24,7 @@ export const AboutUsRowComponent = (props: AboutUsRowComponentProps) => {
                         <Text color="dimmed">{props.email}</Text>
                     </Grid.Col>
                     <Grid.Col span={12} lg={4}>
-                        <Flex align="center" justify="flex-end">
+                        <Flex align="center" justify="flex-start">
                             <Button size={"lg"}
                                     onClick={() => window.open(props.linkedIn, '_blank')}>{t('indexPage.aboutCard.linkedIn')}</Button>
                         </Flex>

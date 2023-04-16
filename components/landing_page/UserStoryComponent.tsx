@@ -13,7 +13,7 @@ const UserStoryComponent = () => {
             <Space h={50}/>
             <Text style={{
                 fontSize: 30,
-                maxHeight: opened ? "570px" : "230px",
+                maxHeight: opened ? "100%" : "230px",
                 textOverflow: "ellipsis",
                 overflow: "hidden",
                 display: "-webkit-box",
