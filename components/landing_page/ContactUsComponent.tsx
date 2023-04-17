@@ -1,5 +1,5 @@
 import {Card, Container, Flex, Text} from '@mantine/core';
-import {IconAt, IconPhone} from '@tabler/icons-react';
+import {IconAt, IconPhone, IconWorld} from '@tabler/icons-react';
 import {useTranslation} from "next-i18next";
 import {ContactUsRowComponent} from "./ContactUsRowComponent";
 

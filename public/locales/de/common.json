@@ -1,6 +1,7 @@
 {
   "appName": "Meddy",
   "madeBy": "",
+  "domain": "www.meddy.me",
   "sidebar": {
     "organisationName": "Praxisname",
     "changeOrganisationName": "Praxisnamen ändern",
@@ -98,7 +99,9 @@
       "1": "Vor Ihnen befinden sich noch eine Person",
       "number": "Vor Ihnen befinden sich noch {{count}} Personen",
       "more": "Vor Ihnen befinden sich noch mehr als vier Personen"
-    }
+    },
+    "InformationAboutMeddy": "\"Meddy ermöglicht eine effiziente Verwaltung von Warteschlangen und schafft Transparenz über Wartezeiten.\"",
+    "ContactUs": "Mehr Informationen unter www.meddy.me"
   },
   "indexPage": {
     "mission": "\"Wir wollen Warteschlangen neu denken\"",
@@ -107,7 +110,7 @@
     "usability": "Einfache Handhabung",
     "privacy": "Datenschutz",
     "clientSatisfaction": "Kundenzufriedenheit",
-    "usabilityText": "Keine Installation notwendig. Leichte Bedinung, für die keine Schulung notwendig ist. Kunden einchecken mit nur vier Klicks.",
+    "usabilityText": "Keine Installation notwendig. Leichte Bedienung, für die keine Schulung notwendig ist. Kunden einchecken mit nur vier Klicks.",
     "privacyText": "Daten werden nicht länger als notwendig gespeichert. Keine Verarbeitung der Daten oder Verkauf. DSGVO-Konform.",
     "clientSatisfactionText": "Transparenz der Wartezeit gegenüber Kunden steigert die Zufriedenheit zuverlässig.",
     "checkInToggle": "1. Kunde einchecken",
@@ -144,14 +147,14 @@
       "cards": [
         {
           "name": "Florian Koller",
-          "bio": "Informatik Student der Technischen Universität München",
+          "bio": "Informatik Student der Technischen Universität München und Co-Founder von Meddy",
           "email": "florian.koller@meddy.me",
           "image": "/images/florian.jpeg",
           "linkedIn": "https://de.linkedin.com/in/florian-koller-837902243"
         },
         {
           "name": "Marius Weigt",
-          "bio": "Wirtschaftsinformatik Student der Technischen Universität München",
+          "bio": "Wirtschaftsinformatik Student der Technischen Universität München und Co-Founder von Meddy",
           "email": "marius.weigt@meddy.me",
           "image": "/images/marius.jpeg",
           "linkedIn": "https://de.linkedin.com/in/marius-weigt-919a4b213"

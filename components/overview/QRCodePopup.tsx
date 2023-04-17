@@ -4,6 +4,7 @@ import {Modal, Text} from "@mantine/core";
 import {Customer} from "../../models/Customer";
 import {useTranslation} from "next-i18next";
 import {ROUTE_WAIT} from "../../helpers/Routes";
+import {router} from "next/client";
 
 interface QRCodePopupProps {
     visible: boolean;
