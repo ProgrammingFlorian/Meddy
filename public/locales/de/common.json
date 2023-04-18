@@ -96,12 +96,12 @@
     "expectedWaitingTime": "Ihre geschätze Wartezeit",
     "soon": "Sie sind gleich dran.",
     "peopleAhead": {
-      "1": "Vor Ihnen befinden sich noch eine Person",
+      "1": "Vor Ihnen befindet sich noch eine Person",
       "number": "Vor Ihnen befinden sich noch {{count}} Personen",
       "more": "Vor Ihnen befinden sich noch mehr als vier Personen"
     },
-    "InformationAboutMeddy": "\"Meddy ermöglicht eine effiziente Verwaltung von Warteschlangen und schafft Transparenz über Wartezeiten.\"",
-    "ContactUs": "Mehr Informationen unter www.meddy.me"
+    "informationAboutMeddy": "\"Meddy ermöglicht eine effiziente Verwaltung von Warteschlangen und schafft Transparenz über Wartezeiten.\"",
+    "contactUs": "Mehr Informationen unter www.meddy.me"
   },
   "indexPage": {
     "mission": "\"Wir wollen Warteschlangen neu denken\"",

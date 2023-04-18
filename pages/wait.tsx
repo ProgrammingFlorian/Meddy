@@ -161,8 +161,8 @@ const wait: NextPage = () => {
                 height: "90vh"
             }}>
                 <Text className="text-center pt-5" weight={500} style={{fontSize: 40, color: "dimgray"}}>
-                    {t("wait.")}
-                    <p className="pt-5">Mehr Informationen unter www.meddy.me</p>
+                    {t("wait.informationAboutMeddy")}
+                    <p className="pt-5"> {t("wait.contactUs")}</p>
                 </Text>
                 {/* TODO: Notifications
                         <div className="w-full flex justify-center">
