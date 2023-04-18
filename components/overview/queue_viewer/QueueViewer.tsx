@@ -1,4 +1,4 @@
-import {Center, Container, Grid, Title} from '@mantine/core';
+import {Box, Center, Container, Grid, Title, Text} from '@mantine/core';
 import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
 import {Customer, getCustomerIdAsString} from '../../../models/Customer';
 import {move, reorder} from "../../../util/ListUtil";
@@ -79,15 +79,15 @@ const QueueViewer = () => {
                                queues={queues} onClose={() => setPopup(null)}/>
                 : <></>
             }
-            <div className="">
-                <Grid style={{maxWidth: 1400}}>
+            <Box style={{maxWidth: 1400}}>
+                <Grid justify={"center"}>
                     <DragDropContext onDragEnd={onDragEnd}>
                         {queues.sort((q1, q2) => q1.name.localeCompare(q2.name)).map(((queue, queue_index) => (
-                            <Grid.Col span={3} key={queue_index}
-                                      style={{minWidth: 350, padding: 0, marginTop: 20, minHeight: 500}}>
+                            <Grid.Col xs={10}  sm={6} md={5} lg={4} xl={3} span={10} key={queue_index} className="w-full"
+                                      style={{ padding: 0, marginTop: 20, minHeight: 500}}>
                                 <Center className="h-full p-0 m-0">
-                                    <Container p={10} m={10} className="bg-gray-100 rounded h-full p-0 w-0"
-                                               style={{width: 350}}>
+                                    <Container p={10} m={10} className="bg-gray-100 rounded h-full p-0 m-0 w-full"
+                                               style={{minWidth: 300}}>
                                         <Container style={{padding: 0, margin: 0}}>
                                             <Title order={3} align="center">{queue.name}</Title>
                                         </Container>
@@ -126,7 +126,7 @@ const QueueViewer = () => {
                         )))}
                     </DragDropContext>
                 </Grid>
-            </div>
+            </Box>
         </>
     );
 };

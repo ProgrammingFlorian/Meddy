@@ -11,6 +11,11 @@
    
 }
 
+.text-blue {
+    color: #0099ff;
+    text-decoration-color: #0099ff;
+}
+
 .fill-blue {
     fill: #0099ff;
 }

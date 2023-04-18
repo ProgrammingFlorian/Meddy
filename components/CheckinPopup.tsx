@@ -1,4 +1,4 @@
-import {Box, Button, createStyles, Group, Modal, Select, Textarea, TextInput} from "@mantine/core";
+import {Box, Button, createStyles, Group, Modal, Select, Textarea, Text, TextInput} from "@mantine/core";
 import {useContext, useEffect, useState} from "react";
 import {customLabel} from "../helpers/Functions";
 import {useForm} from "@mantine/form";
@@ -66,12 +66,12 @@ const CheckinPopup = () => {
                 <div className="flex flex-col items-center justify-center">
                     <div className="relative inline-block text-left" style={{minWidth: 500}}>
                         <div className=" p-10 justify-center">
-                            <label htmlFor="select"
-                                   className=" text-center font-semibold text text-2xl text-blue-500 block py-2">
+                            <Text weight={500} color={"blue"} size={35}
+                                   className=" text-center py-2">
                                 {t('checkin.newCustomer')}
-                            </label>
+                            </Text>
                             <br/>
-                            <Box sx={{maxWidth: 340}} mx="auto">
+                            <Box sx={{}} mx="auto">
                                 <form onSubmit={form.onSubmit((values) => {
                                     const queueId = queues.find(queue => queue.name === values.queue)?.id;
                                     if (queueId) {

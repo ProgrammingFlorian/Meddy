@@ -26,9 +26,9 @@ const QRCodePopup = (props: QRCodePopupProps) => {
                     <div className='p-10 justify-center flex-1'>
                         <div className="text-center">
                             <br/>
-                            <h1 className="font-bold text-blue-800">
+                            <Text className="font-bold" size={35} color={"blue"}>
                                 {t("qrCode.greeting", {name: props.customer.name})}
-                            </h1>
+                            </Text>
                             <br/>
                             <br/>
                         </div>
