@@ -79,8 +79,8 @@ const QueueViewer = () => {
                                queues={queues} onClose={() => setPopup(null)}/>
                 : <></>
             }
-            <Box style={{maxWidth: 1400}}>
-                <Grid justify={"center"} className="w-full" gutter={5}>
+            <Box style={{maxWidth: 1300}}>
+                <Grid justify={"center"} className="w-full" gutter={1}>
                     <DragDropContext onDragEnd={onDragEnd}>
                         {queues.sort((q1, q2) => q1.name.localeCompare(q2.name)).map(((queue, queue_index) => (
                             <Grid.Col xs={10}  sm={6} md={5} lg={4} xl={3} span={10} key={queue_index} className="w-full"
