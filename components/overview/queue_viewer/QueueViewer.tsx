@@ -80,14 +80,14 @@ const QueueViewer = () => {
                 : <></>
             }
             <Box style={{maxWidth: 1400}}>
-                <Grid justify={"center"}>
+                <Grid justify={"center"} className="w-full" gutter={5}>
                     <DragDropContext onDragEnd={onDragEnd}>
                         {queues.sort((q1, q2) => q1.name.localeCompare(q2.name)).map(((queue, queue_index) => (
                             <Grid.Col xs={10}  sm={6} md={5} lg={4} xl={3} span={10} key={queue_index} className="w-full"
-                                      style={{ padding: 0, marginTop: 20, minHeight: 500}}>
+                                      style={{ padding: 0, marginTop: 20, minHeight: 500, minWidth: 300}}>
                                 <Center className="h-full p-0 m-0">
                                     <Container p={10} m={10} className="bg-gray-100 rounded h-full p-0 m-0 w-full"
-                                               style={{minWidth: 300}}>
+                                               style={{minWidth: 280}}>
                                         <Container style={{padding: 0, margin: 0}}>
                                             <Title order={3} align="center">{queue.name}</Title>
                                         </Container>
