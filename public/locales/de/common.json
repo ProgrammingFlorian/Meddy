@@ -130,7 +130,7 @@
     "QRCodeSteps": ["1. Kunde scannt QR-Code", "2. Wartezeit wird auf seinem Smartphone angezeigt"],
     "userStory": {
       "title": "Über uns",
-      "aboutUs": "Prüfung hatte Florian einen Arzttermin. Er musste fast eine Stunde warten, bevor er endlich drankam. Er wusste, dass er diese Zeit auch effizienter hätte nutzen können. In dieser Zeit machte er sich Gedanken darüber, wie man das Warten effizienter gestalten könnte. Schließlich war die Idee geboren: Ein Tool, dass das Warten angenehmer und produktiver macht. Marius hatte ähnliche Erfahrungen gemacht und war von der Idee sofort begeistert. So arbeiteten wir gemeinsam an einem Konzept und entwickelten Meddy, ein Tool, dass das Warten neugestalten sollte. Ursprünglich dachten wir, dass Meddy nur ein nettes Feature sein würde, aber die Rückmeldungen, die wir erhielten, waren viel positiver als erwartet. Wir erkannten schnell, dass unser Ziel darin bestand, das Warten neu zu gestalten und einen Mehrwert für alle Beteiligten - den Wartenden, wie Patienten und zugehörige Einrichtungen, wie Arztpraxen - zu schaffen. Heute ist Meddy zu einem unverzichtbaren Instrument für viele Ärzte geworden, die ihre Zeit effektiver nutzen möchten. Wir sind stolz darauf, dass wir dazu beitragen konnten, das Warten angenehmer und produktiver zu gestalten und freuen uns darauf, Meddy weiter zu verbessern und auszubauen.",
+      "aboutUs": "Als Paulo einen Arzttermin hatte, musste er fast eine Stunde warten, bevor er endlich drankam. Er wusste, dass er diese Zeit auch effizienter hätte nutzen können. In dieser Zeit machte er sich Gedanken darüber, wie man das Warten effizienter gestalten könnte. Schließlich war die Idee geboren: Ein Tool, dass das Warten angenehmer und produktiver macht. Florian und Marius hatten ähnliche Erfahrungen gemacht und waren von der Idee sofort begeistert. So arbeiteten wir gemeinsam an einem Konzept und entwickelten Meddy, ein Tool, dass das Warten neugestalten sollte. Ursprünglich dachten wir, dass Meddy nur ein nettes Feature sein würde, aber die Rückmeldungen, die wir erhielten, waren viel positiver als erwartet. Wir erkannten schnell, dass unser Ziel darin bestand, das Warten neu zu gestalten und einen Mehrwert für alle Beteiligten - den Wartenden, wie Patienten und zugehörige Einrichtungen, wie Arztpraxen - zu schaffen. Heute ist Meddy zu einem unverzichtbaren Instrument für viele Ärzte geworden, die ihre Zeit effektiver nutzen möchten. Wir sind stolz darauf, dass wir dazu beitragen konnten, das Warten angenehmer und produktiver zu gestalten und freuen uns darauf, Meddy weiter zu verbessern und auszubauen.",
       "readStory": "Lies die ganze Story",
       "closeStory": "Schließe die Story"
     },
@@ -158,6 +158,12 @@
           "email": "marius.weigt@meddy.me",
           "image": "/images/marius.jpeg",
           "linkedIn": "https://de.linkedin.com/in/marius-weigt-919a4b213"
+        },
+        {
+          "name": "Paulo Escalona",
+          "bio": "Tennistrainer und International Business Absolvent",
+          "email": "paulo.escalona@meddy.me",
+          "image": "/images/paulo.jpeg"
         }
       ]
     }
