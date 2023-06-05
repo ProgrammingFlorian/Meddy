@@ -16,6 +16,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
+
 # Runner
 FROM base AS runner
 WORKDIR /app
