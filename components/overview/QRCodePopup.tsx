@@ -1,10 +1,10 @@
 import React from "react";
 import {QRCodeSVG} from "qrcode.react";
-import {Group, Modal, PinInput, Text} from "@mantine/core";
+import {Modal, Text} from "@mantine/core";
 import {Customer} from "../../models/Customer";
 import {useTranslation} from "next-i18next";
 import {ROUTE_WAIT} from "../../helpers/Routes";
-import {router} from "next/client";
+import {generatePinFromUUID} from "../../lib/PIN";
 
 interface QRCodePopupProps {
     visible: boolean;
@@ -14,24 +14,6 @@ interface QRCodePopupProps {
 
 const QRCodePopup = (props: QRCodePopupProps) => {
     const {t} = useTranslation();
-
-
-    const generatePinFromUUID = (uuid: string): string => {
-        // Remove any hyphens from the UUID
-        const uuidWithoutHyphens = uuid.replace(/-/g, '');
-
-        // Take the first 6 characters of the UUID
-        const pinSubstring = uuidWithoutHyphens.substring(0, 6);
-
-        // Convert the hexadecimal substring to a decimal number
-        const pinDecimal = parseInt(pinSubstring, 16);
-
-        // Take the last 6 digits of the decimal number and pad with zeros if necessary
-        const pin = String(pinDecimal % 1000000).padStart(6, '0');
-
-        return pin;
-    }
-
 
     return (
         <>

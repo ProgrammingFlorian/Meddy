@@ -5,6 +5,7 @@ import {TABLE_ACCOUNT_INFORMATION} from "./AccountService";
 import {Organisation} from "../models/Organisation";
 import {TABLE_QUEUES} from "./QueueService";
 import {Queue} from "../models/Queue";
+import {generatePinFromUUID} from "../lib/PIN";
 
 const TABLE_CUSTOMERS = 'customers';
 
@@ -32,6 +33,22 @@ const fetchCustomersInSameQueue = async (customerId: string): Promise<[Customer,
         }
     } catch (error) {
         console.error('Error retrieving waiting_queue from database', error);
+    }
+    return Promise.reject();
+}
+
+const fetchCustomerUUID = async (customerPIN: string): Promise<string | undefined> => {
+    try {
+        // @ts-ignore ignore type not perfect
+        const response: PostgrestResponse<Customer> = await supabase.from(TABLE_CUSTOMERS).select(`*`);
+        if (response.data && response.data.length > 0) {
+            const customer = response.data.find(c => {
+                return generatePinFromUUID(c.id) === customerPIN;
+            })
+            return Promise.resolve(customer?.id);
+        }
+    } catch (error) {
+        console.error('Error retrieving customers from database', error);
     }
     return Promise.reject();
 }
@@ -121,6 +138,7 @@ const saveCustomer = async (customer: Customer): Promise<Customer> => {
 
 export default {
     fetchCustomersInSameQueue,
+    fetchCustomerUUID,
     fetchCustomersFromAccountOrganisationGroupedByQueue,
     updateCustomer,
     saveCustomer,

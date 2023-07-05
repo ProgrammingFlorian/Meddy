@@ -85,7 +85,8 @@
     "invalidEmail": "Keine valide E-Mail Adresse",
     "invalidName": "Der Name muss mindestens 3 Zeichen besitzen",
     "positiveNumber": "Bitte wähle eine positive Zahl",
-    "noElement": "Bitte wähle ein Element"
+    "noElement": "Bitte wähle ein Element",
+    "uuidNotFound": "Kunde konnte nicht gefunden werden."
   },
   "checkIn": {
     "assignedDoctor": "Behandelnde/r Ärztin/Arzt:"
@@ -104,6 +105,10 @@
     },
     "informationAboutMeddy": "\"Meddy ermöglicht eine effiziente Verwaltung von Warteschlangen und schafft Transparenz über Wartezeiten.\"",
     "contactUs": "Mehr Informationen unter www.meddy.me"
+  },
+  "pin": {
+    "codeMessage": "Gebe Sie hier den am Empfang erhaltenen sechstelligen Code ein.",
+    "showButton": "Wartezeit anzeigen"
   },
   "indexPage": {
     "mission": "\"Wir wollen Warteschlangen neu denken\"",
