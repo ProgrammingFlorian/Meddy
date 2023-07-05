@@ -8,6 +8,8 @@ import CustomerService from "../services/CustomerService";
 import {Organisation} from "../models/Organisation";
 import OrganisationService from "../services/OrganisationService";
 import {useAuth} from "./Auth";
+import {Feedback} from "../models/Feedback";
+import FeedbackService from "../services/FeedbackService";
 
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -29,6 +31,10 @@ interface StoreType {
     updateOrganisation: (name: string) => void;
     updateCustomer: (customer: Customer) => Promise<void>;
     deleteCustomer: (customer: Customer) => void;
+    feedback: Feedback[];
+    updateFeedback: (feedback_id: number, content: string) => Promise<void>;
+    addFeedback: (content: string) => Promise<void>;
+    deleteFeedback: (feedback_id: number) => Promise<void>;
 }
 
 export const useStore = (): StoreType => {
@@ -37,7 +43,7 @@ export const useStore = (): StoreType => {
     });
     const [queues, setQueues] = useState([] as Queue[]);
     const [organisation, setOrganisation] = useState({id: -1, name: ''} as Organisation); // TODO null
-
+    const [feedback, setFeedback] = useState([] as Feedback[])
     // Before receiving the actual database values (id!) of new elements, add them to instantly show them and then later
     // replace their data with the database values. Use this counter as a preview to keep track of which one needs to
     // be replaced. Count downwards to ensure no actual ids are accidentally used
@@ -64,8 +70,8 @@ export const useStore = (): StoreType => {
                 setCustomersInQueue(result);
             });
             QueueService.fetchQueues(account.id).then(setQueues);
+            FeedbackService.fetchFeedback(account.id).then(data => setFeedback(data));
         }
-
         // Listen to state changes of customers
         channel = supabase.channel(CHANNEL_NAME)
             .on(
@@ -224,6 +230,28 @@ export const useStore = (): StoreType => {
         return QueueService.fetchQueue(queue_id);
     }
 
+    const updateFeedback = async (feedback_id: number, content: string): Promise<void> => {
+        if (account) {
+            await FeedbackService.updateFeedback(feedback_id, content);
+            return FeedbackService.fetchFeedback(account.id).then(data => setFeedback(data));
+        }
+
+    }
+
+    const addFeedback = async (content: string): Promise<void> => {
+        if (account) {
+            await FeedbackService.addFeedback(content, account.id);
+            return FeedbackService.fetchFeedback(account.id).then(data => setFeedback(data));
+        }
+    }
+
+    const deleteFeedback = async (feedback_id: number): Promise<void> => {
+        const feedbackCopy = feedback.filter(f => f.id !== feedback_id);
+        setFeedback(feedbackCopy);
+        await FeedbackService.deleteFeedback(feedback_id)
+        return Promise.resolve();
+    }
+
     return {
         queues,
         customersInQueue,
@@ -237,6 +265,10 @@ export const useStore = (): StoreType => {
         updateOrganisation,
         deleteCustomer,
         updateCustomer,
+        feedback,
+        updateFeedback,
+        addFeedback,
+        deleteFeedback
 
     }
 };

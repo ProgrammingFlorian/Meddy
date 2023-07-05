@@ -6,7 +6,9 @@
     "organisationName": "Praxisname",
     "changeOrganisationName": "Praxisnamen ändern",
     "manageQueues": "Warteschlangen verwalten",
-    "changePassword": "Passwort ändern"
+    "changePassword": "Passwort ändern",
+    "downloadQRCode": "Download QR Code",
+    "feedback": "Feedback"
   },
   "customer": {
     "customerName": "Patienten Name:",
