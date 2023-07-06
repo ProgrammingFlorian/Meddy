@@ -25,7 +25,7 @@
   },
   "qrCode": {
     "scan": "Scannen Sie den QR-Code um über Ihre Wartezeit informiert zu bleiben",
-    "greeting": "Herzlichen Willkommen in der Testing Praxis, {{name}}!"
+    "greeting": "Herzlichen Willkommen, {{name}}!"
   },
   "queueManagement": {
     "confirmDelete": {
