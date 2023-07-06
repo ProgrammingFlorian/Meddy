@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="36ed8252-0eee-4f90-b17e-408752c8b3b4" name="Changes" comment="Meddy.png added" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="tsconfig.json" />
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Marius" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2LN8qpzRjma7tA6jyhyOdMjg97M" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/mariusweigt/WebstormProjects/Meddy/public/images&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;copyright.filetypes.SVG&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/mariusweigt/WebstormProjects/Meddy/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/images" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/components" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/components" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Docker.Dockerfile">
+    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="buildOnly" value="true" />
+          <option name="containerName" value="" />
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.build" />
+        <item itemvalue="Docker.Dockerfile" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="36ed8252-0eee-4f90-b17e-408752c8b3b4" name="Changes" comment="" />
+      <created>1675700373916</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1675700373916</updated>
+      <workItem from="1675700376141" duration="1534000" />
+      <workItem from="1675790671296" duration="1386000" />
+      <workItem from="1675873517659" duration="7750000" />
+      <workItem from="1675941273698" duration="10733000" />
+      <workItem from="1676211166797" duration="689000" />
+      <workItem from="1676737041991" duration="109000" />
+      <workItem from="1677233858076" duration="125198000" />
+      <workItem from="1678269791506" duration="11410000" />
+      <workItem from="1678828706867" duration="33290000" />
+      <workItem from="1679760861047" duration="2502000" />
+      <workItem from="1679852636902" duration="11998000" />
+      <workItem from="1679928815293" duration="752000" />
+      <workItem from="1680094650909" duration="3542000" />
+      <workItem from="1680948972146" duration="64000" />
+      <workItem from="1680949069897" duration="28476000" />
+      <workItem from="1681048438252" duration="9275000" />
+      <workItem from="1681247665300" duration="18546000" />
+      <workItem from="1681394786789" duration="9219000" />
+      <workItem from="1681490501950" duration="24668000" />
+      <workItem from="1682506103522" duration="1413000" />
+      <workItem from="1682691743312" duration="653000" />
+      <workItem from="1682760215817" duration="240000" />
+      <workItem from="1682762904774" duration="375000" />
+      <workItem from="1682763336348" duration="7185000" />
+      <workItem from="1682778653062" duration="1479000" />
+      <workItem from="1682801266365" duration="1797000" />
+      <workItem from="1683031635875" duration="1030000" />
+      <workItem from="1683131000070" duration="649000" />
+      <workItem from="1683216075939" duration="602000" />
+      <workItem from="1683292316405" duration="4723000" />
+      <workItem from="1683461239977" duration="7174000" />
+      <workItem from="1683645076910" duration="598000" />
+      <workItem from="1683838583130" duration="2398000" />
+      <workItem from="1683902488668" duration="810000" />
+      <workItem from="1684091578757" duration="159000" />
+      <workItem from="1684158717991" duration="598000" />
+      <workItem from="1685954573455" duration="734000" />
+      <workItem from="1685981160260" duration="232000" />
+      <workItem from="1686040012967" duration="80000" />
+      <workItem from="1686040473400" duration="602000" />
+      <workItem from="1686045202113" duration="600000" />
+      <workItem from="1686085282500" duration="2297000" />
+      <workItem from="1686480443374" duration="1298000" />
+      <workItem from="1686815988039" duration="3592000" />
+      <workItem from="1686990360328" duration="591000" />
+      <workItem from="1686990964104" duration="4000" />
+      <workItem from="1688458240500" duration="4935000" />
+      <workItem from="1688471121614" duration="1209000" />
+      <workItem from="1688472341911" duration="14754000" />
+      <workItem from="1688548403729" duration="12835000" />
+    </task>
+    <task id="LOCAL-00001" summary="implemented almost everything">
+      <created>1677234016986</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1677234016986</updated>
+    </task>
+    <task id="LOCAL-00002" summary="updated almost everything">
+      <created>1677511301588</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1677511301588</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Services implemented">
+      <created>1677519421301</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1677519421301</updated>
+    </task>
+    <task id="LOCAL-00004" summary="bug fixes">
+      <created>1677601593713</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1677601593713</updated>
+    </task>
+    <task id="LOCAL-00005" summary="bug fixes in checkInPage.tsx, CustomerPopup.tsx&#10;QueueManagement.tsx UI design updated">
+      <created>1677608352882</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1677608352882</updated>
+    </task>
+    <task id="LOCAL-00006" summary="services updated">
+      <created>1677648399743</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1677648399744</updated>
+    </task>
+    <task id="LOCAL-00007" summary="functionality implemented">
+      <created>1677666467929</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1677666467929</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Auth implemented (doesnt work)">
+      <created>1678017840622</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1678017840622</updated>
+    </task>
+    <task id="LOCAL-00009" summary="auth desperate">
+      <created>1678140210096</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1678140210097</updated>
+    </task>
+    <task id="LOCAL-00010" summary="loginPage and registrationPage commented out &quot;handleSubmission&quot;">
+      <created>1678275239908</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1678275239908</updated>
+    </task>
+    <task id="LOCAL-00011" summary="bug fixes">
+      <created>1679262706222</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1679262706222</updated>
+    </task>
+    <task id="LOCAL-00012" summary="bug fixes florian and marius pair coding">
+      <created>1679857511718</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1679857511718</updated>
+    </task>
+    <task id="LOCAL-00013" summary="changed qr code ur to meddy.me">
+      <created>1680121393632</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1680121393632</updated>
+    </task>
+    <task id="LOCAL-00014" summary="bug fix: droppable height, set default dropdown value after checkIn of customer">
+      <created>1680123619544</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1680123619544</updated>
+    </task>
+    <task id="LOCAL-00015" summary="implemented website">
+      <created>1680971008159</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1680971008159</updated>
+    </task>
+    <task id="LOCAL-00016" summary="website carousel bug">
+      <created>1681044806169</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1681044806169</updated>
+    </task>
+    <task id="LOCAL-00017" summary="image added">
+      <created>1681045514988</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1681045514988</updated>
+    </task>
+    <task id="LOCAL-00018" summary="website developed, added imprint and privacy">
+      <created>1681322079474</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1681322079474</updated>
+    </task>
+    <task id="LOCAL-00019" summary="website developed, added imprint and privacy">
+      <created>1681322433285</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1681322433285</updated>
+    </task>
+    <task id="LOCAL-00020" summary="responsive website">
+      <created>1681402773146</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1681402773146</updated>
+    </task>
+    <task id="LOCAL-00021" summary="images added">
+      <created>1681403258494</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1681403258494</updated>
+    </task>
+    <task id="LOCAL-00022" summary="text changed">
+      <created>1681663138564</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1681663138564</updated>
+    </task>
+    <task id="LOCAL-00023" summary="wait page new designed, typos corrected">
+      <created>1681764070754</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1681764070754</updated>
+    </task>
+    <task id="LOCAL-00024" summary="CheckinPopup design, Color fix">
+      <created>1681848069770</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1681848069770</updated>
+    </task>
+    <task id="LOCAL-00025" summary="wait text fixed">
+      <created>1681848375937</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1681848375937</updated>
+    </task>
+    <task id="LOCAL-00026" summary="queue grid fixed">
+      <created>1681920628525</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1681920628525</updated>
+    </task>
+    <task id="LOCAL-00027" summary="queue grid fixed 2">
+      <created>1681942680244</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1681942680244</updated>
+    </task>
+    <task id="LOCAL-00028" summary="grid bug fixed. QueueView width adjusted">
+      <created>1682512385078</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1682512385078</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Paulo Bio updated">
+      <created>1683032040523</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1683032040523</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Paulo Bio updated">
+      <created>1685954790218</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1685954790218</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Paulo Bio updated">
+      <created>1685955026042</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1685955026042</updated>
+    </task>
+    <task id="LOCAL-00032" summary="docker file updated">
+      <created>1685955047204</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1685955047204</updated>
+    </task>
+    <task id="LOCAL-00033" summary="pin added">
+      <created>1688571683854</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1688571683854</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Meddy.png added">
+      <created>1688573489012</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1688573489012</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="auth desperate" />
+    <MESSAGE value="loginPage and registrationPage commented out &quot;handleSubmission&quot;" />
+    <MESSAGE value="bug fixes" />
+    <MESSAGE value="bug fixes florian and marius pair coding" />
+    <MESSAGE value="changed qr code ur to meddy.me" />
+    <MESSAGE value="bug fix: droppable height, set default dropdown value after checkIn of customer" />
+    <MESSAGE value="implemented website" />
+    <MESSAGE value="website carousel bug" />
+    <MESSAGE value="image added" />
+    <MESSAGE value="website developed, added imprint and privacy" />
+    <MESSAGE value="responsive website" />
+    <MESSAGE value="images added" />
+    <MESSAGE value="text changed" />
+    <MESSAGE value="wait page new designed, typos corrected" />
+    <MESSAGE value="CheckinPopup design, Color fix" />
+    <MESSAGE value="wait text fixed" />
+    <MESSAGE value="grid fixed" />
+    <MESSAGE value="queue grid fixed" />
+    <MESSAGE value="queue grid fixed 2" />
+    <MESSAGE value="grid bug fixed. QueueView width adjusted" />
+    <MESSAGE value="Paulo Bio updated" />
+    <MESSAGE value="docker file updated" />
+    <MESSAGE value="feedback added" />
+    <MESSAGE value="pin added" />
+    <MESSAGE value="Meddy.png added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Meddy.png added" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/components/WebsiteComponents/websiteImage.tsx</url>
+          <line>32</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/services/CustomerService.tsx</url>
+          <line>16</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/lib/Store.tsx</url>
+          <line>234</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
