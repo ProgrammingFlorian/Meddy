@@ -25,7 +25,7 @@
   },
   "qrCode": {
     "scan": "Scannen Sie den QR-Code um über Ihre Wartezeit informiert zu bleiben",
-    "greeting": "Herzlichen Willkommen in der Testing Praxis, {{name}}!"
+    "greeting": "Herzlich Willkommen, {{name}}!"
   },
   "queueManagement": {
     "confirmDelete": {
@@ -95,7 +95,7 @@
     "queue": "Warteschlange"
   },
   "wait": {
-    "welcomeMessage": "Herzlichen Willkommen bei {{organisation}}, {{customer}}!",
+    "welcomeMessage": "Herzlich Willkommen bei {{organisation}}, {{customer}}!",
     "expectedWaitingTime": "Ihre geschätze Wartezeit",
     "soon": "Sie sind gleich dran.",
     "peopleAhead": {
@@ -107,7 +107,7 @@
     "contactUs": "Mehr Informationen unter www.meddy.me"
   },
   "pin": {
-    "codeMessage": "Gebe Sie hier den am Empfang erhaltenen sechstelligen Code ein.",
+    "codeMessage": "Bitte geben Sie den sechsstelligen Code ein, den Sie am Empfang erhalten haben.",
     "showButton": "Wartezeit anzeigen"
   },
   "indexPage": {

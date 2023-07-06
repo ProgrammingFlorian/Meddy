@@ -7,7 +7,7 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useForm} from "@mantine/form";
 import CustomerService from "../services/CustomerService";
 import {useRouter} from "next/navigation";
-import {ROUTE_WAIT} from "../helpers/Routes";
+import {ROUTE_WAIT, ROUTE_WAIT2} from "../helpers/Routes";
 
 const PinInputPage: NextPage = () => {
     const {t} = useTranslation();
@@ -20,7 +20,7 @@ const PinInputPage: NextPage = () => {
         validate: {
             pin: (value: string) => {
                 const num = Number(value);
-                return (num > 99999 && num < 1000000) ? null : t("errors.passwordLength");
+                return (num > 0 && num < 1000000) ? null : t("errors.passwordLength");
             }
         }
     });
@@ -28,7 +28,7 @@ const PinInputPage: NextPage = () => {
     const submit = (values: { pin: string }) => {
         CustomerService.fetchCustomerUUID(values.pin).then((uuid) => {
             if(uuid) {
-                router.push(ROUTE_WAIT(uuid));
+                router.push(ROUTE_WAIT2(uuid));
             } else {
                 setError(t('errors.uuidNotFound'));
             }
@@ -64,8 +64,8 @@ const PinInputPage: NextPage = () => {
                                 size="xl"
                                 styles={{
                                     input: {
-                                        height: 120,
-                                        width: 80,
+                                        height: 110,
+                                        width: 70,
                                         fontSize: '2em' // You can adjust the font size to fit the larger input field
                                     }
                                 }}
