@@ -64,8 +64,8 @@ const PinInputPage: NextPage = () => {
                                 size="xl"
                                 styles={{
                                     input: {
-                                        height: 120,
-                                        width: 80,
+                                        height: 110,
+                                        width: 70,
                                         fontSize: '2em' // You can adjust the font size to fit the larger input field
                                     }
                                 }}

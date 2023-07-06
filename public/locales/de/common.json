@@ -107,7 +107,7 @@
     "contactUs": "Mehr Informationen unter www.meddy.me"
   },
   "pin": {
-    "codeMessage": "Gebe Sie hier den am Empfang erhaltenen sechstelligen Code ein.",
+    "codeMessage": "Bitte geben Sie den sechstelligen Code ein, den Sie am Empfang erhalten haben.",
     "showButton": "Wartezeit anzeigen"
   },
   "indexPage": {
