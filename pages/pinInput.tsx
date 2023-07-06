@@ -20,7 +20,7 @@ const PinInputPage: NextPage = () => {
         validate: {
             pin: (value: string) => {
                 const num = Number(value);
-                return (num > 99999 && num < 1000000) ? null : t("errors.passwordLength");
+                return (num > 0 && num < 1000000) ? null : t("errors.passwordLength");
             }
         }
     });

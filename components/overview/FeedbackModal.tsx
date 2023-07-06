@@ -10,12 +10,14 @@ import {
     Textarea,
     TextInput,
     rem,
-    Popover, Container, Space
+    Popover, Container, Space, Flex
 } from "@mantine/core";
 import React, {useContext, useEffect, useState} from "react";
-import { IconDots, IconEdit, IconTrash } from '@tabler/icons-react';
+import {IconAt, IconDots, IconEdit, IconPhone, IconTrash} from '@tabler/icons-react';
 import {StoreContext} from "../../lib/Store";
 import {useTranslation} from "next-i18next";
+import ContactUsComponent from "../landing_page/ContactUsComponent";
+import {ContactUsRowComponent} from "../landing_page/ContactUsRowComponent";
 
 
 interface FeedbackModalProps{
@@ -60,6 +62,21 @@ const FeedbackModal = (props: FeedbackModalProps) => {
         title="Feedback"
     >
         <ScrollArea> {/* Add a maxHeight style to limit the height of the scroll area */}
+            <Card className="w-full h-full" shadow="sm" padding="lg" radius="md" withBorder
+                  style={{fontSize: 15, marginTop: 20, marginBottom: 20}} id="contact">
+                <Container fluid className="align-middle">
+                    <Flex align="flex-start" justify="center" className="h-full">
+                        <ContactUsRowComponent title={t('indexPage.contactCard.email')}
+                                               text={<a href={`mailto:${t('indexPage.contactCard.emailAddress')}`}>
+                                                   {t('indexPage.contactCard.emailAddress')}</a>}
+                                               icon={<IconAt size={20} className="blue-color"/>}/>
+                        <ContactUsRowComponent title={t('indexPage.contactCard.telephone')}
+                                               text={t('indexPage.contactCard.telephoneNumber')}
+                                               icon={<IconPhone size={20} className="blue-color"/>}/>
+                    </Flex>
+                </Container>
+
+            </Card>
             {feedback.sort((f1, f2) => new Date(f2.date).getDate() - new Date(f1.date).getDate()).sort((f1, f2) => new Date(f1.date).getTime() - new Date(f2.date).getTime()).map((f) => {
 
                 const isEditing = editId === f.id;
