@@ -58,8 +58,8 @@ const SidebarComponent = (props: SidebarComponentProps) => {
                                    const pdfBlob = await generatePDF({
                                        praxisName: '/images/Meddy.png',
                                        text1: '1. Scannen Sie den QR-Code',
-                                       text2: '2. Geben Sie den sechsstelligen PIN ein um Ihre Wartezeit angezeigt zu bekommen',
-                                       imagePath: '/images/QR-Code Lyte-Up.png'
+                                       text2: '2. Geben Sie den sechsstelligen PIN-Code ein, um Ihre voraussichtliche Wartezeit anzuzeigen.',
+                                       imagePath: '/images/MeddyInputQRCode.png'
                                    });
                                    const blobURL = URL.createObjectURL(pdfBlob);
 
