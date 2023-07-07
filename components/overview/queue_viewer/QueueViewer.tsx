@@ -1,4 +1,4 @@
-import {Box, Center, Container, Grid, Title, Text} from '@mantine/core';
+import {Box, Center, Container, Grid, Title} from '@mantine/core';
 import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
 import {Customer, getCustomerIdAsString} from '../../../models/Customer';
 import {move, reorder} from "../../../util/ListUtil";
@@ -14,6 +14,7 @@ const QueueViewer = () => {
     const {
         queues,
         customersInQueue,
+        updateCustomer,
         updateCustomersInQueue,
         deleteCustomer,
         updateQueue
@@ -74,7 +75,7 @@ const QueueViewer = () => {
     return (
         <>
             {popup ?
-                <CustomerPopup customer={popup}
+                <CustomerPopup customer={popup} updateCustomer={updateCustomer}
                                appointmentStart={null}//Todo{queues ? queues.find(q => q.id == popup.queue_id).latest_appointment_start : null}
                                queues={queues} onClose={() => setPopup(null)}/>
                 : <></>

@@ -5,18 +5,21 @@ import QRCodePopup from "./QRCodePopup";
 import {Queue} from "../../models/Queue";
 import {useTranslation} from "next-i18next";
 import ConfirmButton from "../ConfirmButton";
-import {StoreContext, useStore} from "../../lib/Store";
+import {StoreContext} from "../../lib/Store";
 import {getTimeLeftFunction} from "../../helpers/Functions";
 
 interface CustomerPopupProps {
     customer: Customer;
     queues: Queue[];
     onClose: () => void;
-    appointmentStart: Date | null
+    appointmentStart: Date | null;
+    updateCustomer:  (customer: Customer) => Promise<void>;
 }
 
 const CustomerPopup = (props: CustomerPopupProps) => {
     const {t} = useTranslation();
+
+    console.log(props.customer);
 
     const initialName = props.customer.name;
     const [name, setName] = useState(initialName)
@@ -34,14 +37,12 @@ const CustomerPopup = (props: CustomerPopupProps) => {
     const [qrCodeShown, showQRCode] = useState(false);
     const customerQueue = props.queues.find(q => q.id === props.customer.queue_id);
 
-    const {updateCustomer} = useStore();
-
     const propertiesChanged = useMemo(() => {
         return name !== initialName || queue !== initialQueue || notes !== initialNotes || durationOfAppointment !== initialDuration
     }, [name, queue, notes, durationOfAppointment]);
 
     const saveChanges = () => {
-        updateCustomer({
+        props.updateCustomer({
             ...props.customer,
             name: name,
             duration: durationOfAppointment,
