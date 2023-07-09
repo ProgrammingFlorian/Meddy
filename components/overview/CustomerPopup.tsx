@@ -19,8 +19,6 @@ interface CustomerPopupProps {
 const CustomerPopup = (props: CustomerPopupProps) => {
     const {t} = useTranslation();
 
-    console.log(props.customer);
-
     const initialName = props.customer.name;
     const [name, setName] = useState(initialName)
     const initialQueue = props.queues.find(queue => props.customer.queue_id === queue.id)?.name ?? null;
