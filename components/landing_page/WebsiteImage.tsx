@@ -27,16 +27,19 @@ const WebsiteImage = () => {
                             <Button size={"lg"}
                                     onClick={() => router.replace("/overview")}>{t('login.title')}</Button>
                         </Container>
-                        <Flex direction="column" mt={400}>
-                            <TitleText style={{fontSize: "min(25vw, 12.5rem)"}}/>
-                            <Center>
-                                <Text style={{color: "white", fontSize: "min(8vw, 50px)"}} align="center">
-                                    “Verwalten Sie Ihre Warteschlangen
-                                    <span className="blue-color"> einfach und effizient</span>. Schaffen Sie
-                                    gleichzeitig
-                                    <span className="blue-color"> Transparenz</span> über Wartezeiten für Ihre Kunden.”
-                                </Text>
-                            </Center>
+                        <Flex className="h-full" direction="row" align="flex-end">
+                            <Flex direction="column" mb={"5em"}>
+                                <TitleText style={{fontSize: "min(25vw, 12.5rem)"}}/>
+                                <Center>
+                                    <Text style={{color: "white", fontSize: "min(8vw, 50px)"}} align="center">
+                                        “Verwalten Sie Ihre Warteschlangen
+                                        <span className="blue-color"> einfach und effizient</span>. Schaffen Sie
+                                        gleichzeitig
+                                        <span className="blue-color"> Transparenz</span> über Wartezeiten für Ihre
+                                        Kunden.”
+                                    </Text>
+                                </Center>
+                            </Flex>
                         </Flex>
                     </Flex>
                 </Container>
