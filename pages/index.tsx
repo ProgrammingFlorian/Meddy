@@ -4,12 +4,12 @@ import React from "react";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {Box, Center, Container, Grid, Space, Text} from '@mantine/core';
 import {useTranslation} from "next-i18next";
-import HeroComponent from "../components/landing_page/WebsiteImage";
 import FeatureCards from "../components/landing_page/FeatureCards";
 import UseCaseAccordion from "../components/landing_page/UseCaseAccordion";
 import UserStoryComponent from "../components/landing_page/UserStoryComponent";
 import ContactUsComponent from "../components/landing_page/ContactUsComponent";
 import AboutUsComponent from "../components/landing_page/AboutUsComponent";
+import WebsiteImage from "../components/landing_page/WebsiteImage";
 
 
 const Index: NextPage = () => {
@@ -17,7 +17,7 @@ const Index: NextPage = () => {
 
     return (
         <Box>
-            <HeroComponent/>
+            <WebsiteImage/>
             <Container className="h-full" style={{maxWidth: 1500}} px={20}>
                 <Space h={100}/>
                 <Text className="font-bold text-center py-10" size={60}>{t("indexPage.mission")}</Text>
