@@ -7,7 +7,7 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useForm} from "@mantine/form";
 import CustomerService from "../services/CustomerService";
 import {useRouter} from "next/navigation";
-import {ROUTE_WAIT, ROUTE_WAIT2} from "../helpers/Routes";
+import {ROUTE_WAIT} from "../helpers/Routes";
 
 const PinInputPage: NextPage = () => {
     const {t} = useTranslation();
@@ -27,8 +27,8 @@ const PinInputPage: NextPage = () => {
 
     const submit = (values: { pin: string }) => {
         CustomerService.fetchCustomerUUID(values.pin).then((uuid) => {
-            if(uuid) {
-                router.push(ROUTE_WAIT2(uuid));
+            if (uuid) {
+                router.push(ROUTE_WAIT(uuid));
             } else {
                 setError(t('errors.uuidNotFound'));
             }
@@ -98,7 +98,6 @@ const PinInputPage: NextPage = () => {
         </>
     );
 }
-
 
 
 export async function getStaticProps({locale}: { locale: string }) {
