@@ -181,9 +181,23 @@ const wait: NextPage = () => {
         </Container>
     ) : error ? (
         <Container mt={50}>
-            <Alert icon={<IconAlertCircle size="1rem"/>} title={t('errors.title')} color="red">
-                {error}
-            </Alert>
+            <Container className="h-100" style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "90vh"
+            }}>
+                <Alert icon={<IconAlertCircle size="1rem"/>} title={t('errors.title')} color="red">
+                    {error}
+                </Alert>
+                <Space h={100}/>
+                <TitleText size={40}/>
+                <Text className="text-center pt-5" weight={500} style={{fontSize: 40, color: "dimgray"}}>
+                    {t("wait.informationAboutMeddy")}
+                    <p className="pt-5"> {t("wait.contactUs")}</p>
+                </Text>
+            </Container>
         </Container>
     ) : (
         <LoadingOverlay visible={true}/>
