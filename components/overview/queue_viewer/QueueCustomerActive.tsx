@@ -21,12 +21,18 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
 
     const {customersInQueue, updateCustomer} = useContext(StoreContext);
 
+    const [showTime, setShowTime] = useState(false);
+
     useEffect(() => {
         const timeLeft = getTimeLeftFunction(props.queue.latest_appointment_start, customersInQueue[props.queue.id], props.queue, props.activeCustomer,
             setRemainingTime, setIsOvertime);
 
         const intervalId = setInterval(timeLeft, 10000);
         timeLeft();
+
+        setTimeout(() => {
+            setShowTime(true);
+        }, 200);
 
         return () => {
             clearInterval(intervalId);
@@ -58,7 +64,7 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
                     </Text>
                     {props.appointmentStart !== null ?
                         <Text size="sm" color={remainingTime < 5 ? "red" : ""}>
-                            {getRemainingTimeText()}
+                            {showTime && getRemainingTimeText()} &nbsp;
                         </Text>
                         : <></>}
                     <div className="mt-2 flex justify-center"
