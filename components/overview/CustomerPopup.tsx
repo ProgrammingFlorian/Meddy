@@ -82,7 +82,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                         fontWeight: "bold"
                     }}>{props.customer.id === customerQueue?.active_customer ? t('remainingAppointmentDuration') : t('remainingWaitingTime')} {remainingTime} {t('multipleMinutes')}</div>
 
-                    <Flex justify="center" gap="md">
+                    <Flex justify="center" gap="xs">
                         {
                             customerQueue?.active_customer === props.customer.id || props.customer.position != 0 ?
                                 <></> : <ConfirmButton fullWidth label={t('call')} onClick={() => {
@@ -110,8 +110,6 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                         {t("sendBackToQueue")}
                     </Button>
                         }
-
-
 
                         <ConfirmButton fullWidth label={t('checkout')} onClick={() => {
                             props.onClose();
