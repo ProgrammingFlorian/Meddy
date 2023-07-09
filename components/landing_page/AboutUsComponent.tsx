@@ -12,8 +12,8 @@ const AboutUsComponent = () => {
             <Text size={30} weight={500}>{t('indexPage.aboutCard.title')}</Text>
             <Space h={20}/>
             <Flex className="m-5" direction="column" align="center">
-                {cards.map(card => (
-                    <AboutUsRowComponent {...card} />
+                {cards.map((card, index) => (
+                    <AboutUsRowComponent key={index} {...card} />
                 ))}
             </Flex>
         </Card>
