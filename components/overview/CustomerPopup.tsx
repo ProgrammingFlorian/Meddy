@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {Button, Flex, Group, Modal, NumberInput, Select, Textarea, TextInput} from '@mantine/core';
+import {Button, Flex, Group, Modal, NumberInput, Text, Textarea, TextInput} from '@mantine/core';
 import {Customer} from "../../models/Customer";
 import QRCodePopup from "./QRCodePopup";
 import {Queue} from "../../models/Queue";
@@ -75,10 +75,14 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                onChange={(e) => setName(e.target.value)} size="xl"
                                sx={{color: 'blue'}}/>
 
-                    <div style={{
-                        fontSize: 16,
-                        fontWeight: "bold"
-                    }}>{props.customer.id === customerQueue?.active_customer ? t('remainingAppointmentDuration') : t('remainingWaitingTime')} {remainingTime} {t('multipleMinutes')}</div>
+                    <Flex direction="column">
+                        <Text weight={600}>{t('customer.currentQueue', {queue: queue})}</Text>
+                        {/*Use Text and proper language*/}
+                        <div style={{
+                            fontSize: 16,
+                            fontWeight: "bold"
+                        }}>{props.customer.id === customerQueue?.active_customer ? t('remainingAppointmentDuration') : t('remainingWaitingTime')} {remainingTime} {t('multipleMinutes')}</div>
+                    </Flex>
 
                     <Flex justify="center" gap="xs">
                         {
@@ -118,7 +122,8 @@ const CustomerPopup = (props: CustomerPopupProps) => {
 
                     <Flex direction="column" gap="xs">
                         <Group grow>
-                            <NumberInput label={t('customer.approximateAppointmentDuration')} value={durationOfAppointment}
+                            <NumberInput label={t('customer.approximateAppointmentDuration')}
+                                         value={durationOfAppointment}
                                          parser={value => value?.replace(/\D/g, '') ?? '0'}
                                          step={1} min={1}
                                          onChange={(value: number) => setDurationOfAppointment(value > 0 ? value : 1)}/>
@@ -132,13 +137,6 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                             ))}
                         </Flex>
                     </Flex>
-                    <Select
-                        disabled={customerQueue?.active_customer === props.customer.id ?? false}
-                        data={props.queues.map(queue => queue.name)}
-                        defaultValue={queue}
-                        label={t('waitingScreen.queue')}
-                        onChange={setQueue}
-                    />
                     <Textarea
                         label={t('customer.notes')}
                         defaultValue={notes}

@@ -20,7 +20,8 @@
     "notesPlaceholder": "Nur interne Informationen",
     "showQRCode": "QR Code anzeigen",
     "approximateAppointmentDuration": "Geschätze Termindauer in Minuten:",
-    "createCostumer": "Kunde erstellen"
+    "createCostumer": "Kunde erstellen",
+    "currentQueue": "In Warteschlange: {{queue}}"
   },
   "qrCode": {
     "scan": "Scannen Sie den QR-Code um über Ihre Wartezeit informiert zu bleiben",
