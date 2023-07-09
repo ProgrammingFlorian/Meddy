@@ -29,9 +29,9 @@ const WebsiteImage = () => {
                         </Container>
                         <Flex className="h-full" direction="row" align="flex-end">
                             <Flex direction="column" mb={"5em"}>
-                                <TitleText style={{fontSize: "min(25vw, 12.5rem)"}}/>
+                                <TitleText style={{fontSize: "min(25vw, 18rem)"}}/>
                                 <Center>
-                                    <Text style={{color: "white", fontSize: "min(8vw, 50px)"}} align="center">
+                                    <Text style={{color: "white", fontSize: "min(8vw, 60px)"}} align="center">
                                         “Verwalten Sie Ihre Warteschlangen
                                         <span className="blue-color"> einfach und effizient</span>. Schaffen Sie
                                         gleichzeitig

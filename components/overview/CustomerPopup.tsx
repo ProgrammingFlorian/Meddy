@@ -122,15 +122,13 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                         <Group grow>
                             <NumberInput label={t('customer.appointmentDuration')} value={durationOfAppointment}
                                          parser={value => value?.replace(/\D/g, '') ?? '0'}
-                                         formatter={value => !Number.isNaN(parseInt(value ?? '')) ?
-                                             `${value} ${t('multipleMinutes')}` : `0 ${t('multipleMinutes')}`}
-                                         step={5} min={5}
-                                         onChange={(value: number) => setDurationOfAppointment(value)}/>
+                                         step={1} min={1}
+                                         onChange={(value: number) => setDurationOfAppointment(value > 0 ? value : 1)}/>
                         </Group>
                         <Flex gap="xs">
                             {[-5, 5, 10].map(time => (
                                 <Button key={time} fullWidth color="gray"
-                                        onClick={() => setDurationOfAppointment(durationOfAppointment + time)}>
+                                        onClick={() => setDurationOfAppointment(durationOfAppointment + time > 0 ? durationOfAppointment + time : 1)}>
                                     {time > 0 ? '+' : ''}{time} {t('minutesAbbreviation')}
                                 </Button>
                             ))}
