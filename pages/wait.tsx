@@ -1,7 +1,7 @@
 import type {NextPage} from 'next'
 import {useEffect, useState} from "react";
 import {Customer} from "../models/Customer";
-import {Alert, Container, LoadingOverlay, Text, Center, Space, Divider} from "@mantine/core";
+import {Alert, Center, Container, Divider, LoadingOverlay, Space, Text} from "@mantine/core";
 import {useRouter} from "next/router";
 import CustomerService from "../services/CustomerService";
 import {IconAlertCircle, IconUser, IconUsers} from "@tabler/icons-react";
@@ -11,7 +11,6 @@ import {getTimeLeftFunction} from "../helpers/Functions";
 import {supabase} from "../lib/Store";
 import {RealtimeChannel} from "@supabase/realtime-js";
 import TitleText from "../components/landing_page/TitleText";
-import {use} from "i18next";
 
 const custerMessageBuilder = (personsInQueue: number, t: TFunction) => {
     if (personsInQueue === 1) {
@@ -61,24 +60,31 @@ const wait: NextPage = () => {
                 }
                 return setInterval(() => {
                     timeLeft();
-                    console.log("interval", intervalId);
                 }, 10000)
             });
             timeLeft();
+        }).catch((e) => {
+            setError(t('errors.customerNotFound'));
         });
     }
 
     useEffect(() => {
         const id = router.query['id'] as string;
+        let timeout : NodeJS.Timeout;
         if (id) {
             loadData(id);
-            const realtimeChannel = supabase.channel('any').on('postgres_changes', {event: 'UPDATE', schema: 'public', table: 'customers'},
+            const realtimeChannel = supabase.channel('any').on('postgres_changes', {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'customers'
+                },
                 _ => {
                     loadData(id);
                 }).subscribe();
             setChannel(realtimeChannel);
         } else {
-            setTimeout(() => {
+            // it takes a short time to get the pin
+            timeout = setTimeout(() => {
                 setError(t('errors.parameterMissing'));
             }, 1000);
         }
@@ -92,13 +98,6 @@ const wait: NextPage = () => {
             }
         };
     }, [router.query]);
-
-    useEffect(() => {
-        const id = router.query['id'] as string;
-        if (id) {
-                loadData(id);
-        }
-    }, [remainingTime])
 
     return customer ? (
         <Container>
@@ -201,12 +200,6 @@ const wait: NextPage = () => {
         </Container>
     ) : (
         <LoadingOverlay visible={true}/>
-
-
-
-
-
-
     );
 };
 
