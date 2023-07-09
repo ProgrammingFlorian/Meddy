@@ -55,17 +55,20 @@ const SidebarComponent = (props: SidebarComponentProps) => {
                                onClick={changePassword}/>
                 <SidebarButton icon={<IconQrcode/>} iconColor="blue" label={t('sidebar.downloadQRCode')}
                                onClick={async () => {
-                                   const pdfBlob = await generatePDF({
+                                   /*
+                                        const pdfBlob = await generatePDF({
                                        praxisName: '/images/Meddy.png',
                                        text1: '1. Scannen Sie den QR-Code',
                                        text2: '2. Geben Sie den sechsstelligen PIN-Code ein, um Ihre voraussichtliche Wartezeit anzuzeigen.',
                                        imagePath: '/images/MeddyInputQRCode.png'
                                    });
                                    const blobURL = URL.createObjectURL(pdfBlob);
+                                   */
 
                                    // create temporary link element
                                    let tempLink = document.createElement('a');
-                                   tempLink.href = blobURL;
+                                   tempLink.href = "/images/Meddy_QRCode.pdf";
+
                                    tempLink.download = 'Meddy_QR-Code.pdf'; // or whatever file name you want
                                    tempLink.style.display = 'none';
 
