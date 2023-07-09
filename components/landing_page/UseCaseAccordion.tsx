@@ -55,11 +55,11 @@ const UseCaseAccordion = () => {
 
                 <UseCaseAccordionItem index="3" icon={<IconPencil className="blue-color" size={35}/>}
                                       title={t("indexPage.queueManagement")}>
-                    {images.slice(2).map(image => (
-                        <>
+                    {images.slice(2).map((image, index) => (
+                        <div key={index}>
                             <Space h={50}/>
                             <TextAndPictureAccordionComponent image={image} setPopup={setPopup}/>
-                        </>
+                        </div>
                     ))}
                 </UseCaseAccordionItem>
             </Accordion>

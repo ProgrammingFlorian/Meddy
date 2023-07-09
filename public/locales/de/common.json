@@ -87,7 +87,8 @@
     "invalidName": "Der Name muss mindestens 3 Zeichen besitzen",
     "positiveNumber": "Bitte wähle eine positive Zahl",
     "noElement": "Bitte wähle ein Element",
-    "uuidNotFound": "Kunde konnte nicht gefunden werden."
+    "uuidNotFound": "Kunde konnte nicht gefunden werden.",
+    "customerNotFound": "Dieser Kunde konnte nicht gefunden werden. Wurden Sie schon eingecheckt oder bereits ausgecheckt?"
   },
   "checkIn": {
     "assignedDoctor": "Behandelnde/r Ärztin/Arzt:"
