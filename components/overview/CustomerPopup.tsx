@@ -118,7 +118,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
 
                     <Flex direction="column" gap="xs">
                         <Group grow>
-                            <NumberInput label={t('customer.appointmentDuration')} value={durationOfAppointment}
+                            <NumberInput label={t('customer.approximateAppointmentDuration')} value={durationOfAppointment}
                                          parser={value => value?.replace(/\D/g, '') ?? '0'}
                                          step={1} min={1}
                                          onChange={(value: number) => setDurationOfAppointment(value > 0 ? value : 1)}/>
