@@ -1,9 +1,9 @@
 import {Customer} from "../../../models/Customer";
 import {Queue} from "../../../models/Queue";
 import {Button, Card, Group, Popover, Text} from "@mantine/core";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useTranslation} from "next-i18next";
-import {useStore} from "../../../lib/Store";
+import {StoreContext} from "../../../lib/Store";
 import {getTimeLeftFunction} from "../../../helpers/Functions";
 
 interface QueueCustomerActiveProps {
@@ -19,7 +19,9 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
     const [remainingTime, setRemainingTime] = useState(0);
     const [isOvertime, setIsOvertime] = useState(false);
 
-    const {customersInQueue, updateCustomer} = useStore();
+    const {customersInQueue, updateCustomer} = useContext(StoreContext);
+
+    const [showTime, setShowTime] = useState(false);
 
     useEffect(() => {
         const timeLeft = getTimeLeftFunction(props.queue.latest_appointment_start, customersInQueue[props.queue.id], props.queue, props.activeCustomer,
@@ -27,6 +29,10 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
 
         const intervalId = setInterval(timeLeft, 10000);
         timeLeft();
+
+        setTimeout(() => {
+            setShowTime(true);
+        }, 200);
 
         return () => {
             clearInterval(intervalId);
@@ -42,7 +48,7 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
     }
 
     return props.activeCustomer !== null ? (
-        <Card shadow="sm" m={8} style={{height: 160}}>
+        <Card shadow="sm" mb="sm" m={8} style={{height: 160}}>
             <Group position="center" style={{
                 width: '100%',
                 height: '100%',
@@ -58,7 +64,7 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
                     </Text>
                     {props.appointmentStart !== null ?
                         <Text size="sm" color={remainingTime < 5 ? "red" : ""}>
-                            {getRemainingTimeText()}
+                            {showTime && getRemainingTimeText()} &nbsp;
                         </Text>
                         : <></>}
                     <div className="mt-2 flex justify-center"

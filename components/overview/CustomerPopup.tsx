@@ -13,7 +13,7 @@ interface CustomerPopupProps {
     queues: Queue[];
     onClose: () => void;
     appointmentStart: Date | null;
-    updateCustomer:  (customer: Customer) => Promise<void>;
+    updateCustomer: (customer: Customer) => Promise<void>;
 }
 
 const CustomerPopup = (props: CustomerPopupProps) => {
@@ -99,16 +99,16 @@ const CustomerPopup = (props: CustomerPopupProps) => {
 
                         {
                             customerQueue?.active_customer === props.customer.id
-                               &&  <Button fullWidth  onClick={() => {
+                            && <Button fullWidth onClick={() => {
                                 const newQueue = {...customerQueue};
                                 newQueue.active_customer = null;
-
                                 newQueue.latest_appointment_start = null;
                                 updateQueue(newQueue);
-                                props.onClose();}}>
+                                props.onClose();
+                            }}>
 
-                        {t("sendBackToQueue")}
-                    </Button>
+                                {t("sendBackToQueue")}
+                            </Button>
                         }
 
                         <ConfirmButton fullWidth label={t('checkout')} onClick={() => {
@@ -137,6 +137,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                         </Flex>
                     </Flex>
                     <Select
+                        disabled={customerQueue?.active_customer === props.customer.id ?? false}
                         data={props.queues.map(queue => queue.name)}
                         defaultValue={queue}
                         label={t('waitingScreen.queue')}
