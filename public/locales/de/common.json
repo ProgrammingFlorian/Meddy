@@ -70,6 +70,7 @@
   "multipleMinutes": "Minuten",
   "call": "Aufrufen",
   "checkout": "Abmelden",
+  "sendBackToQueue": "Zurück in die Warteschlange",
   "saveChanges": "Änderungen speichern",
   "confirm": "Bestätigen",
   "logout": "Abmelden",
@@ -95,7 +96,7 @@
     "queue": "Warteschlange"
   },
   "wait": {
-    "welcomeMessage": "Herzlich Willkommen bei {{organisation}}, {{customer}}!",
+    "welcomeMessage": "Herzlich Willkommen bei {{organisation}}!",
     "expectedWaitingTime": "Ihre geschätze Wartezeit",
     "soon": "Sie sind gleich dran.",
     "peopleAhead": {

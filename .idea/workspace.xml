@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36ed8252-0eee-4f90-b17e-408752c8b3b4" name="Changes" comment="typo">
+    <list default="true" id="36ed8252-0eee-4f90-b17e-408752c8b3b4" name="Changes" comment="bug fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/overview/CustomerPopup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/overview/CustomerPopup.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/overview/queue_viewer/QueueCustomer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/overview/queue_viewer/QueueCustomer.tsx" afterDir="false" />
@@ -177,7 +177,7 @@
       <workItem from="1688471121614" duration="1209000" />
       <workItem from="1688472341911" duration="14754000" />
       <workItem from="1688548403729" duration="23289000" />
-      <workItem from="1688910902269" duration="7084000" />
+      <workItem from="1688910902269" duration="7448000" />
     </task>
     <task id="LOCAL-00001" summary="implemented almost everything">
       <created>1677234016986</created>
@@ -473,7 +473,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688673706101</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="bug fixes">
+      <created>1688931929104</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1688931929104</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -491,7 +498,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="bug fix: droppable height, set default dropdown value after checkIn of customer" />
     <MESSAGE value="implemented website" />
     <MESSAGE value="website carousel bug" />
     <MESSAGE value="image added" />
@@ -516,7 +522,8 @@
     <MESSAGE value="route updated, modal sized updated" />
     <MESSAGE value="typos" />
     <MESSAGE value="typo" />
-    <option name="LAST_COMMIT_MESSAGE" value="typo" />
+    <MESSAGE value="bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
