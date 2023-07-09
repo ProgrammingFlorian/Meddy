@@ -62,6 +62,7 @@ const PinInputPage: NextPage = () => {
                             <PinInput
                                 length={6}
                                 size="xl"
+                                type={/^[0-9]+/} inputType="number" inputMode="numeric"
                                 styles={{
                                     input: {
                                         height: 110,
@@ -97,6 +98,8 @@ const PinInputPage: NextPage = () => {
         </>
     );
 }
+
+
 
 export async function getStaticProps({locale}: { locale: string }) {
     return {

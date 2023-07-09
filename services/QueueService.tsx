@@ -3,6 +3,7 @@ import {supabase} from "../lib/Store";
 import {Queue} from "../models/Queue";
 import {TABLE_ACCOUNT_INFORMATION} from "./AccountService";
 import {PostgrestResponseSuccess} from "@supabase/postgrest-js";
+import {Customer} from "../models/Customer";
 
 export const TABLE_QUEUES = 'queues';
 

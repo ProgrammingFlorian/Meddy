@@ -84,7 +84,7 @@ const CustomerPopup = (props: CustomerPopupProps) => {
 
                     <Flex justify="center" gap="md">
                         {
-                            props.queues.find(q => q.id === props.customer.queue_id)?.active_customer === props.customer.id || props.customer.position != 0 ?
+                            customerQueue?.active_customer === props.customer.id || props.customer.position != 0 ?
                                 <></> : <ConfirmButton fullWidth label={t('call')} onClick={() => {
                                     const newQueue = {...props.queues.find(q => q.id === props.customer.queue_id)};
                                     if (newQueue.id !== undefined) {
@@ -96,6 +96,22 @@ const CustomerPopup = (props: CustomerPopupProps) => {
                                     props.onClose();
                                 }} color="green"/>
                         }
+
+                        {
+                            customerQueue?.active_customer === props.customer.id
+                               &&  <Button fullWidth  onClick={() => {
+                                const newQueue = {...customerQueue};
+                                newQueue.active_customer = null;
+
+                                newQueue.latest_appointment_start = null;
+                                updateQueue(newQueue);
+                                props.onClose();}}>
+
+                        {t("sendBackToQueue")}
+                    </Button>
+                        }
+
+
 
                         <ConfirmButton fullWidth label={t('checkout')} onClick={() => {
                             props.onClose();

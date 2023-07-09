@@ -11,6 +11,7 @@ import {getTimeLeftFunction} from "../helpers/Functions";
 import {supabase} from "../lib/Store";
 import {RealtimeChannel} from "@supabase/realtime-js";
 import TitleText from "../components/landing_page/TitleText";
+import {use} from "i18next";
 
 const custerMessageBuilder = (personsInQueue: number, t: TFunction) => {
     if (personsInQueue === 1) {
@@ -49,7 +50,7 @@ const wait: NextPage = () => {
     const loadData = (id: string) => {
         CustomerService.fetchCustomersInSameQueue(id).then(([c, otherCustomers, organisation, queue]) => {
             setCustomer(c);
-            setPersonsAhead(otherCustomers.length);
+            setPersonsAhead(otherCustomers.filter(oc => oc.position < c.position).length);
             setOrganisationName(organisation.name);
 
             const timeLeft = getTimeLeftFunction(queue.latest_appointment_start, otherCustomers, queue, c, setRemainingTime, setIsOvertime);
@@ -92,6 +93,13 @@ const wait: NextPage = () => {
         };
     }, [router.query]);
 
+    useEffect(() => {
+        const id = router.query['id'] as string;
+        if (id) {
+                loadData(id);
+        }
+    }, [remainingTime])
+
     return customer ? (
         <Container>
             <Container style={{
@@ -105,8 +113,7 @@ const wait: NextPage = () => {
                 <Center className="py-10">
                     <Text weight={500} size={50} className="text-blue-600 text-center">
                         {t('wait.welcomeMessage', {
-                            organisation: organisationName,
-                            customer: customer.name
+                            organisation: organisationName
                         })}
                     </Text>
                 </Center>
@@ -137,7 +144,7 @@ const wait: NextPage = () => {
                             <Text className='pt-5' weight={500}
                                   style={{fontSize: 40}}>{t('wait.expectedWaitingTime')}</Text>
                         </Center>
-                        <Space h={120}/>
+                        <Space h={90}/>
                         <Center>
                             {personInQueue(personsAhead)}
                         </Center>
@@ -150,9 +157,6 @@ const wait: NextPage = () => {
             </Container>
 
             <Divider my="sm"/>
-            <Container>
-
-            </Container>
             <Container className="h-100" style={{
                 display: "flex",
                 flexDirection: "column",

@@ -18,7 +18,7 @@ interface QueueCustomerProps {
 const QueueCustomer = (props: QueueCustomerProps) => {
     const {t} = useTranslation();
 
-    return <Card mb="sm" shadow="sm"
+    return <Card mb="sm" shadow="sm" h={props.isHighlighted ? 160 : 120}
         {...props.provided.draggableProps}
         {...props.provided.dragHandleProps}
         ref={props.provided.innerRef}>
@@ -42,7 +42,7 @@ const QueueCustomer = (props: QueueCustomerProps) => {
                                  shadow="md"
                         >
                             <Popover.Target>
-                                <Button color="green">
+                                <Button color="green" style={{marginTop: 20}}>
                                     {t('call')}
                                 </Button>
                             </Popover.Target>

@@ -4,8 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36ed8252-0eee-4f90-b17e-408752c8b3b4" name="Changes" comment="typos">
+    <list default="true" id="36ed8252-0eee-4f90-b17e-408752c8b3b4" name="Changes" comment="typo">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/overview/CustomerPopup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/overview/CustomerPopup.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/overview/queue_viewer/QueueCustomer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/overview/queue_viewer/QueueCustomer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/overview/queue_viewer/QueueCustomerActive.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/overview/queue_viewer/QueueCustomerActive.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/overview/queue_viewer/QueueViewer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/overview/queue_viewer/QueueViewer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/Routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/Routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/pinInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/pinInput.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/wait.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/wait.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/locales/de/common.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/locales/de/common.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/QueueService.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/services/QueueService.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +176,8 @@
       <workItem from="1688458240500" duration="4935000" />
       <workItem from="1688471121614" duration="1209000" />
       <workItem from="1688472341911" duration="14754000" />
-      <workItem from="1688548403729" duration="22677000" />
+      <workItem from="1688548403729" duration="23289000" />
+      <workItem from="1688910902269" duration="7084000" />
     </task>
     <task id="LOCAL-00001" summary="implemented almost everything">
       <created>1677234016986</created>
@@ -456,7 +466,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688671590988</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="typo">
+      <created>1688673706101</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1688673706101</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -474,7 +491,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="changed qr code ur to meddy.me" />
     <MESSAGE value="bug fix: droppable height, set default dropdown value after checkIn of customer" />
     <MESSAGE value="implemented website" />
     <MESSAGE value="website carousel bug" />
@@ -499,7 +515,8 @@
     <MESSAGE value="QR Code changed" />
     <MESSAGE value="route updated, modal sized updated" />
     <MESSAGE value="typos" />
-    <option name="LAST_COMMIT_MESSAGE" value="typos" />
+    <MESSAGE value="typo" />
+    <option name="LAST_COMMIT_MESSAGE" value="typo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -516,8 +533,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/lib/Store.tsx</url>
-          <line>234</line>
-          <properties lambdaOrdinal="-1" />
+          <line>236</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
