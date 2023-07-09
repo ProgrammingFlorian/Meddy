@@ -63,7 +63,9 @@ export const useStore = (): StoreType => {
                 } = [];
 
                 data.organisations.queues.forEach(val => {
-                    result[val.id] = val.customers;
+                    result[val.id] = val.customers.sort((a, b) => {
+                        return a.position - b.position
+                    });
                 });
 
                 setOrganisation({id: data.organisation_id, name: data.organisations.name});

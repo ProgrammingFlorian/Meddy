@@ -40,10 +40,10 @@ const Index: NextPage = () => {
                     <UserStoryComponent/>
                     <Space h={200}/>
                     <Grid gutter={20} className="w-full" justify={"center"}>
-                        <Grid.Col md={5} lg={5} span={12}>
+                        <Grid.Col md={5} lg={5} span={12} key="contact">
                             <ContactUsComponent/>
                         </Grid.Col>
-                        <Grid.Col md={7} lg={7} span={12}>
+                        <Grid.Col md={7} lg={7} span={12} key="about">
                             <AboutUsComponent/>
                         </Grid.Col>
                     </Grid>

@@ -122,7 +122,6 @@ const CheckinPopup = () => {
                                                 onClick={() => form.setFieldValue('duration', 30)}>
                                             30 {t('minutesAbbreviation')}
                                         </Button>
-
                                     </div>
                                     <br/>
                                     <Select
