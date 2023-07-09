@@ -59,7 +59,7 @@ const Login = () => {
                 <LoadingOverlay visible={message === true}/>
                 <TextInput
                     label={customLabel("E-Mail:", true)}
-                    placeholder="Your email" icon={<IconAt/>}
+                    placeholder="Your email"
                     {...form.getInputProps('email')}/>
                 {isLogin ?
                     <PasswordInput
