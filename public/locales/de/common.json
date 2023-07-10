@@ -88,7 +88,8 @@
     "positiveNumber": "Bitte wähle eine positive Zahl",
     "noElement": "Bitte wähle ein Element",
     "uuidNotFound": "Kunde konnte nicht gefunden werden.",
-    "customerNotFound": "Dieser Kunde konnte nicht gefunden werden. Wurden Sie schon eingecheckt oder bereits ausgecheckt?"
+    "customerNotFound": "Dieser Kunde konnte nicht gefunden werden. Wurden Sie schon eingecheckt oder bereits ausgecheckt?",
+    "channelError": "Die Verbindung zum Server wurde getrennt. Bitte laden "
   },
   "checkIn": {
     "assignedDoctor": "Behandelnde/r Ärztin/Arzt:"
@@ -106,7 +107,8 @@
       "more": "Vor Ihnen befinden sich noch mehr als vier Personen"
     },
     "informationAboutMeddy": "\"Meddy ermöglicht eine effiziente Verwaltung von Warteschlangen und schafft Transparenz über Wartezeiten.\"",
-    "contactUs": "Mehr Informationen unter www.meddy.me"
+    "contactUs": "Mehr Informationen unter www.meddy.me",
+    "refresh": "Wartezeit aktualisieren"
   },
   "pin": {
     "codeMessage": "Bitte geben Sie den sechsstelligen Code ein, den Sie am Empfang erhalten haben.",
