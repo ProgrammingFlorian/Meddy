@@ -9,7 +9,7 @@ import OrganisationService from "../services/OrganisationService";
 import {useAuth} from "./Auth";
 import {Feedback} from "../models/Feedback";
 import FeedbackService from "../services/FeedbackService";
-import {RealtimePostgresUpdatePayload} from "@supabase/realtime-js";
+import {RealtimeChannel, RealtimePostgresUpdatePayload} from "@supabase/realtime-js";
 
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -57,7 +57,7 @@ export const useStore = (): StoreType => {
         fetchData();
         // Update to dashboard if it is updated on another client
         let updateTimeout: NodeJS.Timeout;
-        const updateCallback = (payload: RealtimePostgresUpdatePayload<{ [p: string]: any }>) => {
+        const updateCallback = () => {
             if (updateTimeout) {
                 clearTimeout(updateTimeout);
             }
@@ -66,8 +66,7 @@ export const useStore = (): StoreType => {
             }, 1000);
         };
 
-        // @ts-ignore TODO: Find out why this is marked as an error and not in wait.tsx
-        const realtimeChannelCustomers = supabase.channel(CHANNEL_CUSTOMERS).on('postgres_changes', {
+        const realtimeChannelCustomers: RealtimeChannel = supabase.channel(CHANNEL_CUSTOMERS).on('postgres_changes', {
                 event: '*',
                 schema: 'public',
                 table: 'customers'
@@ -75,7 +74,6 @@ export const useStore = (): StoreType => {
             updateCallback
         ).subscribe();
 
-        // @ts-ignore TODO: Find out why this is marked as an error and not in wait.tsx
         const realtimeChannelQueues = supabase.channel(CHANNEL_QUEUES).on('postgres_changes', {
                 event: '*',
                 schema: 'public',
