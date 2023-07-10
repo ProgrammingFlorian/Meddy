@@ -94,7 +94,7 @@ const wait: NextPage = () => {
             };
 
             const realtimeChannelCustomers = supabase.channel(CHANNEL_CUSTOMERS).on('postgres_changes', {
-                    event: 'UPDATE',
+                    event: '*',
                     schema: 'public',
                     table: 'customers'
                 },
@@ -102,7 +102,7 @@ const wait: NextPage = () => {
             ).subscribe(subscribeCallback);
 
             const realtimeChannelQueues = supabase.channel(CHANNEL_QUEUES).on('postgres_changes', {
-                    event: 'UPDATE',
+                    event: '*',
                     schema: 'public',
                     table: 'queues'
                 },

@@ -67,7 +67,7 @@ export const useStore = (): StoreType => {
         };
 
         const realtimeChannelCustomers = supabase.channel(CHANNEL_CUSTOMERS).on('postgres_changes', {
-                event: 'UPDATE',
+                event: '*',
                 schema: 'public',
                 table: 'customers'
             },
@@ -75,7 +75,7 @@ export const useStore = (): StoreType => {
         ).subscribe();
 
         const realtimeChannelQueues = supabase.channel(CHANNEL_QUEUES).on('postgres_changes', {
-                event: 'UPDATE',
+                event: '*',
                 schema: 'public',
                 table: 'queues'
             },
