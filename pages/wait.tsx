@@ -1,7 +1,7 @@
 import type {NextPage} from 'next'
 import {useEffect, useState} from "react";
 import {Customer} from "../models/Customer";
-import {Alert, Center, Container, Divider, LoadingOverlay, Space, Text} from "@mantine/core";
+import {Alert, Button, Center, Container, Divider, LoadingOverlay, Space, Text} from "@mantine/core";
 import {useRouter} from "next/router";
 import CustomerService from "../services/CustomerService";
 import {IconAlertCircle, IconUser, IconUsers} from "@tabler/icons-react";
@@ -35,6 +35,7 @@ const wait: NextPage = () => {
 
     const [customer, setCustomer] = useState(null as Customer | null);
     const [error, setError] = useState(null as string | null);
+    const [channelError, setChannelError] = useState(false);
 
     const [remainingTime, setRemainingTime] = useState(0);
     const [isOvertime, setIsOvertime] = useState(false);
@@ -61,7 +62,7 @@ const wait: NextPage = () => {
                 }
                 return setInterval(() => {
                     timeLeft();
-                }, 10000)
+                }, 10000);
             });
             timeLeft();
         }).catch(() => {
@@ -85,13 +86,17 @@ const wait: NextPage = () => {
                 }, 5000);
             };
 
+            let subscribeCallback = (status: string) => {
+                setChannelError(status !== 'SUBSCRIBED');
+            };
+
             const realtimeChannelCustomers = supabase.channel('any').on('postgres_changes', {
                     event: 'UPDATE',
                     schema: 'public',
                     table: 'customers'
                 },
                 updateCallback
-            ).subscribe();
+            ).subscribe(subscribeCallback);
 
             const realtimeChannelQueues = supabase.channel('any').on('postgres_changes', {
                     event: 'UPDATE',
@@ -99,7 +104,7 @@ const wait: NextPage = () => {
                     table: 'queues'
                 },
                 updateCallback
-            ).subscribe();
+            ).subscribe(subscribeCallback);
 
             setChannelCustomers(realtimeChannelCustomers);
             setChannelQueues(realtimeChannelQueues);
@@ -126,7 +131,31 @@ const wait: NextPage = () => {
         };
     }, [router.query]);
 
-    return customer ? (
+    const refresh = () => {
+        router.reload();
+    }
+
+    return error ? (
+        <Container mt={50}>
+            <Container className="h-100" style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "90vh"
+            }}>
+                <Alert icon={<IconAlertCircle size="1rem"/>} title={t('errors.title')} color="red">
+                    {error}
+                </Alert>
+                <Space h={100}/>
+                <TitleText size={40}/>
+                <Text className="text-center pt-5" weight={500} style={{fontSize: 40, color: "dimgray"}}>
+                    {t("wait.informationAboutMeddy")}
+                    <p className="pt-5"> {t("wait.contactUs")}</p>
+                </Text>
+            </Container>
+        </Container>
+    ) : customer ? (
         <Container>
             <Container style={{
                 display: "flex",
@@ -170,6 +199,8 @@ const wait: NextPage = () => {
                             <Text className='pt-5' weight={500}
                                   style={{fontSize: 40}}>{t('wait.expectedWaitingTime')}</Text>
                         </Center>
+                        {channelError &&
+                            <Button style={{height: 80, width: 420}} m="xl" onClick={refresh}><Text size={25}>{t('wait.refresh')}</Text></Button>}
                         <Space h={90}/>
                         <Center>
                             {personInQueue(personsAhead)}
@@ -179,6 +210,8 @@ const wait: NextPage = () => {
                         </Text></>
                     : <>
                         <h1>{t('wait.soon')}</h1>
+                        {channelError &&
+                            <Button style={{height: 80, width: 420}} m="xl" onClick={refresh}><Text size={25}>{t('wait.refresh')}</Text></Button>}
                     </>}
             </Container>
 
@@ -203,26 +236,6 @@ const wait: NextPage = () => {
                             </button>
                         </div>
                         */}
-            </Container>
-        </Container>
-    ) : error ? (
-        <Container mt={50}>
-            <Container className="h-100" style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "90vh"
-            }}>
-                <Alert icon={<IconAlertCircle size="1rem"/>} title={t('errors.title')} color="red">
-                    {error}
-                </Alert>
-                <Space h={100}/>
-                <TitleText size={40}/>
-                <Text className="text-center pt-5" weight={500} style={{fontSize: 40, color: "dimgray"}}>
-                    {t("wait.informationAboutMeddy")}
-                    <p className="pt-5"> {t("wait.contactUs")}</p>
-                </Text>
             </Container>
         </Container>
     ) : (
