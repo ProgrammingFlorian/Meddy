@@ -42,7 +42,8 @@ const wait: NextPage = () => {
     const [organisationName, setOrganisationName] = useState('');
 
     const [intervalId, setIntervalId] = useState(null as null | NodeJS.Timer);
-    const [channel, setChannel] = useState(null as null | RealtimeChannel);
+    const [channelCustomers, setChannelCustomers] = useState(null as null | RealtimeChannel);
+    const [channelQueues, setChannelQueues] = useState(null as null | RealtimeChannel);
 
     const router = useRouter();
 
@@ -59,7 +60,6 @@ const wait: NextPage = () => {
                     clearInterval(oldIntervalId);
                 }
                 return setInterval(() => {
-                    console.log('time left')
                     timeLeft();
                 }, 10000)
             });
@@ -74,15 +74,35 @@ const wait: NextPage = () => {
         let timeout: NodeJS.Timeout;
         if (id) {
             loadData(id);
-            const realtimeChannel = supabase.channel('any').on('postgres_changes', {
+            let updateTimeout: NodeJS.Timeout;
+
+            const updateCallback = () => {
+                if (updateTimeout) {
+                    clearTimeout(updateTimeout);
+                }
+                updateTimeout = setTimeout(() => {
+                    loadData(id);
+                }, 5000);
+            };
+
+            const realtimeChannelCustomers = supabase.channel('any').on('postgres_changes', {
                     event: 'UPDATE',
                     schema: 'public',
                     table: 'customers'
                 },
-                _ => {
-                    loadData(id);
-                }).subscribe();
-            setChannel(realtimeChannel);
+                updateCallback
+            ).subscribe();
+
+            const realtimeChannelQueues = supabase.channel('any').on('postgres_changes', {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'queues'
+                },
+                updateCallback
+            ).subscribe();
+
+            setChannelCustomers(realtimeChannelCustomers);
+            setChannelQueues(realtimeChannelQueues);
         } else {
             // it takes a short time to get the pin
             timeout = setTimeout(() => {
@@ -97,8 +117,11 @@ const wait: NextPage = () => {
             if (timeout) {
                 clearTimeout(timeout);
             }
-            if (channel) {
-                supabase.removeChannel(channel);
+            if (channelCustomers) {
+                supabase.removeChannel(channelCustomers);
+            }
+            if (channelQueues) {
+                supabase.removeChannel(channelQueues);
             }
         };
     }, [router.query]);
