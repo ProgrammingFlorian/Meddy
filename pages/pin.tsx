@@ -1,5 +1,5 @@
 import {NextPage} from "next";
-import {Alert, Button, Center, Container, Divider, Group, PinInput, Space, Text} from "@mantine/core";
+import {Alert, Button, Center, Container, Divider, Flex, Group, PinInput, Space, Text} from "@mantine/core";
 import TitleText from "../components/landing_page/TitleText";
 import {useTranslation} from "next-i18next";
 import React, {useState} from "react";
@@ -59,22 +59,33 @@ const PinInputPage: NextPage = () => {
                             : <></>}
                         <Space h={80}/>
                         <Group position="center">
-                            <PinInput
-                                length={6}
-                                size="xl"
-                                type={/^[0-9]+/} inputType="number" inputMode="numeric"
-                                styles={{
-                                    input: {
-                                        height: 110,
-                                        width: 70,
-                                        fontSize: '2em' // You can adjust the font size to fit the larger input field
-                                    }
-                                }}
-                                {...form.getInputProps('pin')}
-                            />
-                            <Space h={40}/>
-                            <Button type="submit" style={{height: 120}} size="xl">{t('pin.showButton')}</Button>
-                        </Group>
+                            <Flex direction={"column"}>
+                                <Center>
+                                    <PinInput
+                                        length={6}
+                                        size="xl"
+                                        type={/^[0-9]+/} inputType="number" inputMode="numeric"
+                                        styles={{
+                                            input: {
+                                                height: 100,
+                                                width: 60,
+                                                fontSize: '2em' // You can adjust the font size to fit the larger input field
+                                            }
+                                        }}
+                                        {...form.getInputProps('pin')}
+                                    />
+                                </Center>
+
+                                <Space h={40}/>
+                                <Center>
+                                    <Button type="submit" style={{height: 80, width: 420}} size="xl"><Text size={25}>
+                                        {t('pin.showButton')}</Text></Button>
+                                </Center>
+
+
+                            </Flex>
+
+                            </Group>
                     </Container>
                 </form>
 
