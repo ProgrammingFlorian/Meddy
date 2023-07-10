@@ -66,6 +66,7 @@ export const useStore = (): StoreType => {
             }, 1000);
         };
 
+        // @ts-ignore TODO: Find out why this is marked as an error and not in wait.tsx
         const realtimeChannelCustomers = supabase.channel(CHANNEL_CUSTOMERS).on('postgres_changes', {
                 event: '*',
                 schema: 'public',
@@ -74,6 +75,7 @@ export const useStore = (): StoreType => {
             updateCallback
         ).subscribe();
 
+        // @ts-ignore TODO: Find out why this is marked as an error and not in wait.tsx
         const realtimeChannelQueues = supabase.channel(CHANNEL_QUEUES).on('postgres_changes', {
                 event: '*',
                 schema: 'public',
