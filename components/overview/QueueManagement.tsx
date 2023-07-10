@@ -40,7 +40,15 @@ export const QueueManagement = (props: QueueManagementProps) => {
                 const queueId = queue.id;
                 return <Card className="mt-1" p="xs" radius="sm" withBorder key={queueId}>
                     <Group position="apart">
-                        <Text style={{userSelect: "none"}} weight={500}>{queue.name}</Text>
+                        <Text style={{
+                            userSelect: "none",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                        }}>
+                            {queue.name}
+                        </Text>
+
                         <ActionIcon onClick={() => setShowConfirmation(queue)}>
                             <IconX size={32}/>
                         </ActionIcon>

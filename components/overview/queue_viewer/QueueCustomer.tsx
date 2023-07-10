@@ -18,7 +18,7 @@ interface QueueCustomerProps {
 const QueueCustomer = (props: QueueCustomerProps) => {
     const {t} = useTranslation();
 
-    return <Card mb="sm" shadow="sm" h={props.isHighlighted ? 160 : 120}
+    return <Card mb="sm" shadow="sm" style={{minHeight: props.isHighlighted ? 160 : 120}}
         {...props.provided.draggableProps}
         {...props.provided.dragHandleProps}
         ref={props.provided.innerRef}>

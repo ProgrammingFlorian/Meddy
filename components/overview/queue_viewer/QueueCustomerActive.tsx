@@ -48,7 +48,7 @@ const QueueCustomerActive = (props: QueueCustomerActiveProps) => {
     }
 
     return props.activeCustomer !== null ? (
-        <Card shadow="sm" mb="sm" m={8} style={{height: 160}}>
+        <Card shadow="sm" mb="sm" m={8} style={{minHeight: 160}}>
             <Group position="center" style={{
                 width: '100%',
                 height: '100%',
