@@ -135,6 +135,7 @@ const CheckinPopup = () => {
                                         minRows={3}
                                         maxRows={10}
                                         autosize
+                                        {...form.getInputProps('notes')}
                                     />
                                     <br/>
                                     <br/>
