@@ -28,7 +28,7 @@ export const calculateTimeLeft = (latestAppointmentStart: Date | null, fixedWait
         const difference = +(new Date()) - +(new Date(latestAppointmentStart));
         const minuteDifference = Math.floor((difference / 1000 / 60) % 60);
         const actualTime = (fixedWaitingTime + Math.max(0, liveWaitingTime - minuteDifference));
-        const isOvertime = liveWaitingTime - minuteDifference < 0;
+        const isOvertime = liveWaitingTime - minuteDifference <= 0;
         setRemainingTime(actualTime);
         setIsOvertime(isOvertime);
     } else {

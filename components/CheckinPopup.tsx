@@ -1,5 +1,5 @@
-import {Box, Button, createStyles, Group, Modal, Select, Textarea, Text, TextInput} from "@mantine/core";
-import {useContext, useEffect, useState} from "react";
+import {Box, Button, createStyles, Group, Modal, Select, Textarea, Text, TextInput, NumberInput} from "@mantine/core";
+import React, {useContext, useEffect, useState} from "react";
 import {customLabel} from "../helpers/Functions";
 import {useForm} from "@mantine/form";
 import {Customer} from "../models/Customer";
@@ -37,7 +37,7 @@ const CheckinPopup = () => {
         // functions will be used to validate values at corresponding key
         validate: {
             name: value => (value.length < 3 ? t('errors.invalidName') : null),
-            duration: value => value < 0 ? t('errors.positiveNumber') : null,
+            duration: value => value < 1 ? t('errors.positiveNumber') : null,
             queue: value => queues.find(queue => queue.name == value) === undefined ? t('errors.noElement') : null
         },
     });
@@ -67,7 +67,7 @@ const CheckinPopup = () => {
                     <div className="relative inline-block text-left" style={{minWidth: 500}}>
                         <div className="p-5 justify-center">
                             <Text weight={500} color={"blue"} size={35}
-                                   className=" text-center py-2">
+                                  className=" text-center py-2">
                                 {t('checkin.newCustomer')}
                             </Text>
                             <br/>
@@ -99,12 +99,11 @@ const CheckinPopup = () => {
                                         placeholder={`${t('customer.name')}`}
                                         {...form.getInputProps('name')} />
                                     <br/>
-                                    <TextInput
-                                        label={customLabel(t('customer.approximateAppointmentDuration'), true)}
-                                        placeholder={"5"}
-                                        classNames={{input: classes.textColor}}
-                                        {...form.getInputProps('duration')}
-                                    />
+                                    <NumberInput label={customLabel(t('customer.approximateAppointmentDuration'), true)}
+                                                 defaultValue={5}
+                                                 parser={value => value?.replace(/\D/g, '') ?? '0'}
+                                                 step={1} min={1}
+                                                 {...form.getInputProps('duration')}/>
                                     <div className="grid grid-cols-4 gap-0.5 pt-1 place-items-stretch">
                                         <Button color="gray"
                                                 onClick={() => form.setFieldValue('duration', 10)}>

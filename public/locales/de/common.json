@@ -14,14 +14,14 @@
     "customerName": "Patienten Name:",
     "editTitle": "Bearbeiten",
     "name": "Name",
-    "appointmentDuration": "Termindauer",
     "remainingTime": "Aktuelle Wartezeit",
     "queue": "Behandelnde/r Ärztin/Arzt:",
     "notes": "Notizen:",
     "notesPlaceholder": "Nur interne Informationen",
     "showQRCode": "QR Code anzeigen",
     "approximateAppointmentDuration": "Geschätze Termindauer in Minuten:",
-    "createCostumer": "Kunde erstellen"
+    "createCostumer": "Kunde erstellen",
+    "currentQueue": "In Warteschlange: {{queue}}"
   },
   "qrCode": {
     "scan": "Scannen Sie den QR-Code um über Ihre Wartezeit informiert zu bleiben",
@@ -128,6 +128,7 @@
     "applicationQuestion": "Wie wird Meddy verwendet?",
     "aboutUsIntroduction": "Unsere Geschichte begann während unseres Studiums an der Technischen Universität München. Als vielbeschäftigte Studenten waren wir immer wieder von den langen Wartezeiten genervt, die uns in unserem hektischen Alltag aufhielten. Kurz vor einer wichtigen Analysis",
     "contact": "Kontakt",
+    "pin": "PIN Eingabe",
     "accordion": {
       "checkinCustomer": "Kunde einchecken",
       "customerView": "Kundenansicht",

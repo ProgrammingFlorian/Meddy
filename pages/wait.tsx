@@ -12,7 +12,7 @@ import {supabase} from "../lib/Store";
 import {RealtimeChannel} from "@supabase/realtime-js";
 import TitleText from "../components/landing_page/TitleText";
 
-const custerMessageBuilder = (personsInQueue: number, t: TFunction) => {
+const customMessageBuilder = (personsInQueue: number, t: TFunction) => {
     if (personsInQueue === 1) {
         return t('wait.peopleAhead.1');
     } else if (personsInQueue > 4) {
@@ -59,18 +59,19 @@ const wait: NextPage = () => {
                     clearInterval(oldIntervalId);
                 }
                 return setInterval(() => {
+                    console.log('time left')
                     timeLeft();
                 }, 10000)
             });
             timeLeft();
-        }).catch((e) => {
+        }).catch(() => {
             setError(t('errors.customerNotFound'));
         });
     }
 
     useEffect(() => {
         const id = router.query['id'] as string;
-        let timeout : NodeJS.Timeout;
+        let timeout: NodeJS.Timeout;
         if (id) {
             loadData(id);
             const realtimeChannel = supabase.channel('any').on('postgres_changes', {
@@ -92,6 +93,9 @@ const wait: NextPage = () => {
         return () => {
             if (intervalId) {
                 clearInterval(intervalId);
+            }
+            if (timeout) {
+                clearTimeout(timeout);
             }
             if (channel) {
                 supabase.removeChannel(channel);
@@ -148,7 +152,7 @@ const wait: NextPage = () => {
                             {personInQueue(personsAhead)}
                         </Center>
                         <Text className='text-center' weight={500} style={{fontSize: 40}}>
-                            {custerMessageBuilder(personsAhead, t)}
+                            {customMessageBuilder(personsAhead, t)}
                         </Text></>
                     : <>
                         <h1>{t('wait.soon')}</h1>
