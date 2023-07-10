@@ -1,7 +1,6 @@
-import {createContext, ReactNode, useCallback, useEffect, useState} from 'react'
+import {createContext, ReactNode, useEffect, useState} from 'react'
 import {createClient} from '@supabase/supabase-js'
 import {Customer} from '../models/Customer'
-import {RealtimeChannel} from "@supabase/realtime-js";
 import {Queue} from "../models/Queue";
 import QueueService from "../services/QueueService";
 import CustomerService from "../services/CustomerService";
@@ -15,7 +14,7 @@ export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '');
 
-const BROADCAST_CHANNEL = 'waiting_queue_updated';
+const BROADCAST_EVENT = 'waiting_queue_updated';
 const CHANNEL_NAME = 'waiting_updates';
 
 interface StoreType {
@@ -49,63 +48,61 @@ export const useStore = (): StoreType => {
     // be replaced. Count downwards to ensure no actual ids are accidentally used
     let local_preview_counter = -1;
 
-    let channel: RealtimeChannel | null = null;
-
     const auth = useAuth();
     const account = auth.user;
 
     useEffect(() => {
         // Fetch current state of customers
+        fetchData();
+        // Listen to state changes of customers
+        supabase.channel(CHANNEL_NAME, {
+            config: {
+                broadcast: {
+                    self: true,
+                },
+            },
+        }).on('broadcast', {event: BROADCAST_EVENT}, () => {
+            console.log("Refreshing data..");
+            fetchData();
+        }).subscribe();
+    }, [account]);
+
+    const sendUpdate = () => {
+        const channel = supabase.channel(CHANNEL_NAME, {
+            config: {
+                broadcast: {
+                    self: true
+                },
+            },
+        }).subscribe();
+        channel.send({
+            type: 'broadcast',
+            event: BROADCAST_EVENT,
+            payload: {}
+        });
+    };
+
+    const fetchData = () => {
         if (account) {
+
             CustomerService.fetchCustomersFromAccountOrganisationGroupedByQueue(account.id).then(data => {
                 const result: {
                     [id: number]: Customer[]
                 } = [];
-
                 data.organisations.queues.forEach(val => {
+
                     result[val.id] = val.customers.sort((a, b) => {
                         return a.position - b.position
                     });
                 });
-
                 setOrganisation({id: data.organisation_id, name: data.organisations.name});
                 setCustomersInQueue(result);
             });
             QueueService.fetchQueues(account.id).then(setQueues);
             FeedbackService.fetchFeedback(account.id).then(data => setFeedback(data));
         }
-        // Listen to state changes of customers
-        channel = supabase.channel(CHANNEL_NAME)
-            .on(
-                'broadcast',
-                {
-                    event: BROADCAST_CHANNEL
-                    // TODO: Find out type
-                }, (payload) => {
-                    // TODO: Only update single queue
-                    //fetchCustomers(setCustomers);
-                }
-            )
-            .subscribe();
 
-        // On unmount clean subscribed channels
-        return () => {
-            if (channel) {
-                supabase.removeChannel(channel);
-            }
-        }
-    }, [account]);
-
-    const sendUpdate = useCallback((queue_id: number) => {
-        if (channel) {
-            // TODO: Send only the customers that should be updated
-            channel.send({
-                type: 'broadcast',
-                event: BROADCAST_CHANNEL,
-                payload: queue_id
-            });
-        }
-    }, [channel]);
+    }
 
     const createQueue = (name: string) => {
         const temporaryId = local_preview_counter--;
@@ -136,9 +133,9 @@ export const useStore = (): StoreType => {
 
     const deleteQueue = (queue_id: number): Promise<void> => {
         return QueueService.deleteQueue(queue_id).then(() => {
-                setQueues(previous => previous.filter(queue => queue.id !== queue_id));
-                return Promise.resolve();
-            });
+            setQueues(previous => previous.filter(queue => queue.id !== queue_id));
+            return Promise.resolve();
+        });
     }
 
     // TODO: Resolve before waiting for server
@@ -164,6 +161,7 @@ export const useStore = (): StoreType => {
                 );
                 return newQueues;
             });
+            sendUpdate();
             return Promise.resolve(serverValue);
         }).catch(() => {
             return Promise.reject();
@@ -186,6 +184,7 @@ export const useStore = (): StoreType => {
                 );
                 return newQueues;
             });
+            sendUpdate();
             return Promise.resolve();
         });
     };
@@ -201,6 +200,7 @@ export const useStore = (): StoreType => {
             });
         });
         setCustomersInQueue(newValue);
+        sendUpdate();
     };
 
     const updateOrganisation = (name: string) => {
@@ -214,7 +214,9 @@ export const useStore = (): StoreType => {
             newValue[customer.queue_id] = newValue[customer.queue_id].filter(c => c.id !== customer.id);
             return newValue;
         });
-        CustomerService.deleteCustomer(customer.id);
+        CustomerService.deleteCustomer(customer.id).then(() => {
+            sendUpdate();
+        });
     };
 
     const updateQueue = (queue: Queue) => {
@@ -224,7 +226,9 @@ export const useStore = (): StoreType => {
             newQueues[index] = queue;
             return newQueues;
         });
-        QueueService.updateQueue(queue); // TODO: Handle error
+        QueueService.updateQueue(queue).then(() => { // TODO: Handle error
+            sendUpdate();
+        });
     };
 
 
