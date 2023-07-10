@@ -101,16 +101,13 @@ const CustomerPopup = (props: CustomerPopupProps) => {
 
                         {
                             customerQueue?.active_customer === props.customer.id
-                            && <Button fullWidth onClick={() => {
+                            && <ConfirmButton fullWidth label= {t("sendBackToQueue")} onClick={() => {
                                 const newQueue = {...customerQueue};
                                 newQueue.active_customer = null;
                                 newQueue.latest_appointment_start = null;
                                 updateQueue(newQueue);
                                 props.onClose();
-                            }}>
-
-                                {t("sendBackToQueue")}
-                            </Button>
+                            }}/>
                         }
 
                         <ConfirmButton fullWidth label={t('checkout')} onClick={() => {
