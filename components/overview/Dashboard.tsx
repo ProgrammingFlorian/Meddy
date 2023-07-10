@@ -1,9 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import QueueViewer from "./queue_viewer/QueueViewer";
 import {StoreContext} from "../../lib/Store";
-import {Container, Flex, Group, Space, Title, Center} from "@mantine/core";
+import {Center, Container, Flex, Group, Space, Title} from "@mantine/core";
 import CheckinPopup from "../CheckinPopup";
-import FooterComponent from "../FooterComponent";
 
 const Dashboard = () => {
     const getCurrentTime = () => {

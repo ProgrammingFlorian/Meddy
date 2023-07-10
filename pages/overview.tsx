@@ -14,22 +14,21 @@ const Overview: NextPage = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [openedQueueManagement, setOpenedQueueManagement] = useState(false);
 
-
     return (
         <AuthProvider>
-                <StoreProvider>
-                    <AppShell
-                        padding="md"
-                        fixed={false}
-                        navbar={sidebarOpen ?
-                            <SidebarComponent openQueueManagement={() => setOpenedQueueManagement(true)}/> : <></>}
-                        header={<HeaderComponent toggleSidebarOpen={() => setSidebarOpen(!sidebarOpen)}/>}
-                    >
-                        <Dashboard/>
-                    </AppShell>
-                    <QueueManagement isOpen={openedQueueManagement} onClose={() => setOpenedQueueManagement(false)}
-                    />
-                </StoreProvider>
+            <StoreProvider>
+                <AppShell
+                    padding="md"
+                    fixed={false}
+                    navbar={sidebarOpen ?
+                        <SidebarComponent openQueueManagement={() => setOpenedQueueManagement(true)}/> : <></>}
+                    header={<HeaderComponent toggleSidebarOpen={() => setSidebarOpen(!sidebarOpen)}/>}
+                >
+                    <Dashboard/>
+                </AppShell>
+                <QueueManagement isOpen={openedQueueManagement} onClose={() => setOpenedQueueManagement(false)}
+                />
+            </StoreProvider>
         </AuthProvider>
 
     );

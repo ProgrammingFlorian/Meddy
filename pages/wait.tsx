@@ -48,6 +48,9 @@ const wait: NextPage = () => {
 
     const router = useRouter();
 
+    const CHANNEL_CUSTOMERS = "db_customers";
+    const CHANNEL_QUEUES = "db_queues";
+
     const loadData = (id: string) => {
         CustomerService.fetchCustomersInSameQueue(id).then(([c, otherCustomers, organisation, queue]) => {
             setCustomer(c);
@@ -90,7 +93,7 @@ const wait: NextPage = () => {
                 setChannelError(status !== 'SUBSCRIBED');
             };
 
-            const realtimeChannelCustomers = supabase.channel('any').on('postgres_changes', {
+            const realtimeChannelCustomers = supabase.channel(CHANNEL_CUSTOMERS).on('postgres_changes', {
                     event: 'UPDATE',
                     schema: 'public',
                     table: 'customers'
@@ -98,7 +101,7 @@ const wait: NextPage = () => {
                 updateCallback
             ).subscribe(subscribeCallback);
 
-            const realtimeChannelQueues = supabase.channel('any').on('postgres_changes', {
+            const realtimeChannelQueues = supabase.channel(CHANNEL_QUEUES).on('postgres_changes', {
                     event: 'UPDATE',
                     schema: 'public',
                     table: 'queues'

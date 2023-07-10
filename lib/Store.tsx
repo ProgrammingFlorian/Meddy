@@ -9,13 +9,11 @@ import OrganisationService from "../services/OrganisationService";
 import {useAuth} from "./Auth";
 import {Feedback} from "../models/Feedback";
 import FeedbackService from "../services/FeedbackService";
+import {RealtimePostgresUpdatePayload} from "@supabase/realtime-js";
 
 export const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '');
-
-const BROADCAST_EVENT = 'waiting_queue_updated';
-const CHANNEL_NAME = 'waiting_updates';
 
 interface StoreType {
     sendUpdate: (queue_id: number) => void;
@@ -51,35 +49,51 @@ export const useStore = (): StoreType => {
     const auth = useAuth();
     const account = auth.user;
 
+    const CHANNEL_CUSTOMERS = "db_customers";
+    const CHANNEL_QUEUES = "db_queues";
+
     useEffect(() => {
         // Fetch current state of customers
         fetchData();
-        // Listen to state changes of customers
-        supabase.channel(CHANNEL_NAME, {
-            config: {
-                broadcast: {
-                    self: true,
-                },
+        // Update to dashboard if it is updated on another client
+        let updateTimeout: NodeJS.Timeout;
+        const updateCallback = (payload: RealtimePostgresUpdatePayload<{ [p: string]: any }>) => {
+            if (updateTimeout) {
+                clearTimeout(updateTimeout);
+            }
+            updateTimeout = setTimeout(() => {
+                fetchData();
+            }, 1000);
+        };
+
+        const realtimeChannelCustomers = supabase.channel(CHANNEL_CUSTOMERS).on('postgres_changes', {
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'customers'
             },
-        }).on('broadcast', {event: BROADCAST_EVENT}, () => {
-            console.log("Refreshing data..");
-            fetchData();
-        }).subscribe();
-    }, [account]);
+            updateCallback
+        ).subscribe();
+
+        const realtimeChannelQueues = supabase.channel(CHANNEL_QUEUES).on('postgres_changes', {
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'queues'
+            },
+            updateCallback
+        ).subscribe();
+
+        return () => {
+            if (realtimeChannelCustomers) {
+                supabase.removeChannel(realtimeChannelCustomers);
+            }
+            if (realtimeChannelQueues) {
+                supabase.removeChannel(realtimeChannelQueues);
+            }
+        };
+    }, []);
 
     const sendUpdate = () => {
-        const channel = supabase.channel(CHANNEL_NAME, {
-            config: {
-                broadcast: {
-                    self: true
-                },
-            },
-        }).subscribe();
-        channel.send({
-            type: 'broadcast',
-            event: BROADCAST_EVENT,
-            payload: {}
-        });
+
     };
 
     const fetchData = () => {
