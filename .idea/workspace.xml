@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36ed8252-0eee-4f90-b17e-408752c8b3b4" name="Changes" comment="translation">
+    <list default="true" id="36ed8252-0eee-4f90-b17e-408752c8b3b4" name="Changes" comment="cards height fixed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/overview/QueueManagement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/overview/QueueManagement.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/marius.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/marius.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/locales/de/common.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/locales/de/common.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +48,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/mariusweigt/WebstormProjects/Meddy/public/images&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/mariusweigt/WebstormProjects/Meddy&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -64,6 +66,7 @@
       <recent name="$PROJECT_DIR$/components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/images" />
       <recent name="$PROJECT_DIR$/components" />
     </key>
   </component>
@@ -169,28 +172,20 @@
       <workItem from="1688471121614" duration="1209000" />
       <workItem from="1688472341911" duration="14754000" />
       <workItem from="1688548403729" duration="23289000" />
-      <workItem from="1688910902269" duration="7759000" />
-    </task>
-    <task id="LOCAL-00001" summary="implemented almost everything">
-      <created>1677234016986</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1677234016986</updated>
-    </task>
-    <task id="LOCAL-00002" summary="updated almost everything">
-      <created>1677511301588</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1677511301588</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Services implemented">
-      <created>1677519421301</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1677519421301</updated>
+      <workItem from="1688910902269" duration="15634000" />
+      <workItem from="1689023852000" duration="2216000" />
+      <workItem from="1689197546085" duration="1550000" />
+      <workItem from="1690204162184" duration="19000" />
+      <workItem from="1694946659924" duration="600000" />
+      <workItem from="1695869462604" duration="686000" />
+      <workItem from="1697080121926" duration="742000" />
+      <workItem from="1697884059610" duration="11000" />
+      <workItem from="1697884836585" duration="1988000" />
+      <workItem from="1699094993582" duration="3000" />
+      <workItem from="1699455336102" duration="598000" />
+      <workItem from="1699948347838" duration="1199000" />
+      <workItem from="1716233050193" duration="958000" />
+      <workItem from="1716736736117" duration="684000" />
     </task>
     <task id="LOCAL-00004" summary="bug fixes">
       <created>1677601593713</created>
@@ -479,7 +474,63 @@
       <option name="project" value="LOCAL" />
       <updated>1688932240465</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="padding button">
+      <created>1688932306448</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1688932306448</updated>
+    </task>
+    <task id="LOCAL-00046" summary="login fixed">
+      <created>1688933804847</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1688933804847</updated>
+    </task>
+    <task id="LOCAL-00047" summary="error page added">
+      <created>1688934420065</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1688934420065</updated>
+    </task>
+    <task id="LOCAL-00048" summary="pdf updated">
+      <created>1688938024378</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1688938024378</updated>
+    </task>
+    <task id="LOCAL-00049" summary="button updated">
+      <created>1689015323118</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1689015323118</updated>
+    </task>
+    <task id="LOCAL-00050" summary="sendBackToQueue confirmButton added">
+      <created>1689023741405</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1689023741406</updated>
+    </task>
+    <task id="LOCAL-00051" summary="sendBackToQueue confirmButton added">
+      <created>1689024102531</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1689024102531</updated>
+    </task>
+    <task id="LOCAL-00052" summary="cards height fixed">
+      <created>1689026423946</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1689026423947</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -497,13 +548,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="website carousel bug" />
-    <MESSAGE value="image added" />
-    <MESSAGE value="website developed, added imprint and privacy" />
-    <MESSAGE value="responsive website" />
-    <MESSAGE value="images added" />
-    <MESSAGE value="text changed" />
-    <MESSAGE value="wait page new designed, typos corrected" />
     <MESSAGE value="CheckinPopup design, Color fix" />
     <MESSAGE value="wait text fixed" />
     <MESSAGE value="grid fixed" />
@@ -522,7 +566,14 @@
     <MESSAGE value="typo" />
     <MESSAGE value="bug fixes" />
     <MESSAGE value="translation" />
-    <option name="LAST_COMMIT_MESSAGE" value="translation" />
+    <MESSAGE value="padding button" />
+    <MESSAGE value="login fixed" />
+    <MESSAGE value="error page added" />
+    <MESSAGE value="pdf updated" />
+    <MESSAGE value="button updated" />
+    <MESSAGE value="sendBackToQueue confirmButton added" />
+    <MESSAGE value="cards height fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="cards height fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -539,7 +590,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/lib/Store.tsx</url>
-          <line>236</line>
+          <line>254</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>

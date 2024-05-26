@@ -3,7 +3,7 @@ import {IconX} from "@tabler/icons-react";
 import {useForm} from "@mantine/form";
 import {Queue} from "../../models/Queue";
 import {StoreContext, useStore} from "../../lib/Store";
-import React, {useContext, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {useTranslation} from "next-i18next";
 
 
@@ -33,7 +33,6 @@ export const QueueManagement = (props: QueueManagementProps) => {
                 setShowDeleteError(true);
             });
     };
-
     return (
         <Modal opened={props.isOpen} onClose={props.onClose} size={"sm"} title={t('sidebar.manageQueues')}>
             {queues.sort((q1, q2) => q1.name.localeCompare(q2.name)).map((queue) => {
@@ -52,6 +51,8 @@ export const QueueManagement = (props: QueueManagementProps) => {
                         <ActionIcon onClick={() => setShowConfirmation(queue)}>
                             <IconX size={32}/>
                         </ActionIcon>
+
+
                     </Group>
                 </Card>
             })}
