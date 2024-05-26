@@ -46,7 +46,7 @@
   },
   "checkin": {
     "newCustomer": "Neuer Kunde/in",
-    "checkin": "Einchecken"
+    "checkin": "Kunde anmelden"
   },
   "password_reset": {
     "title": "Passwort zurücksetzen",
@@ -121,10 +121,10 @@
     "usability": "Einfache Handhabung",
     "privacy": "Datenschutz",
     "clientSatisfaction": "Kundenzufriedenheit",
-    "usabilityText": "Keine Installation notwendig. Leichte Bedienung, für die keine Schulung notwendig ist. Kunden einchecken mit nur vier Klicks.",
+    "usabilityText": "Keine Installation notwendig. Leichte Bedienung, für die keine Schulung notwendig ist. Kunden anmelden mit nur vier Klicks.",
     "privacyText": "Daten werden nicht länger als notwendig gespeichert. Keine Verarbeitung der Daten oder Verkauf. DSGVO-Konform.",
     "clientSatisfactionText": "Transparenz der Wartezeit gegenüber Kunden steigert die Zufriedenheit zuverlässig.",
-    "checkInToggle": "1. Kunde einchecken",
+    "checkInToggle": "1. Kunde anmelden",
     "scanQRToggle": "2. Kunde scannt QR-Code",
     "queueManagement": "3. Warteschlangen verwalten",
     "applicationQuestion": "Wie wird Meddy verwendet?",
@@ -132,7 +132,7 @@
     "contact": "Kontakt",
     "pin": "PIN Eingabe",
     "accordion": {
-      "checkinCustomer": "Kunde einchecken",
+      "checkinCustomer": "Kunde anmelden",
       "customerView": "Kundenansicht",
       "changeOrder": "Reihenfolge/Warteschlange der Kunden verändern",
       "editCustomer": "Kunde bearbeiten",
