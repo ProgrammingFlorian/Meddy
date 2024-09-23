@@ -14,9 +14,11 @@ const Imprint: NextPage = () => {
             <Text className="text-center" size={40} fw={700}>Impressum</Text>
             <Space h={50}/>
             <Space h={100}/>
+            <p>Meddy wird nicht fortgesetzt</p>
+            <Space h={20}/>
             <p>Marius Weigt</p>
-            <p>Implerstraße 10</p>
-            <p>81371 München</p>
+            <p>Schubartstraße 9</p>
+            <p>74076 Heilbronn</p>
             <p>Deutschland</p>
             <br/>
             <p>Tel.: +49 1573 2128812</p>
