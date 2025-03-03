@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="36ed8252-0eee-4f90-b17e-408752c8b3b4" name="Changes" comment="cards height fixed">
+    <list default="true" id="36ed8252-0eee-4f90-b17e-408752c8b3b4" name="Changes" comment="Impressum geupdated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/overview/QueueManagement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/overview/QueueManagement.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/marius.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/marius.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/locales/de/common.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/locales/de/common.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,21 +182,13 @@
       <workItem from="1699455336102" duration="598000" />
       <workItem from="1699948347838" duration="1199000" />
       <workItem from="1716233050193" duration="958000" />
-      <workItem from="1716736736117" duration="684000" />
-    </task>
-    <task id="LOCAL-00004" summary="bug fixes">
-      <created>1677601593713</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1677601593713</updated>
-    </task>
-    <task id="LOCAL-00005" summary="bug fixes in checkInPage.tsx, CustomerPopup.tsx&#10;QueueManagement.tsx UI design updated">
-      <created>1677608352882</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1677608352882</updated>
+      <workItem from="1716736736117" duration="1346000" />
+      <workItem from="1718183081902" duration="163000" />
+      <workItem from="1726062114709" duration="2000" />
+      <workItem from="1726062774541" duration="5000" />
+      <workItem from="1726295559829" duration="603000" />
+      <workItem from="1727078828366" duration="869000" />
+      <workItem from="1729432851348" duration="17000" />
     </task>
     <task id="LOCAL-00006" summary="services updated">
       <created>1677648399743</created>
@@ -530,7 +519,21 @@
       <option name="project" value="LOCAL" />
       <updated>1689026423947</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Paulo removed&#10;Marius' imaged updated&#10;Paulo removed from story">
+      <created>1716737766637</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1716737766638</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Impressum geupdated">
+      <created>1727079093774</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1727079093774</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -548,8 +551,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="CheckinPopup design, Color fix" />
-    <MESSAGE value="wait text fixed" />
     <MESSAGE value="grid fixed" />
     <MESSAGE value="queue grid fixed" />
     <MESSAGE value="queue grid fixed 2" />
@@ -573,7 +574,9 @@
     <MESSAGE value="button updated" />
     <MESSAGE value="sendBackToQueue confirmButton added" />
     <MESSAGE value="cards height fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="cards height fixed" />
+    <MESSAGE value="Paulo removed&#10;Marius' imaged updated&#10;Paulo removed from story" />
+    <MESSAGE value="Impressum geupdated" />
+    <option name="LAST_COMMIT_MESSAGE" value="Impressum geupdated" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
